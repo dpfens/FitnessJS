@@ -1,8 +1,7 @@
 /* Exercise Physiology Library
- * Author: Doug Fenstermacher
  * Version: 0.7.0
  * Created: March 2013
- * Updated: May 10 2014
+ * Updated: Feb 9 2015
  */
 
 
