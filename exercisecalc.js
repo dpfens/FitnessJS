@@ -864,463 +864,462 @@ function Person(options) {
 };
 
 Person.prototype = {
-		
-		set: function(options) {
-			console.log(typeof(options)==="object");
-			if(typeof(options)==="object") {
-				for(key in options) {
-						this[key] = options[key];
-				}
+	
+	set: function(options) {
+		if(typeof(options)==="object") {
+			for(key in options) {
+				this[key] = options[key];
 			}
-		},
-		
-		get: function(key) {
-			return this[key];
-		},
-		
-		
-		/****************************** Body Composition ****************************************/
-		
-		
-		/*
-		* Net Caloric Cost
-		* Mets must be in MET form (not mL/kg/min)
-		*/
-		calcNetCaloricCost : function(mets, weight) {
-			weight = parseInt(weight) || this.weight,
-			data;
-			data = mets * 3.5 * (weight/200);
-			return data;
-		},
-		               		
-		calcBMIToBodyFat : function(options) {
-			gender = options.gender.toLowerCase() || this.gender,
-			age = parseInt(options.age) || this.age,
-			bmi = parseInt(options.bmi) || (options.weight/Math.pow(options.height, 2)) || (this.weight/Math.pow(this.height, 2)),
-			data = {};
-			if(gender === "male") { // male
-				data = {
-					child: ((1.51*bmi) - (0.70*age) - (3.6) + 1.4) / 100,
-					adult: ((1.20*bmi) - (0.23*age) - (10.8) - 5.4) / 100
-				}
-			} else if (gender === "female") { // male
-				data = {
-		            child: ((1.51*bmi) - (0.70*age) + 1.4) / 100,
-		            adult: ((1.20*bmi) - (0.23*age) - 5.4) / 100
-		        }
-			}
-			return data;
-		},
-		            		
-		/*
-		* Population-specific Formulas for converting Body Density (Db) to Percent Body Fat (%BF) 
-		*/
-		calcDbtoBF : function(bd) {
-			bd = parseInt(bd) || 0,
-			data = {Brozek: ((4.570/bd)-4.142) , Siri: ((495/bd)-450)};
-		    return data;
-		},
-		            		
-		/*
-		* Skinfold tests
-		*/
-		calcSkinfoldDb : function (sum, options) {
-			gender = options.gender.toLowerCase() || this.gender,
-			age = options.parseInt(age) || this.age,
-			sum = parseInt(sum) || 0,
-			data = {};
-			if(gender === "male" ) { // male
-				data = {
-					black: 1.112 - (0.00043499*sum) + (0.00000055*Math.pow(sum, 2)) - (0.00028826*age),
-					white: 1.10938 - (0.0008267*sum) + (0.0000016*Math.pow(sum, 2)) - (0.0002574*age),
-					collegiateathlete: {
-						black: 8.997 - (0.2468*sum) - (6.343 * 1) - (1.998),
-						white: 8.997 - (0.2468*sum) - (6.343 * 1),
-					},
-					child: (0.735*sum) + 1.0
-					}
-			} else if(gender === "female") {
-				data = {
-					blackhispanic: 1.0970 - (0.00046971*sum) + (0.00000056*Math.pow(sum, 2)) - (0.00012828*age),
-					whiteanorexic: 1.0994921 - (0.0009929*sum) + (0.0000023*Math.pow(sum, 2)) - (0.00001392*age),
-					athlete: 1.096095 - (0.0006952*sum) + (0.0000011*Math.pow(sum, 2)) - (0.0000714*age),
-					collegiateathlete: {
-						black: 8.997 - (0.2468*sum) - (1.998),
-						white: 8.997 - (0.2468*sum),
-					},
-					child: (0.610*sum) + 5.1
-				}
-			}
-			return data;
-		},
-		
-		/*
-		* Calculate Body Density at TLCNS
-		*/
-		calcDbAtTLCNS : function(bd) {
-			bd = parseInt(bd) || 0;
-			gender = gender.toLowerCase() || this.gender,
-			data;
-			if(gender === "female") {
-				data = 0.4745*bd + 0.5173;
-			}
-			else if(gender === "male") {
-				data = 0.5829*bd+0.4059;
-			}
-			return data;
-		},
-		            		
-		/*
-		* Calculation of body surface area in Meters^2
-		* weight in kilogams (kg)
-		* height in centimeters (cm)
-		*/
-		calcBSA : function(weight, height) {
-			weight = parseInt(weight) || this.weight,
-			height = parseInt(height) || this.weight,
-			data;
-		    data = { Boyd: 0.03330 * Math.pow(weight,(0.7285-0.0188*Math.log(weight)))*Math.pow(height,0.3),
-		    	Costeff: (4*weight+7)/(90+weight),
-		        DuBois: 0.0087184 * Math.pow(weight,0.425) * Math.pow(height,0.725),
-		        Fujimoto: 0.008883 * Math.pow(weight, 0.444) * Math.pow(height, 0.663),
-		        GehanGeorge: 0.0235 * Math.pow(weight, 0.51456) * Math.pow(height, 0.42246),
-		        Haycock: 0.024265 * Math.pow(weight, 0.5378) * Math.pow(height, 0.3964),
-		        Mosteller: Math.sqrt(weight*height)/60,
-		        Takahira: 0.007241 * Math.pow(weight, 0.425) * Math.pow(height,0.725) };
-		    
-		    return data;
-		},
-		            		
-		/*
-		* Body volume calculation from hydrostatic weighing
-		* uww is Underwater Weight
-		* rv is Residual Volume in mL
-		* gv is Volume of air in gastrointestinal tract (GV) (default: 100mL)
-		 */
-		calcBV : function(options) {
-		    weight = parseInt(options.weight) || this.weight,
-		    uww = parseInt(options.uww) || 0,
-		    rv = parseInt(options.rv) || 0,
-		    gv = parseInt(options.gv) || 100,
-		    data;
-		    data = ((weight - uww)/ waterdensity) - (rv - gv);
-		    return data;
-		},
-		
-		/*
-		* Resting Metabolic Rate
-		* weight in kg, height in cm, age in years
-		*/
-		calcRMR : function(options) {
-			gender = options.gender.toLowerCase() || this.gender;
-			age = parseInt(options.age) || this.age,
-			weight = parseInt(options.weight) || this.weight,
-			height = parseInt(options.height) || this.height,
-			data;
-			if(gender ==="male") {
-				data = {'Harris-Benedict': 66.473 + 13.751*weight + 5.0033*height - 6.755*age,'Mifflin': (9.99*weight + 6.25*height + - 4.92*age)+5} // male
-			} else if(gender === "female") {
-				data = {'Harris-Benedict': 655.0955 + 9.463*weight + 1.8496*height - 4.6756*age,'Mifflin': (9.99*weight + 6.25*height + - 4.92*age)-161}// female
-		    }
-			return data;
-		},
-		            		
-		/*
-		* Total Daily Energy Expenditure of Children and Adults
-		* age in years
-		* weight in kilograms (kg)
-		* height in meters
-		* returns object with sedentary (1.0 < PAL < 1.4), low activity (1.4 < PAL < 1.6), active (1.6 < PAL < 1.9), and very active (1.9 < PAL < 2.5)
-		* 
-		*/
-		calcPredictedTEE : function(options) {
-			gender = options.gender.toLowerCase() || this.gender;
-			age = parseInt(options.age) || this.age,
-			weight = parseInt(options.weight) || this.weight,
-			height = parseInt(options.height) || this.height,
-			data;
-		    if(gender === "male") { // male
-		    	if (age >= 3 && age >= 18) {
-		    		data = {
-		    			sedentary: 88.5 - (61.9 * age) + 1*((26.7*weight)+(903*height)),
-		    			low: 88.5 - (61.9 * age) + 1.13*((26.7*weight)+(903*height)),
-		    			active: 88.5 - (61.9 * age) + 1.26*((26.7*weight)+(903*height)),
-		    			veryactive: 88.5 - (61.9 * age) + 1.42*((26.7*weight)+(903*height)),
-		           }
-		    	}
-		    	else if (age >= 19) {
-		    		data = {
-		    			sedentary: 662 - (9.53 * age) + 1*((15.9*weight)+(540*height)),
-		    			low: 662 - (9.53 * age) + 1.11*((15.9*weight)+(540*height)),
-		    			active: 662 - (9.53 * age) + 1.25*((15.9*weight)+(540*height)),
-		    			veryactive: 662 - (9.53 * age) + 1.48*((15.9*weight)+(540*height)),
-		            }
-		        }
-		    } else if(gender === "female") {
-		    	if (age >= 3 && age >= 18) {
-		    		data = {
-		    			sedentary: 135.3 - (30.8 * age) + 1*((10*weight)+(934*height)),
-		    			low: 135.3 - (30.8 * age) + 1.16*((10*weight)+(934*height)),
-		    			active: 135.3 - (30.8 * age) + 1.31*((10*weight)+(934*height)),
-		    			veryactive: 135.3 - (30.8 * age) + 1.56*((10*weight)+(934*height)),
-		    		}
-		    	}
-		    	else if (age >= 19) {
-		    		data = {
-		    			sedentary: 354 - (6.91 * age) + 1*((9.36*weight)+(726*height)),
-		    			low: 662 - (9.53 * age) + 1.12*((15.9*weight)+(540*height)),
-		    			active: 662 - (9.53 * age) + 1.27*((15.9*weight)+(540*height)),
-		    			veryactive: 662 - (9.53 * age) + 1.45*((15.9*weight)+(540*height)),
-		    		}
-		    	}
-		    }
-		    return data;
-		},
-		
-		// Skinfold tests
-		            		
-		/*
-		* Calculate Fat Free Body Mass (FFM) based on impedance
-		* resistance in ohms
-		* height in centimeters (cm)
-		* weight in kg
-		* returns fat free mass (FFM) in kg
-		*/
-		calcFFM : function(resistance, reactance, options) {
-			resistance = parseInt(resistance) || 0,
-			reactance = parseInt(reactance) || 0;
-			gender = options.gender.toLowerCase() || this.gender;
-			weight = parseInt(options.weight) || this.weight,
-			height = parseInt(options.height) || this.height,
-			age = parseInt(options.age) || this.age,
-		    results = {};
-		            			
-		    /*
-		    * White boys and girls, 8-15 years
-		    * Lohman(1992)
-		    */
-		    if(age >= 8 && age <= 15) {
-		    	results.child = (0.62*(Math.pow(height,2)/resistance)) + (0.21*weight) + (0.1*reactance) + 4.2;
-		    }
-		            			
-		    /*
-		    * White boys and girls, 10-19 years
-		    * Houtkooper e al. (1992)
-		    */
-		    if(age >= 10 && age <= 19) {
-		    	results.adolescent = (0.61*(Math.pow(height,2)/resistance)) + (0.25*weight) + 1.31;
-		    	
-		    }
-		            			
-		    if(gender === "male") { // male
-		    	if(age >= 17 && age <= 62) { // Adults between 17 and 62
-		    		results.adult = {
-		            /*
-		            * American Indian, black, Hispanic, and White Men
-		            * %BF < .20 Segal et al. (1988)
-		            */ 
-		            lean: (0.00066360*Math.pow(height,2)) - (0.02117 * resistance) + (0.62854*weight) - (0.12380 * age) + 9.33285,
-		            /*
-		            * American Indian, black, Hispanic, and White Men
-		            * %BF > .20 Segal et al. (1988)
-		            */ 
-		            obese: (0.00088580*Math.pow(height,2)) - (0.02999 * resistance) + (0.42688*weight) - (0.07002 * age) + 14.52435,
-		    		}
-		    		/*
-		    		 * Male athletes 19-40 years
-		    		 * Oppliger et al. (1991)
-		    		 */
-		    		if (age >= 19 && age <= 40) {
-		    			results.athlete = (0.186*(Math.pow(height,2)/resistance)) + (0.701*weight) + 1.949;
-		    		}
-		    	results.adult.average = (results.adult.lean + results.adult.obese) / 2;
-		    	}
-		    }
-		    else if(gender === "female") {
-		    	if(age >= 17 && age <= 62 && gender === 'female') { // Adults between 17 and 62
-		    		results['adult'] = {
-		    			/*
-		    			* American Indian, black, Hispanic, and White Women
-		    			* %BF < .30 Segal et al. (1988)
-		    			*/ 
-		    			lean: (0.000646*Math.pow(height,2)) - (0.014 * resistance) + (0.421*weight) + 10.4,
-		    			/*
-		    			* American Indian, black, Hispanic, and White Women
-		    			* %BF > .30 Segal et al. (1988)
-		    			*/ 
-		    			obese: (0.00091186*Math.pow(height,2)) - (0.1466 * resistance) + (0.29990*weight) - (0.07012 * age) + 9.37938,
-		    		};
-		    		results.adult.average = (results.adult.lean + results.adult.obese) / 2;
-		    	}
-		    	/*
-		    	 * Female athletes 18-27 years
-		    	 * Fornetti et al. (1999)
-		    	 */
-		    	if (age >= 18 && age <=27) {
-		    		results.athlete = (0.282*height) + (0.415*weight) - (0.037*resistance) + (0.096*reactance) - 9.734;
-		    	}
-		    
-		    }
-		return results;
+		}
 	},
-		            			
-	/****************************** Cardiovascular Assessments, Tests, and Formulas ****************************************/
-		            			
-	calcFieldTestsV02Max: function(options) {
+	
+	get: function(key) {
+		return this[key];
+	},
+	
+	
+	/****************************** Body Composition ****************************************/
+	
+	
+	/*
+	* Net Caloric Cost
+	* Mets must be in MET form (not mL/kg/min)
+	*/
+	calcNetCaloricCost : function(mets, weight) {
+		weight = parseInt(weight) || this.weight,
+		data;
+		data = mets * 3.5 * (weight/200);
+		return data;
+	},
+	               	
+	calcBMIToBodyFat : function(options) {
 		gender = options.gender.toLowerCase() || this.gender,
 		age = parseInt(options.age) || this.age,
-		weight = parseInt(options.weight) || this.weight,
-		time = parseInt(options.time) || 0,
-		bmi = parseInt(options.bmi) || (this.weight/Math.pow(this.height, 2)),
-		hr = parseInt(options.hr) || this.hr,
-		speed = parseInt(options.speed) || 0,
-		results = {};
-		            	        	
-		if(gender === "female") {
-			gender = 0;
-		} else if(gender === "male") {
-			gender = 1;
+		bmi = parseInt(options.bmi) || (options.weight/Math.pow(options.height, 2)) || (this.weight/Math.pow(this.height, 2)),
+		data = {};
+		if(gender === "male") { // male
+		data = {
+			child: ((1.51*bmi) - (0.70*age) - (3.6) + 1.4) / 100,
+			adult: ((1.20*bmi) - (0.23*age) - (10.8) - 5.4) / 100
 		}
-		            	        	
-		/*
-		*  20m Shuttle Run Test
-		*  Leger et al. (1988)
-		*  Children 8-19 years old)
-		*/
-		if(age && speed) {
-			results.shuttle = 31.025 + (3.238*speed) - (3.248*age) + 0.1536*(age*speed);
+		} else if (gender === "female") { // male
+		data = {
+	            child: ((1.51*bmi) - (0.70*age) + 1.4) / 100,
+	            adult: ((1.20*bmi) - (0.23*age) - 5.4) / 100
+	        }
 		}
-
-		/*
-		* 1.0 mile run/walk (8-17 years old)
-		* Cureton et al. (1995)
-		* for gender field, 1 for male, 0 for female
-		*/
-		if(bmi && time && gender) {
-			results.mileRunWalk =108.94 - (8.41 * time) + 0.34 * Math.pow(time,2) + 0.21*(age*gender) - (0.84*bmi);
-		}
-		if(distance) {
-			/*
-			 * 12 minute Run Test
-		     * Cooper (1968)
-		     * distance expected in meters
-		     */
-			results.TwelveMinuteTest = 0.0268*distance - 11.3;
-			/*
-		    * 15 minute run test
-		    * Balke (1963)
-		    * distance expected in meters 
-		    */
-		    results.FifteenMinuteTest = 0.0178*distance + 9.6;
-		}
-		            	        	
-		/*
-		*  1 Mile Walk Test
-		*  Kline et al. (1987)
-		*  for gender field, 1 for male, 0 for female
-		*  
-		*/
-		if(age && weight && gender && time && hr) {
-			results.mileWalk = 132.853 - .0769*weight - 0.3877*age + 6.315*gender - 3.2649*time - 0.1565*hr;
-		}
-		            	        	
-		/*
-		* 1.0 mile steady-state jog
-		* George et al. (1993)
-		*/
-		if(time && hr && weight) {
-			results.mileSteady = 100.5 - 0.1636 * weight - 1.438 * time - 0.1928 * hr;
-			results.MileHalf = [88.02 - (0.1656*weight) - (2.76*time) + (3.716*gender),
-			100.16 + (7.30*gender) - (0.164*weight) - (1.273 * time) - (0.1563 * hr)];
-		}
-		if(hr && weight) {
-			/*
-			 * Astrand Step Test
-		     * Marley and Linnerud (1976)
-
-		     * Queen's College Step Test
-		     * McArdle et al. (1972)
-		     * For gender field, 1 for male, 0 for female
-		     */
-		     // Male
-		     if(gender ==="male") {
-		    	 results.astrand = 3.744*((weight+5)/(hr-62));
-		    	 results.queenscollege = 111.33 - (0.42 * hr); 
-		     } // Female
-		     else if(gender === "female") { 
-		    	 results.astrand = 3.750*((weight-3)/(hr-65)); 
-		    	 results.queenscollege = 65.81 - (0.1847 * hr); 
-		     }	
-		 }
-		            	        	    	        	
-		 return results;
+		return data;
 	},
-		            	        
+	            	
+	/*
+	* Population-specific Formulas for converting Body Density (Db) to Percent Body Fat (%BF) 
+	*/
+	calcDbtoBF : function(bd) {
+		bd = parseInt(bd) || 0,
+		data = {Brozek: ((4.570/bd)-4.142) , Siri: ((495/bd)-450)};
+	    return data;
+	},
+	            	
+	/*
+	* Skinfold tests
+	*/
+	calcSkinfoldDb : function (sum, options) {
+		gender = options.gender.toLowerCase() || this.gender,
+		age = options.parseInt(age) || this.age,
+		sum = parseInt(sum) || 0,
+		data = {};
+		if(gender === "male" ) { // male
+		data = {
+			black: 1.112 - (0.00043499*sum) + (0.00000055*Math.pow(sum, 2)) - (0.00028826*age),
+			white: 1.10938 - (0.0008267*sum) + (0.0000016*Math.pow(sum, 2)) - (0.0002574*age),
+			collegiateathlete: {
+			black: 8.997 - (0.2468*sum) - (6.343 * 1) - (1.998),
+			white: 8.997 - (0.2468*sum) - (6.343 * 1),
+			},
+			child: (0.735*sum) + 1.0
+			}
+		} else if(gender === "female") {
+		data = {
+			blackhispanic: 1.0970 - (0.00046971*sum) + (0.00000056*Math.pow(sum, 2)) - (0.00012828*age),
+			whiteanorexic: 1.0994921 - (0.0009929*sum) + (0.0000023*Math.pow(sum, 2)) - (0.00001392*age),
+			athlete: 1.096095 - (0.0006952*sum) + (0.0000011*Math.pow(sum, 2)) - (0.0000714*age),
+			collegiateathlete: {
+			black: 8.997 - (0.2468*sum) - (1.998),
+			white: 8.997 - (0.2468*sum),
+			},
+			child: (0.610*sum) + 5.1
+		}
+		}
+		return data;
+	},
+	
+	/*
+	* Calculate Body Density at TLCNS
+	*/
+	calcDbAtTLCNS : function(bd) {
+		bd = parseInt(bd) || 0;
+		gender = gender.toLowerCase() || this.gender,
+		data;
+		if(gender === "female") {
+		data = 0.4745*bd + 0.5173;
+		}
+		else if(gender === "male") {
+		data = 0.5829*bd+0.4059;
+		}
+		return data;
+	},
+	            	
+	/*
+	* Calculation of body surface area in Meters^2
+	* weight in kilogams (kg)
+	* height in centimeters (cm)
+	*/
+	calcBSA : function(weight, height) {
+		weight = parseInt(weight) || this.weight,
+		height = parseInt(height) || this.weight,
+		data;
+	    data = { Boyd: 0.03330 * Math.pow(weight,(0.7285-0.0188*Math.log(weight)))*Math.pow(height,0.3),
+	    	Costeff: (4*weight+7)/(90+weight),
+	        DuBois: 0.0087184 * Math.pow(weight,0.425) * Math.pow(height,0.725),
+	        Fujimoto: 0.008883 * Math.pow(weight, 0.444) * Math.pow(height, 0.663),
+	        GehanGeorge: 0.0235 * Math.pow(weight, 0.51456) * Math.pow(height, 0.42246),
+	        Haycock: 0.024265 * Math.pow(weight, 0.5378) * Math.pow(height, 0.3964),
+	        Mosteller: Math.sqrt(weight*height)/60,
+	        Takahira: 0.007241 * Math.pow(weight, 0.425) * Math.pow(height,0.725) };
+	    
+	    return data;
+	},
+	            	
+	/*
+	* Body volume calculation from hydrostatic weighing
+	* uww is Underwater Weight
+	* rv is Residual Volume in mL
+	* gv is Volume of air in gastrointestinal tract (GV) (default: 100mL)
+	 */
+	calcBV : function(options) {
+	    weight = parseInt(options.weight) || this.weight,
+	    uww = parseInt(options.uww) || 0,
+	    rv = parseInt(options.rv) || 0,
+	    gv = parseInt(options.gv) || 100,
+	    data;
+	    data = ((weight - uww)/ waterdensity) - (rv - gv);
+	    return data;
+	},
+	
+	/*
+	* Resting Metabolic Rate
+	* weight in kg, height in cm, age in years
+	*/
+	calcRMR : function(options) {
+		gender = options.gender.toLowerCase() || this.gender;
+		age = parseInt(options.age) || this.age,
+		weight = parseInt(options.weight) || this.weight,
+		height = parseInt(options.height) || this.height,
+		data;
+		if(gender ==="male") {
+		data = {'Harris-Benedict': 66.473 + 13.751*weight + 5.0033*height - 6.755*age,'Mifflin': (9.99*weight + 6.25*height + - 4.92*age)+5} // male
+		} else if(gender === "female") {
+		data = {'Harris-Benedict': 655.0955 + 9.463*weight + 1.8496*height - 4.6756*age,'Mifflin': (9.99*weight + 6.25*height + - 4.92*age)-161}// female
+	    }
+		return data;
+	},
+	            	
+	/*
+	* Total Daily Energy Expenditure of Children and Adults
+	* age in years
+	* weight in kilograms (kg)
+	* height in meters
+	* returns object with sedentary (1.0 < PAL < 1.4), low activity (1.4 < PAL < 1.6), active (1.6 < PAL < 1.9), and very active (1.9 < PAL < 2.5)
+	* 
+	*/
+	calcPredictedTEE : function(options) {
+		gender = options.gender.toLowerCase() || this.gender;
+		age = parseInt(options.age) || this.age,
+		weight = parseInt(options.weight) || this.weight,
+		height = parseInt(options.height) || this.height,
+		data;
+	    if(gender === "male") { // male
+	    	if (age >= 3 && age >= 18) {
+	    	data = {
+	    		sedentary: 88.5 - (61.9 * age) + 1*((26.7*weight)+(903*height)),
+	    		low: 88.5 - (61.9 * age) + 1.13*((26.7*weight)+(903*height)),
+	    		active: 88.5 - (61.9 * age) + 1.26*((26.7*weight)+(903*height)),
+	    		veryactive: 88.5 - (61.9 * age) + 1.42*((26.7*weight)+(903*height)),
+	           }
+	    	}
+	    	else if (age >= 19) {
+	    	data = {
+	    		sedentary: 662 - (9.53 * age) + 1*((15.9*weight)+(540*height)),
+	    		low: 662 - (9.53 * age) + 1.11*((15.9*weight)+(540*height)),
+	    		active: 662 - (9.53 * age) + 1.25*((15.9*weight)+(540*height)),
+	    		veryactive: 662 - (9.53 * age) + 1.48*((15.9*weight)+(540*height)),
+	            }
+	        }
+	    } else if(gender === "female") {
+	    	if (age >= 3 && age >= 18) {
+	    	data = {
+	    		sedentary: 135.3 - (30.8 * age) + 1*((10*weight)+(934*height)),
+	    		low: 135.3 - (30.8 * age) + 1.16*((10*weight)+(934*height)),
+	    		active: 135.3 - (30.8 * age) + 1.31*((10*weight)+(934*height)),
+	    		veryactive: 135.3 - (30.8 * age) + 1.56*((10*weight)+(934*height)),
+	    	}
+	    	}
+	    	else if (age >= 19) {
+	    	data = {
+	    		sedentary: 354 - (6.91 * age) + 1*((9.36*weight)+(726*height)),
+	    		low: 662 - (9.53 * age) + 1.12*((15.9*weight)+(540*height)),
+	    		active: 662 - (9.53 * age) + 1.27*((15.9*weight)+(540*height)),
+	    		veryactive: 662 - (9.53 * age) + 1.45*((15.9*weight)+(540*height)),
+	    	}
+	    	}
+	    }
+	    return data;
+	},
+	
+	// Skinfold tests
+	            	
+	/*
+	* Calculate Fat Free Body Mass (FFM) based on impedance
+	* resistance in ohms
+	* height in centimeters (cm)
+	* weight in kg
+	* returns fat free mass (FFM) in kg
+	*/
+	calcFFM : function(resistance, reactance, options) {
+		resistance = parseInt(resistance) || 0,
+		reactance = parseInt(reactance) || 0;
+		gender = options.gender.toLowerCase() || this.gender;
+		weight = parseInt(options.weight) || this.weight,
+		height = parseInt(options.height) || this.height,
+		age = parseInt(options.age) || this.age,
+	    results = {};
+	            		
+	    /*
+	    * White boys and girls, 8-15 years
+	    * Lohman(1992)
+	    */
+	    if(age >= 8 && age <= 15) {
+	    	results.child = (0.62*(Math.pow(height,2)/resistance)) + (0.21*weight) + (0.1*reactance) + 4.2;
+	    }
+	            		
+	    /*
+	    * White boys and girls, 10-19 years
+	    * Houtkooper e al. (1992)
+	    */
+	    if(age >= 10 && age <= 19) {
+	    	results.adolescent = (0.61*(Math.pow(height,2)/resistance)) + (0.25*weight) + 1.31;
+	    	
+	    }
+	            		
+	    if(gender === "male") { // male
+	    	if(age >= 17 && age <= 62) { // Adults between 17 and 62
+	    	results.adult = {
+	            /*
+	            * American Indian, black, Hispanic, and White Men
+	            * %BF < .20 Segal et al. (1988)
+	            */ 
+	            lean: (0.00066360*Math.pow(height,2)) - (0.02117 * resistance) + (0.62854*weight) - (0.12380 * age) + 9.33285,
+	            /*
+	            * American Indian, black, Hispanic, and White Men
+	            * %BF > .20 Segal et al. (1988)
+	            */ 
+	            obese: (0.00088580*Math.pow(height,2)) - (0.02999 * resistance) + (0.42688*weight) - (0.07002 * age) + 14.52435,
+	    	}
+	    	/*
+	    	 * Male athletes 19-40 years
+	    	 * Oppliger et al. (1991)
+	    	 */
+	    	if (age >= 19 && age <= 40) {
+	    		results.athlete = (0.186*(Math.pow(height,2)/resistance)) + (0.701*weight) + 1.949;
+	    	}
+	    	results.adult.average = (results.adult.lean + results.adult.obese) / 2;
+	    	}
+	    }
+	    else if(gender === "female") {
+	    	if(age >= 17 && age <= 62 && gender === 'female') { // Adults between 17 and 62
+	    	results['adult'] = {
+	    		/*
+	    		* American Indian, black, Hispanic, and White Women
+	    		* %BF < .30 Segal et al. (1988)
+	    		*/ 
+	    		lean: (0.000646*Math.pow(height,2)) - (0.014 * resistance) + (0.421*weight) + 10.4,
+	    		/*
+	    		* American Indian, black, Hispanic, and White Women
+	    		* %BF > .30 Segal et al. (1988)
+	    		*/ 
+	    		obese: (0.00091186*Math.pow(height,2)) - (0.1466 * resistance) + (0.29990*weight) - (0.07012 * age) + 9.37938,
+	    	};
+	    	results.adult.average = (results.adult.lean + results.adult.obese) / 2;
+	    	}
+	    	/*
+	    	 * Female athletes 18-27 years
+	    	 * Fornetti et al. (1999)
+	    	 */
+	    	if (age >= 18 && age <=27) {
+	    	results.athlete = (0.282*height) + (0.415*weight) - (0.037*resistance) + (0.096*reactance) - 9.734;
+	    	}
+	    
+	    }
+	return results;
+	},
+	            		
+	/****************************** Cardiovascular Assessments, Tests, and Formulas ****************************************/
+	            		
+	calcFieldTestsV02Max: function(options) {
+	gender = options.gender.toLowerCase() || this.gender,
+	age = parseInt(options.age) || this.age,
+	weight = parseInt(options.weight) || this.weight,
+	time = parseInt(options.time) || 0,
+	bmi = parseInt(options.bmi) || (this.weight/Math.pow(this.height, 2)),
+	hr = parseInt(options.hr) || this.hr,
+	speed = parseInt(options.speed) || 0,
+	results = {};
+	            	        	
+	if(gender === "female") {
+		gender = 0;
+	} else if(gender === "male") {
+		gender = 1;
+	}
+	            	        	
+	/*
+	*  20m Shuttle Run Test
+	*  Leger et al. (1988)
+	*  Children 8-19 years old)
+	*/
+	if(age && speed) {
+		results.shuttle = 31.025 + (3.238*speed) - (3.248*age) + 0.1536*(age*speed);
+	}
+
+	/*
+	* 1.0 mile run/walk (8-17 years old)
+	* Cureton et al. (1995)
+	* for gender field, 1 for male, 0 for female
+	*/
+	if(bmi && time && gender) {
+		results.mileRunWalk =108.94 - (8.41 * time) + 0.34 * Math.pow(time,2) + 0.21*(age*gender) - (0.84*bmi);
+	}
+	if(distance) {
+		/*
+		 * 12 minute Run Test
+	     * Cooper (1968)
+	     * distance expected in meters
+	     */
+		results.TwelveMinuteTest = 0.0268*distance - 11.3;
+		/*
+	    * 15 minute run test
+	    * Balke (1963)
+	    * distance expected in meters 
+	    */
+	    results.FifteenMinuteTest = 0.0178*distance + 9.6;
+	}
+	            	        	
+	/*
+	*  1 Mile Walk Test
+	*  Kline et al. (1987)
+	*  for gender field, 1 for male, 0 for female
+	*  
+	*/
+	if(age && weight && gender && time && hr) {
+		results.mileWalk = 132.853 - .0769*weight - 0.3877*age + 6.315*gender - 3.2649*time - 0.1565*hr;
+	}
+	            	        	
+	/*
+	* 1.0 mile steady-state jog
+	* George et al. (1993)
+	*/
+	if(time && hr && weight) {
+		results.mileSteady = 100.5 - 0.1636 * weight - 1.438 * time - 0.1928 * hr;
+		results.MileHalf = [88.02 - (0.1656*weight) - (2.76*time) + (3.716*gender),
+		100.16 + (7.30*gender) - (0.164*weight) - (1.273 * time) - (0.1563 * hr)];
+	}
+	if(hr && weight) {
+		/*
+		 * Astrand Step Test
+	     * Marley and Linnerud (1976)
+
+	     * Queen's College Step Test
+	     * McArdle et al. (1972)
+	     * For gender field, 1 for male, 0 for female
+	     */
+	     // Male
+	     if(gender ==="male") {
+	    	 results.astrand = 3.744*((weight+5)/(hr-62));
+	    	 results.queenscollege = 111.33 - (0.42 * hr); 
+	     } // Female
+	     else if(gender === "female") { 
+	    	 results.astrand = 3.750*((weight-3)/(hr-65)); 
+	    	 results.queenscollege = 65.81 - (0.1847 * hr); 
+	     }	
+	 }
+	            	        	    	        	
+	 return results;
+	},
+	            	        
 	// VO2 Max
 	calcPopV02Max: function(time, time2, time3) {
-		time = parseInt(time),
-		time2 = parseInt(time2) || 0,
-		time3 = parseInt(time3) || 0;
-		results = {
-				male: {
-					/*
-		            * Active & Sedentary Men
-		            * Pollock et al. (1976)
-		            * SEE = 2.50 (mL/kg/min)
-		            */
-		            balke: 1.444 * time + 14.99,
-		            /*
-		            * Naughton Protocol
-		            * Male cardiac patients
-		            * Foster et a. (1983)
-		            * SEE = 2.60 (mL/kg/min)
-		            */
-		            naughton: (1.61*time) +3.60, 
-		       },
-		       female: {
-		    	   /*
-		    	    * Balke Protocol
-		            * Active & Sedentary Women
-		            * Pollock et al. (1982)
-		            * SEE = 2.20 (mL/kg/min)
-		            */
-		            balke: 1.38 * time + 5.22,
-		            /*
-		            * Bruce Protocol
-		            * Active & Sedentary Women
-		            * Pollock et al. (1982)
-		            * SEE = 2.70 (mL/kg/min)
-		            */
-		            bruce: 4.38 * time - 3.90,
-		       },
-		       /*
-		       * Bruce Protocol
-		       * Cardiac patients and Elderly Persons
-		       * McConnell and Clark (1987)
-		       * SEE = 4.9 (mL/kg/min)
-		       */
-		       elderlycardiac: (2.282*time) + 8.545,
-		  };
-		  if (time2 && time3) {
-			  /*
-		      * Bruce Protocol
-		      * Active & Sedentary Men
-		      * Foster et al. (1984)
-		      * SEE = 3.35 (mL/kg/min)
-		      */
-		      results.male.bruce = 14.76 - 1.379*time + 0.451*time2 - 0.012*time3;
-		  }
-		  return results;
+	time = parseInt(time),
+	time2 = parseInt(time2) || 0,
+	time3 = parseInt(time3) || 0;
+	results = {
+		male: {
+			/*
+	            * Active & Sedentary Men
+	            * Pollock et al. (1976)
+	            * SEE = 2.50 (mL/kg/min)
+	            */
+	            balke: 1.444 * time + 14.99,
+	            /*
+	            * Naughton Protocol
+	            * Male cardiac patients
+	            * Foster et a. (1983)
+	            * SEE = 2.60 (mL/kg/min)
+	            */
+	            naughton: (1.61*time) +3.60, 
+	       },
+	       female: {
+	    	   /*
+	    	    * Balke Protocol
+	            * Active & Sedentary Women
+	            * Pollock et al. (1982)
+	            * SEE = 2.20 (mL/kg/min)
+	            */
+	            balke: 1.38 * time + 5.22,
+	            /*
+	            * Bruce Protocol
+	            * Active & Sedentary Women
+	            * Pollock et al. (1982)
+	            * SEE = 2.70 (mL/kg/min)
+	            */
+	            bruce: 4.38 * time - 3.90,
+	       },
+	       /*
+	       * Bruce Protocol
+	       * Cardiac patients and Elderly Persons
+	       * McConnell and Clark (1987)
+	       * SEE = 4.9 (mL/kg/min)
+	       */
+	       elderlycardiac: (2.282*time) + 8.545,
+	  };
+	  if (time2 && time3) {
+		  /*
+	      * Bruce Protocol
+	      * Active & Sedentary Men
+	      * Foster et al. (1984)
+	      * SEE = 3.35 (mL/kg/min)
+	      */
+	      results.male.bruce = 14.76 - 1.379*time + 0.451*time2 - 0.012*time3;
+	  }
+	  return results;
 	},
-		            	        
+	            	        
 	/*
 	* Walking VO2
 	* speed of treadmill in meters / minute
 	* grade (% incline) of treadmill in decimal form (e.g. 10% = 0.10) 
 	*/
 	calcWalkingVO2: function(speed, grade) {
-		speed = parseInt(speed) || 0, grade = parseInt(grade) || 0;
-		return speed * 0.1 + S * grade * 1.8;
+	speed = parseInt(speed) || 0, grade = parseInt(grade) || 0;
+	return speed * 0.1 + S * grade * 1.8;
 	},
 	/*
 	* Running VO2
@@ -1328,39 +1327,39 @@ Person.prototype = {
 	* grade (% incline) of treadmill in decimal form (e.g. 10% = 0.10) 
 	*/
 	calcRunningVO2: function(speed, grade) {
-		speed = parseInt(speed) || 0, grade = parseInt(grade) || 0;
-		return speed * 0.2 + speed * grade * 0.9;
+	speed = parseInt(speed) || 0, grade = parseInt(grade) || 0;
+	return speed * 0.2 + speed * grade * 0.9;
 	},
-		            	        
+	            	        
 	/* Leg Ergometry VO2
 	* work rate in kgm / min; 1 Watt = 6 kgm / min
 	* body mass in kilograms; 1 kg = 2.2 lb
 	*/
 	calclegErgometryVO2: function(work, mass) {
-		work = parseInt(work) || 0, mass = parseInt(mass) || 0;
-		return work/mass * 1.8 + 3.5;
+	work = parseInt(work) || 0, mass = parseInt(mass) || 0;
+	return work/mass * 1.8 + 3.5;
 	},
-		            	        
+	            	        
 	/* Arm Ergometry VO2
 	* work rate in kgm / min; 1 Watt = 6 kgm / min
 	* body mass in kilograms; 1 kg = 2.2 lb
 	*/
 	calcArmErgometryVO2: function(work, mass) {
-		work = parseInt(work) || 0, mass = parseInt(mass) || 0;
-		return work/mass * 3.0;
+	work = parseInt(work) || 0, mass = parseInt(mass) || 0;
+	return work/mass * 3.0;
 	},
-		            	        
+	            	        
 	/* Stepping VO2
 	* frequency of stepping in steps per minute
 	* bench height in meters; 1 inch = 0.0254 meters
 	*/
 	calcSteppingVO2: function(frequency, height) {
-		frequency = parseInt(frequench) || 0, height = parseInt(height) || 0;
-		return frequency * 0.2 + frequency * height * 1.8 * 1.33;
+	frequency = parseInt(frequench) || 0, height = parseInt(height) || 0;
+	return frequency * 0.2 + frequency * height * 1.8 * 1.33;
 	},
-		            	        
+	            	        
 	// Submaximal Tests
-		            	        
+	            	        
 	/*
 	* VO2 Reserve
 	* max is Max VO2
@@ -1369,11 +1368,11 @@ Person.prototype = {
 	* 1 MET = 3.5 mL/kg/min
 	*/
 	VO2Reserve: function(max, rest) {
-		max = parseInt(max) || 0, rest = parseInt(rest) || 0, data;
-		data = max - rest;
-		return data;
+	max = parseInt(max) || 0, rest = parseInt(rest) || 0, data;
+	data = max - rest;
+	return data;
 	},
-		            	        
+	            	        
 	/*
 	* Target VO2 
 	* intensity as relative exercise percentage (e.g. 10% = 0.10)
@@ -1383,20 +1382,20 @@ Person.prototype = {
 	* 1 MET = 3.5 mL/kg/min
 	*/
 	calcTargetVO2: function(intensity, reserve, rest) {
-		intensity = parseInt(intensity) || 0, reserve = parseInt(reserve) || 0, rest = parseInt(rest) || 0, data;
-		data = (intensity * reserve) + rest;
-		this.set({targetVO2: data});
-		return data;
+	intensity = parseInt(intensity) || 0, reserve = parseInt(reserve) || 0, rest = parseInt(rest) || 0, data;
+	data = (intensity * reserve) + rest;
+	this.set({targetVO2: data});
+	return data;
 	},
-		            	        
+	            	        
 	// HR Max
 	calcHeartRateMax: function(age) {
-		age = parseInt(age) || 0,
-		data;
-		data = 208 - (0.7 * age);
-		return data;
+	age = parseInt(age) || 0,
+	data;
+	data = 208 - (0.7 * age);
+	return data;
 	},
-		            	        
+	            	        
 	/*
 	* Target Heart Rate
 	* intensity as relative exercise percentage (e.g. 10% = 0.10)
@@ -1406,22 +1405,22 @@ Person.prototype = {
 	* max and rest must be of same unit type
 	*/
 	calcTargetHeartRate: function(intensity, rest, max) {
-		intensity = parseInt(intensity) || 0, rest = parseInt(rest) || 0 , max = parseInt(max) || 0, data;
-		data = (intensity * (max - rest)) + rest;
-		return data;
+	intensity = parseInt(intensity) || 0, rest = parseInt(rest) || 0 , max = parseInt(max) || 0, data;
+	data = (intensity * (max - rest)) + rest;
+	return data;
 	},
-		            	        
+	            	        
 	// Device Specific Formulas
-		            	        
+	            	        
 	/*
 	* Accurate StairMaster 4000 PT METs
 	* setting is the Stairmaster MET setting
 	*/
 	calcStairMasterMets: function(setting) {
-		setting = parseInt(setting) || 0
-		return 0.556 + 7.45 * setting
+	setting = parseInt(setting) || 0
+	return 0.556 + 7.45 * setting
 	},
-		            	        
+	            	        
 	/*
 	 * Tidal Volume (TV = IC - IRV)
 	 * Inspiratory Reserve Volume (IRV = ERV + TV - VC)
@@ -1431,28 +1430,28 @@ Person.prototype = {
 	 * bsa in meters squared ( body surface area for females) or kilograms (body mass for males)
 	*/ 
 	calcRV: function(age, height, options) {
-		gender = gender.toLowerCase() || this.gender,
-		age = parseInt(age) || this.age,
-		height = parseInt(height) || this.height,
-		weight = parseInt(options.weight) || this.weight,
-		bsa = parseInt(options.bsa) || 0,
-		data;
-		if(gender === "male" && weight) {
-			data = {
-				Berglund: (0.0115*age) + (0.019* height) - 2.24,
-				Boren: (0.022*age) + (0.0198*height) - (0.015*weight) - 1.54,
-				Goldman: (0.017*age) + (0.027*height) - 3.477,
-			}
+	gender = gender.toLowerCase() || this.gender,
+	age = parseInt(age) || this.age,
+	height = parseInt(height) || this.height,
+	weight = parseInt(options.weight) || this.weight,
+	bsa = parseInt(options.bsa) || 0,
+	data;
+	if(gender === "male" && weight) {
+		data = {
+		Berglund: (0.0115*age) + (0.019* height) - 2.24,
+		Boren: (0.022*age) + (0.0198*height) - (0.015*weight) - 1.54,
+		Goldman: (0.017*age) + (0.027*height) - 3.477,
 		}
-		else if(gender === "female" && bsa) {
-			data = {
-				Berglund: (0.0115*age) + (0.019* height) - 2.24,
-				Black: (0.021*age) + (0.023*height) - 2.978,
-				Goldman: (0.017*age) + (0.027*height) - 3.477,
-				Obrien: (0.03*age) + (0.0387*height) - (0.73*bsa) - 4.78
-			}
+	}
+	else if(gender === "female" && bsa) {
+		data = {
+		Berglund: (0.0115*age) + (0.019* height) - 2.24,
+		Black: (0.021*age) + (0.023*height) - 2.978,
+		Goldman: (0.017*age) + (0.027*height) - 3.477,
+		Obrien: (0.03*age) + (0.0387*height) - (0.73*bsa) - 4.78
 		}
-		return data;
+	}
+	return data;
 	},   
 	
 	// Vital Capacity (VC = ERB + TV + IRV)
@@ -1460,40 +1459,40 @@ Person.prototype = {
 	// Functional Residual Capacity (FRC = RV + ERV)
 	// Total Lung Capacity (TLC = RV + VC)
 	calcTLC: function(rv,vc) {
-		rv = parseInt(rv) || 1300, vc = parseInt(vc) || 4700;       	        	
-		return rv + vc;
+	rv = parseInt(rv) || 1300, vc = parseInt(vc) || 4700;       	        	
+	return rv + vc;
 	},
-		            	        
-		      /******************* Muscle Balance and RM *****************/
-		            	        
+	            	        
+	      /******************* Muscle Balance and RM *****************/
+	            	        
 	/*
 	* 1-RM Formula
 	* Based on number of repetitions to fatigue in one set
 	* weight is the weight lifted in lb
 	*/
 	calcFatigueRepMaximum: function(reps, weight) {
-		reps = parseInt(reps) || 0,
-		weight = parseInt(weight) || 0,
-		data;
-		data = weight / (1.0278 - (reps * 0.0278));
-		return data;
+	reps = parseInt(reps) || 0,
+	weight = parseInt(weight) || 0,
+	data;
+	data = weight / (1.0278 - (reps * 0.0278));
+	return data;
 	},
-		            			
+	            		
 	/*
 	* 1-RM Formula
 	* Based on the number of repetitions to fatigue obtained in two submaximal sets so long as number of reps is under 10
 	* weight1 and weight2 must be of same unit (kg or lb)
 	*/
 	calcTwoSetMaximum : function(rep1, weight1, rep2, weight2) {
-		rep1 = parseInt(reps) || 0,
-		weight1 = parseInt(weight) || 0,
-		rep2 = parseInt(reps) || 0,
-		weight2 = parseInt(weight) || 0,
-		data;
-		data = ((weight1 - weight2)/(rep2 - rep1)) * (rep1 - 1) + weight1;
-		return data;
+	rep1 = parseInt(reps) || 0,
+	weight1 = parseInt(weight) || 0,
+	rep2 = parseInt(reps) || 0,
+	weight2 = parseInt(weight) || 0,
+	data;
+	data = ((weight1 - weight2)/(rep2 - rep1)) * (rep1 - 1) + weight1;
+	return data;
 	},
-		            			
+	            		
 	/*
 	*  gender-specific 1-RM Formula for Younger adults (22 - 36 years old)
 	*  Kim, Mayhew, and Peterson (2002)
@@ -1501,17 +1500,17 @@ Person.prototype = {
 	*  For gender field, 1 for male, 0 for female
 	*/
 	calcYMCAUpperBodyRepMax : function(gender, reps) {
-		gender = gender.toLowerCase() || this.gender;
-		reps = parseInt(reps) || 0,
-		data;
-		if (gender === "male") {
-			data = (1.55 * reps) + 37.9; // male
-		} else if(gender === "female") {
-			data = (0.31 * reps) + 19.2; // female
-		}
-		return data;
+	gender = gender.toLowerCase() || this.gender;
+	reps = parseInt(reps) || 0,
+	data;
+	if (gender === "male") {
+		data = (1.55 * reps) + 37.9; // male
+	} else if(gender === "female") {
+		data = (0.31 * reps) + 19.2; // female
+	}
+	return data;
 	},
-		            			
+	            		
 	/*
 	* Relative Strength
 	* rm is 1-Rep Maximum
@@ -1519,26 +1518,26 @@ Person.prototype = {
 	* rm and weight must be of the same unit (kg or lbs)
 	*/
 	calcRelativeStrength: function(rm, weight) {
-		rm = parseInt(rm) || 0, weight = parseInt(weight) || 0;
-		return rm / weight;
+	rm = parseInt(rm) || 0, weight = parseInt(weight) || 0;
+	return rm / weight;
 	},
-		            			
+	            		
 	/*
 	* Middle Age (40-50 years old) & Older adult (60-70 years old) 1-RM
 	* Kuramoto & Payne (1995)
 	*/
 	calcFemaleRepMax: function(age, reps, weight) {
-		age = parseInt(age) || this.age,
-		reps = parseInt(reps) || 0,
-		weight = parseInt(weight) || 0,
-		data;
-		if (age >= 40 && age <= 50) {
-			data = (1.06 * weight) + (0.58 * reps) - (0.20 * age) - 3.41;
-		} else if(age >= 60 && age <= 70) {
-			data = (0.92 * weight) + (0.79 * reps) - (0.20 * age) - 3.73;
-		}
-		return data;
-	},	            			
+	age = parseInt(age) || this.age,
+	reps = parseInt(reps) || 0,
+	weight = parseInt(weight) || 0,
+	data;
+	if (age >= 40 && age <= 50) {
+		data = (1.06 * weight) + (0.58 * reps) - (0.20 * age) - 3.41;
+	} else if(age >= 60 && age <= 70) {
+		data = (0.92 * weight) + (0.79 * reps) - (0.20 * age) - 3.73;
+	}
+	return data;
+	},	            		
 };
 
 /* MET related information
