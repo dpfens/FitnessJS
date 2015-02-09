@@ -1540,10 +1540,6 @@ Person.prototype = {
 	},	            		
 };
 
-/* MET related information
- * METsList acquired from https://sites.google.com/site/compendiumofphysicalactivities/
- *
-
 // PT Muscular Module
 Person.prototype.Muscle = (function() {
 	
@@ -1572,5 +1568,3 @@ Person.prototype.Muscle = (function() {
 		
 	}
 })();
- */
-	// Star excursion test
