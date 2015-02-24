@@ -1,0 +1,86 @@
+
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono|Open+Sans|Oswald);
+
+* {
+	-webkit-transition: all 300ms;
+    transition:all 300ms;
+}
+
+/************************* General Element Styles **************************/
+
+body {
+	margin: 0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Oswald';
+}
+
+p, li, span, a {
+	font-family: 'Open Sans';
+}
+
+p {
+	font-size: 0.80rem; 
+}
+
+/************************* Header Styles ***********************************/
+
+header {
+	background: -webkit-linear-gradient(#222, #000); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#222, #000); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#222, #000); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#222, #000); /* Standard syntax */
+	overflow: auto;
+}
+
+header * {
+	color: #999;
+}
+
+header .inner-container {
+	max-width: 60rem;
+	margin: 0 auto;
+}
+
+header #logo {
+	float: left;
+	height: 2rem;
+	margin: 0;
+}
+
+header ul {
+	float: left;
+	list-style-type: none;
+	margin: 0;
+}
+
+header li {
+	float: left;
+}
+
+header li a {
+	display: block;
+	font-size: 0.85rem;
+	padding: 1rem;
+	text-decoration: none;
+}
+
+header li a:hover {
+	color: #FFF;
+}
+
+
+/************************* Inline Styles **************************/
+
+div.row {
+	overflow:hidden;
+	width: 60rem;
+}
+
+div.cell-3 {
+	float: left;
+	height: 10rem;
+	margin: 0.625rem;
+	width: 18.75rem;
+}
