@@ -10,7 +10,7 @@ var Fit = (function() {
 		// METsList acquired from https://sites.google.com/site/compendiumofphysicalactivities/
 	var Mets = (function() {
 		
-		var MetsList = [
+		var metsList = [
 			{"met":14.0,"code":01003,"description":"bicycling, mountain, uphill, vigorous"},
 			{"met":16.0,"code":01004,"description":"bicycling, mountain, competitive, racing"},
 			{"met":8.5,"code":01008,"description":"bicycling, BMX"},
@@ -846,14 +846,14 @@ var Fit = (function() {
 		return {
 			// Returns list of all known MET values
 			getMets: function() {
-				return MetsList;
+				return metsList;
 			},
 		
 			getMetsByCode: function(code) {
 				code = parseInt(code) || 0;
-				for (var i in MetsList) {
-					if(MetsList[i]["code"] === code) {
-						return MetsList[i];
+				for (var i=0; i < metsList.length; i++) {
+					if(metsList[i]["code"] === code) {
+						return metsList[i];
 					}
 				}
 				return false;
@@ -887,7 +887,7 @@ var Fit = (function() {
 		* wt in kg
 		* returns fat free mass (FFM) in kg
 		*/
-		FFM : function(resistance, reactance) {
+		fatFreeMass : function(resistance, reactance) {
 			resistance = parseInt(resistance) || 0,
 			reactance = parseInt(reactance) || 0,
 			gender = this.gender,
@@ -967,7 +967,7 @@ var Fit = (function() {
 		            		
 		/****************************** Cardiovascular Assessments, Tests, and Formulas ****************************************/
 		            		
-		FieldTestsV02Max: function(time, hr, speed) {
+		fieldTestsV02Max: function(time, hr, speed) {
 			gender = this.gender,
 			age = this.getAge(),
 			wt = this.weight,
@@ -1055,7 +1055,7 @@ var Fit = (function() {
 		},
 		            	        
 		// VO2 Max
-		PopV02Max: function(time, time2, time3) {
+		popV02Max: function(time, time2, time3) {
 			time = parseInt(time),
 			time2 = parseInt(time2) || 0,
 			time3 = parseInt(time3) || 0;
@@ -1116,7 +1116,7 @@ var Fit = (function() {
 		* speed of treadmill in meters / minute
 		* grade (% incline) of treadmill in decimal form (e.g. 10% = 0.10) 
 		*/
-		WalkingVO2: function(speed, grade) {
+		walkingVO2: function(speed, grade) {
 			return (speed * 0.1) + (1.8 * speed * grade);
 		},
 		/*
@@ -1124,7 +1124,7 @@ var Fit = (function() {
 		* speed of treadmill in meters / minute
 		* grade (% incline) of treadmill in decimal form (e.g. 10% = 0.10) 
 		*/
-		RunningVO2: function(speed, grade) {
+		runningVO2: function(speed, grade) {
 			return (speed * 0.2) + (speed * grade * 0.9);
 		},
 		            	        
@@ -1140,7 +1140,7 @@ var Fit = (function() {
 		* work rate in kgm / min; 1 Watt = 6 kgm / min
 		* body mass in kilograms; 1 kg = 2.2 lb
 		*/
-		ArmErgometryVO2: function(work, mass) {
+		armErgometryVO2: function(work, mass) {
 			return work/mass * 3.0;
 		},
 		            	        
@@ -1161,7 +1161,7 @@ var Fit = (function() {
 		* reserve and rest must be of same unit type (METs or mL/kg/min)
 		* 1 MET = 3.5 mL/kg/min
 		*/
-		VO2Reserve: function(max, rest) {
+		vO2Reserve: function(max, rest) {
 			data = max - rest;
 			return data;
 		},
@@ -1174,13 +1174,13 @@ var Fit = (function() {
 		* reserve and rest must be of same unit type (METs or mL/kg/min)
 		* 1 MET = 3.5 mL/kg/min
 		*/
-		TargetVO2: function(intensity, reserve, rest) {
+		targetVO2: function(intensity, reserve, rest) {
 			data = (intensity * reserve) + rest;
 			return data;
 		},
 		            	        
 		// HR Max
-		HeartRateMax: function() {
+		heartRateMax: function() {
 			age = this.getAge();
 			data = 208 - (0.7 * age);
 			return data;
@@ -1194,7 +1194,7 @@ var Fit = (function() {
 		* max is maximum heart rate
 		* max and rest must be of same unit type
 		*/
-		TargetHeartRate: function(intensity, rest, max) {
+		targetHeartRate: function(intensity, rest, max) {
 			data = (intensity * (max - rest)) + rest;
 			return data;
 		},
@@ -1205,7 +1205,7 @@ var Fit = (function() {
 		* Accurate StairMaster 4000 PT METs
 		* setting is the Stairmaster MET setting
 		*/
-		StairMasterMets: function(setting) {
+		stairMasterMets: function(setting) {
 			return 0.556 + 7.45 * setting
 		},
 		            	        
@@ -1217,7 +1217,7 @@ var Fit = (function() {
 		 * age in years
 		 * bsa in meters squared ( body surface area for females) or kilograms (body mass for males)
 		*/ 
-		RV: function(bsa) {
+		residualVolume: function(bsa) {
 			gender = this.gender,
 			age = this.getAge(),
 			ht = this.height,
@@ -1248,7 +1248,7 @@ var Fit = (function() {
 		// Inspiratory Capacity (IC = TV + IRV)
 		// Functional Residual Capacity (FRC = RV + ERV)
 		// Total Lung Capacity (TLC = RV + VC)
-		TLC: function(rv,vc) {
+		totalLungCapacity: function(rv,vc) {
 			rv = parseInt(rv) || 1300, vc = parseInt(vc) || 4700;       	        	
 			return rv + vc;
 		},
@@ -1299,7 +1299,7 @@ var Fit = (function() {
 		* Based on number of repetitions to fatigue in one set
 		* wt is the wt lifted in lb
 		*/
-		FatigueRepMaximum: function(reps, wt) {
+		fatigueRepMaximum: function(reps, wt) {
 			data = wt / (1.0278 - (reps * 0.0278));
 			return data;
 		},
@@ -1309,7 +1309,7 @@ var Fit = (function() {
 		* Based on the number of repetitions to fatigue obtained in two submaximal sets so long as number of reps is under 10
 		* wt1 and wt2 must be of same unit (kg or lb)
 		*/
-		TwoSetMaximum : function(rep1, wt1, rep2, wt2) {
+		twoSetMaximum : function(rep1, wt1, rep2, wt2) {
 			rep1 = parseInt(rep1) || 1,
 			wt1 = wt1 || 1,
 			rep2 = parseInt(rep2) || 1,
@@ -1343,7 +1343,7 @@ var Fit = (function() {
 		* wt is the body mass of the individual
 		* rm and wt must be of the same unit (kg or lbs)
 		*/
-		RelativeStrength: function(rm) {
+		relativeStrength: function(rm) {
 			return rm / this.weight;
 		},
 
@@ -1351,7 +1351,7 @@ var Fit = (function() {
 		* Middle Age (40-50 years old) & Older adult (60-70 years old) 1-RM
 		* Kuramoto & Payne (1995)
 		*/
-		FemaleRepMax: function(reps, wt) {
+		femaleRepMax: function(reps, wt) {
 			age = this.getAge(),
 			data = 0;
 			if (age >= 40 && age <= 50) {
@@ -1389,13 +1389,13 @@ var Fit = (function() {
 		* Net Caloric Cost
 		* Mets must be in MET form (not mL/kg/min)
 		*/
-		NetCaloricCost : function(mets) {
+		netCaloricCost : function(mets) {
 			wt = this.weight,
 			data = mets * 3.5 * (wt/200);
 			return data;
 		},
 		               	
-		BMIToBodyFat : function() {
+		bmiToBodyFat : function() {
 			gender = this.gender,
 			age = this.getAge(),
 			bmi = (this.weight/Math.pow(this.height, 2));
@@ -1414,7 +1414,7 @@ var Fit = (function() {
 		/*
 		* Population-specific Formulas for converting Body Density (Db) to Percent Body Fat (%BF) 
 		*/
-		DbtoBF : function(bd) {
+		dbtoBF : function(bd) {
 			bd = parseInt(bd) || 0,
 			data = {Brozek: ((4.570/bd)-4.142) , Siri: ((495/bd)-450)};
 		    return data;
@@ -1423,7 +1423,7 @@ var Fit = (function() {
 		/*
 		* Skinfold tests
 		*/
-		SkinfoldDb : function (sum) {
+		skinfoldDb : function (sum) {
 			sum = parseInt(sum) || 0,
 			age = this.getAge(),
 			data = {};
@@ -1455,7 +1455,7 @@ var Fit = (function() {
 		/*
 		* ulate Body Density at TLCNS
 		*/
-		DbAtTLCNS : function(bd) {
+		dbAtTLCNS : function(bd) {
 			bd = parseInt(bd) || 0;
 			gender = this.gender,
 			data=0;
@@ -1473,7 +1473,7 @@ var Fit = (function() {
 		* wt in kilogams (kg)
 		* ht in centimeters (cm)
 		*/
-		BSA : function() {
+		bodySurfaceArea : function() {
 			wt = this.weight,
 			ht = this.height;
 		    data = { 
@@ -1495,7 +1495,7 @@ var Fit = (function() {
 		* rv is Residual Volume in mL
 		* gv is Volume of air in gastrointestinal tract (GV) (default: 100mL)
 		 */
-		BV : function(uww, rv, gv) {
+		bodyVolume : function(uww, rv, gv) {
 		    wt = this.weight,
 		    gv = gv || 100,
 		    data = ((wt - uww)/ waterdensity) - (rv - gv);
@@ -1506,7 +1506,7 @@ var Fit = (function() {
 		* Resting Metabolic Rate
 		* wt in kg, ht in cm, age in years
 		*/
-		RMR : function() {
+		restingMetabolicRate : function() {
 			gender = this.gender;
 			age = this.getAge(),
 			wt = this.weight,
@@ -1527,7 +1527,7 @@ var Fit = (function() {
 		* returns object with sedentary (1.0 < PAL < 1.4), low activity (1.4 < PAL < 1.6), active (1.6 < PAL < 1.9), and very active (1.9 < PAL < 2.5)
 		* 
 		*/
-		PredictedTEE : function() {
+		predictedTEE : function() {
 			gender =  this.gender;
 			age = this.getAge(),
 			wt = this.weight,

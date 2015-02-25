@@ -2,12 +2,8 @@
 	<head>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<script src="js/libs/angular.js" ></script>
-		<script src="js/libs/angular-route.min.js"></script>
-		<script src="js/libs/angular-animate.min.js"></script>
-		<script src="js/libs/jquery-1.11.1.min.js"></script>
-		<script src="FitnessJS.min.js"></script>
-		<script src="js/demo.js"></script>
+		<script src="js/libs/jquery-1.11.1.min.js" type="text/js" ></script>
+	<script src="js/docs.js" type="text/js" ></script>
 	</head>
 	
 	<body>
@@ -100,79 +96,17 @@
 			</div>
 		</header>
 		
-		<section ng-app="demoApp">
-			<div class="inner-container" ng-controller="PersonOverviewCtrl">
+		<section>
+			<div class="inner-container">
 			
-				<article ng-controller="PersonIndexCtrl" ng-if="displayIndex" class="view-container">
-					<h1>A quick demonstration of the exercise physiology calculations</h1>
-					
-					<p>FitnessJS structures exercise physiology equations to allow you to focus more on the results of the calculations, rather than performing
-					the calculations themselves. There are many exercise physiology equations in existence, but they were conducted using different units of measure,
-					and by researchers of different nationalities. FitnessJS is a compilation of these researcher's efforts (sources included) for web developers to 
-					utilize.</p>
-					
-					<p>Click on the <i class="fa fa-plus fa-lg fa-fw"></i> button in the upper left to create a new <b>Person</b>.  See what your predictions would
-					be!</p>
-				</article>
+			<aside>
 				
-			
-				<aside ng-controller="PersonListCtrl">
 				
-					<div class="demo-menu">
-						<button ng-class="displayIndex ? 'cta' : ''" ng-click="showIndex()"><i class="fa fa-home fa-lg fa-fw"></i></button>
-						<button ng-class="displayAddForm ? 'cta' : ''" ng-click="showAddForm()"><i class="fa fa-plus fa-lg fa-fw"></i></button>
-					</div>
-						
-						<ul>
-							<li ng-repeat="person in people" class="view-container"><span ng-click="show(person)">{{person.name}}</span><button ng-click="remove(person)"><i class="fa fa-times fa-lg fa-fw"></i></button></li>
-						</ul>
-				</aside>
+			</aside>
 			
-				<article ng-controller="PersonNewCtrl" ng-if="displayAddForm" class="view-container">
-					<h2>Add someone</h2>
-					<form novalidate>
-						<p><label>Name</label><input type="text" ng-model="person.name"/></p>
-						<p><label>Gender</label><select type="text" ng-model="person.gender" ng-options="gender.value as gender.label for gender in genders"></select></p>
-						<p><label>Date of Birth</label><input type="date" ng-model="person.dob"/>years</p>
-						<p><label>Weight</label><input type="text" ng-model="person.weight"/>kg</p>
-						<p><label>Height</label><input type="text" ng-model="person.height"/>cm</p>
-						<p><button ng-click="create(person)"><i class="fa fa-plus fa-lg fa-fw"></i></button></p>
-					</form>
-				</article>
+			<article>
 			
-			
-				<article ng-controller="PersonDetailCtrl" ng-if="person" class="view-container">
-					
-					<div class="specs">
-						<h2>Provided information</h2>
-						<p><i class="fa fa-2x" ng-class="{'fa-female': person.gender === 'female', 'fa-male': person.gender === 'male' }" ></i> {{person.gender}}</p>
-						<p>Age:{{ person.getAge() | number:2 }} years old</p>
-						<p>Weight: {{ person.weight }} kg</p>
-						<p>Height: {{ person.height }} cm</p>
-					</div>
-				
-					<h1>{{ person.name }}</h1>
-					
-					<form novalidate>
-						
-						<h3>Body Fat (%)</h3>
-						<p ng-repeat="(equation, val) in bmi_to_bf">{{equation}}: {{val}}</p>
-						
-						<h3>Body Surface Area (m<sup>2</sup>)</h3>
-						<p ng-repeat="(equation, val) in bsa">{{equation}}: {{val}}</p>
-						
-						<h3>Resting Metabolic Rate (kcal)</h3>
-						<p ng-repeat="(equation, val) in rmr">{{equation}}: {{val}}</p>
-						
-						<h3>Predicted Total Energy Expenditure (kcal)</h3>
-						<p ng-repeat="(equation, val) in predicted_tee">{{equation}}: {{val}}</p>
-						
-						<h3>Predicted Heart Rate Max (bpm)</h3>
-						<p>{{ hr_max }}</p>
-						
-					</form>
-					
-				</article>
+			</article>
 			
 			</div>
 		</section>

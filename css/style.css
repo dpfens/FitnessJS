@@ -264,3 +264,167 @@ div.specs * {
 	margin-left: 1rem;
 }
 
+/****************************** Angular-Specific ***************************************/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
+
+.ng-enter,
+.ng-leave,
+.ng-move {
+  -webkit-transition: 0.5s linear all;
+  -moz-transition: 0.5s linear all;
+  -o-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+}
+
+.ng-enter,
+.ng-move {
+  opacity: 0;
+  overflow: hidden;
+  -webkit-animation: 0.5s slide-right;
+  -moz-animation: 0.5s slide-right;
+  -o-animation: 0.5s slide-right;
+  animation: 0.5s slide-right;
+}
+
+.ng-move.ng-move-active,
+.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.ng-leave {
+  opacity: 1;
+  overflow: hidden;
+  -webkit-animation: 0.5s slide-left;
+  -moz-animation: 0.5s slide-left;
+  -o-animation: 0.5s slide-left;
+  animation: 0.5s slide-left;
+}
+
+.ng-leave.ng-leave-active {
+  opacity: 0;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.view-container {
+position: relative;
+}
+
+div.drop-down.ng-enter {
+	-webkit-animation: 0.3s slide-down;
+	-moz-animation: 0.3s slide-down;
+	-o-animation: 0.3s slide-down;
+	animation: 0.3s slide-down;
+	z-index: 100;
+}
+
+div.drop-down.ng-leave {
+	-webkit-animation: 0.3s slide-up;
+	-moz-animation: 0.3s slide-up;
+	-o-animation: 0.3s slide-up;
+	animation: 0.3s slide-up;
+}
+
+.view-frame.ng-enter, .view-frame.ng-leave {
+position: absolute;
+left: 0;
+right: 0;
+}
+
+.ng-enter {
+-webkit-animation: 0.5s slide-right;
+-moz-animation: 0.5s slide-right;
+-o-animation: 0.5s slide-right;
+animation: 0.5s slide-right;
+}
+
+.ng-leave {
+-webkit-animation: 0.5s slide-left;
+-moz-animation: 0.5s slide-left;
+-o-animation: 0.5s slide-left;
+animation: 0.5s slide-left;
+}
+
+@keyframes fade-in {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+@-moz-keyframes fade-in {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+@-webkit-keyframes fade-in {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@keyframes fade-out {
+from { opacity: 1; }
+to { opacity: 0; }
+}
+@-moz-keyframes fade-out {
+from { opacity: 1; }
+to { opacity: 0; }
+}
+@-webkit-keyframes fade-out {
+from { opacity: 1; }
+to { opacity: 0; }
+}
+
+
+@keyframes slide-right {
+	from {
+        left: -3rem; 
+	}
+	to {
+		left:0; 
+	}
+}
+@-moz-keyframes slide-right {
+	from {
+        left: -3rem; 
+	}
+	to {
+		left:0; 
+	}
+}
+@-webkit-keyframes slide-right {
+	from {
+        left: -3rem; 
+	}
+	to {
+		left:0; 
+	}
+}
+
+@keyframes slide-left {
+	from {
+		left:0;
+	}
+	to {
+        left: -3rem; 
+	}
+}
+@-moz-keyframes slide-left {
+	from {
+		left:0;
+	}
+	to {
+        left: -3rem; 
+	}
+}
+@-webkit-keyframes slide-left {
+	from {
+		left:0;
+	}
+	to {
+        left: -3rem; 
+	}
+}
+
+

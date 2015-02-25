@@ -1,4 +1,4 @@
-var app = angular.module("demoApp", ['PersonCtrl']);
+var app = angular.module("demoApp", ['PersonCtrl', 'ngAnimate']);
 
 app.service('personService', function($rootScope) {
 	var people = [],
@@ -102,9 +102,9 @@ PersonCtrl.controller('PersonNewCtrl', ['$scope','personService',function($scope
 }]);
 
 PersonCtrl.controller('PersonDetailCtrl',  ['$scope','personService',function($scope, personService) {
-	$scope.bsa = $scope.person.BSA();
-	$scope.rmr = $scope.person.RMR();
-	$scope.predicted_tee = $scope.person.PredictedTEE();
-	$scope.bmi_to_bf = $scope.person.BMIToBodyFat();
-	$scope.hr_max = $scope.person.cardio.HeartRateMax();
+	$scope.bsa = $scope.person.bodySurfaceArea();
+	$scope.rmr = $scope.person.restingMetabolicRate();
+	$scope.predicted_tee = $scope.person.predictedTEE();
+	$scope.bmi_to_bf = $scope.person.bmiToBodyFat();
+	$scope.hr_max = $scope.person.cardio.heartRateMax();
 }]);
