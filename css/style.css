@@ -2,8 +2,8 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono|Open+Sans|Oswald);
 
 * {
-	-webkit-transition: all 300ms;
-    transition:all 300ms;
+	-webkit-transition: color 300ms, background-color 300ms;
+    transition: color 300ms,  background-color 300ms;
 }
 
 /************************* General Element Styles **************************/
@@ -16,12 +16,61 @@ h1,h2,h3,h4,h5,h6 {
 	font-family: 'Oswald';
 }
 
+h1{
+	font-size: 1.5rem;
+}
+
 p, li, span, a {
 	font-family: 'Open Sans';
 }
 
 p {
 	font-size: 0.80rem; 
+}
+
+.cta {
+	background-color: #00FFFF;
+	color: #FFF;
+}
+
+button {
+	padding: 0.5rem;
+}
+
+code {
+	font-family: 'Ubuntu Mono';
+}
+
+aside {
+	position: fixed;
+	top: 4rem;
+	bottom: 0;
+	overflow: auto;
+	width: 15rem;
+}
+aside ul {
+	padding: 1rem;
+}
+
+aside li {
+	cursor: pointer;
+	padding: 0.25rem 0;
+	list-style-type: none;
+}
+
+article {
+	margin: 0 0 0 15rem;
+	padding-top: 3.5rem;
+}
+
+form label {
+	display: inline-block;
+	text-align: right;
+	width: 5rem;
+}
+
+form input, form select {
+	text-align: left;
 }
 
 /************************* Header Styles ***********************************/
@@ -32,13 +81,15 @@ header {
 	background: -moz-linear-gradient(#222, #000); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(#222, #000); /* Standard syntax */
 	overflow: auto;
+	position: fixed;
+	width: 100%;
 }
 
 header * {
 	color: #999;
 }
 
-header .inner-container {
+.inner-container {
 	max-width: 60rem;
 	margin: 0 auto;
 }
@@ -46,7 +97,7 @@ header .inner-container {
 header #logo {
 	float: left;
 	height: 2rem;
-	margin: 0;
+	margin: 0.5rem 0;
 }
 
 header ul {
@@ -73,6 +124,13 @@ header li a:hover {
 
 /************************* Inline Styles **************************/
 
+div.splSash {
+	background: ;
+	width: 60rem;
+	height:50%;
+	max-height: 40rem;
+}
+
 div.row {
 	overflow:hidden;
 	width: 60rem;
@@ -83,4 +141,65 @@ div.cell-3 {
 	height: 10rem;
 	margin: 0.625rem;
 	width: 18.75rem;
+}
+
+div.main.list {
+	-webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+}
+
+
+div.list-item {
+	height: 8rem;
+	width:29rem;
+	margin: 0.5rem;
+}
+
+div.list-item img, div.list-item svg {
+	width: 5rem;
+}
+
+div.list-item div.content {
+	display: inline-block;
+}
+
+
+/************************* Demo Specific Styles **************************/
+
+div.demo-menu {
+	display: block;
+	margin: 1rem auto;
+	width: 10rem;
+}
+
+div.demo-menu button:nth-child(odd) {
+	border: none;
+	webkit-border-top-left-radius: 2rem;
+	-webkit-border-bottom-left-radius: 2rem;
+	-moz-border-radius-topleft: 2rem;
+	-moz-border-radius-bottomleft: 2rem;
+	border-top-left-radius: 2rem;
+	border-bottom-left-radius: 2rem;
+	margin-right: -2px;
+}
+
+div.demo-menu button:nth-child(even) {
+	border: none;
+	-webkit-border-top-right-radius: 2rem;
+	-webkit-border-bottom-right-radius: 2rem;
+	-moz-border-radius-topright: 2rem;
+	-moz-border-radius-bottomright: 2rem;
+	border-top-right-radius: 2rem;
+	border-bottom-right-radius: 2rem;
+}
+
+div.specs {
+	float: right;
+	border: 2px solid #333;
+	width: 15rem;
+}
+
+div.specs * {
+	margin-left: 1rem;
 }
