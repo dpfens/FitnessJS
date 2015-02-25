@@ -36,6 +36,7 @@ PersonCtrl = angular.module('PersonCtrl',[]);
 
 PersonCtrl.controller('PersonOverviewCtrl', ['$scope','$rootScope' ,'personService',function($scope, $rootScope, personService) {
 	$scope.people = personService.get();
+    $scope.displayIndex = true;
 	
 	$scope.showIndex = function() {
 		$scope.displayIndex = true;
