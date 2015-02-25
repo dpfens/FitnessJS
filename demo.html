@@ -1,0 +1,176 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<script src="js/libs/angular.min.js" ></script>
+		<script src="js/libs/angular-route.min.js"></script>
+		<script src="js/libs/angular-animate.min.js"></script>
+		<script src="js/libs/jquery-1.11.1.min.js"></script>
+		<script src="fitness.min.js"></script>
+		<script src="js/demo.js"></script>
+	</head>
+	
+	<body>
+		<header>
+			<div class="inner-container">
+				<a href="/FitnessJS">
+					<svg version="1.1" id="logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+						 width="175px" height="99px" viewBox="0 0 520 99" enable-background="new 0 0 520 99" xml:space="preserve">
+					<g>
+						<g>
+							<g>
+								<path fill="#29ABE2" d="M436.246,88.046c-0.236,1.075-1.33,1.954-2.43,1.954h-48.065c-1.1,0-1.826-0.883-1.614-1.962
+									l8.479-43.075C392.826,43.883,393.9,43,395,43h3.083c1.1,0,1.827,0.883,1.615,1.963l-7.064,36.074
+									c-0.212,1.08,0.517,1.963,1.615,1.963h33.935c1.101,0,2.194-0.879,2.433-1.953l15.703-71.094C446.556,8.879,447.65,8,448.75,8
+									h3.084c1.1,0,1.807,0.879,1.57,1.954L436.246,88.046z"/>
+							</g>
+						</g>
+					</g>
+					<g>
+						<path fill="#FFFFFF" d="M323,14c1.1,0,2.179-0.882,2.396-1.96l0.622-3.079c0.219-1.078-0.504-1.96-1.604-1.96h-48.229
+							c-1.1,0-2.188,0.88-2.42,1.955l-8.146,37.874c-0.23,1.075-0.432,2.003-0.443,2.063c-0.013,0.06,0.877,0.108,1.977,0.108h40.451
+							c1.101,0,1.831,0.884,1.625,1.964l-5.748,30.071c-0.205,1.081-1.274,1.964-2.375,1.964h-41.268c-1.1,0-2.189,0.88-2.42,1.955
+							l-0.665,3.09c-0.231,1.075,0.479,1.955,1.58,1.955h48.562c1.101,0,2.188-0.88,2.415-1.957l9.345-44.087
+							c0.229-1.076-0.485-1.957-1.585-1.957h-40.8c-1.1,0-1.822-0.882-1.606-1.961l4.813-24.078c0.217-1.079,1.293-1.961,2.394-1.961
+							L323,14L323,14z"/>
+					</g>
+					<g>
+						<path fill="#FFFFFF" d="M387,14c1.1,0,2.179-0.882,2.396-1.96l0.622-3.079c0.219-1.078-0.504-1.96-1.604-1.96h-48.229
+							c-1.1,0-2.188,0.88-2.421,1.955l-8.146,37.874c-0.231,1.075-0.433,2.003-0.443,2.063c-0.013,0.06,0.877,0.108,1.978,0.108h40.45
+							c1.101,0,1.831,0.884,1.625,1.964l-5.747,30.071c-0.206,1.081-1.275,1.964-2.375,1.964h-41.269c-1.1,0-2.188,0.88-2.421,1.955
+							l-0.664,3.09C320.521,89.12,321.232,90,322.332,90h48.562c1.101,0,2.188-0.88,2.415-1.957l9.345-44.087
+							c0.229-1.076-0.485-1.957-1.585-1.957H340.27c-1.1,0-1.822-0.882-1.606-1.961l4.813-24.078c0.217-1.079,1.293-1.961,2.394-1.961
+							L387,14L387,14z"/>
+					</g>
+					<g>
+						<path fill="#29ABE2" d="M513,14c1.1,0,2.179-0.882,2.396-1.96l0.622-3.079c0.219-1.078-0.504-1.96-1.604-1.96h-48.229
+							c-1.1,0-2.188,0.88-2.421,1.955l-8.146,37.874c-0.231,1.075-0.433,2.003-0.443,2.063c-0.013,0.06,0.877,0.108,1.978,0.108h40.45
+							c1.101,0,1.831,0.884,1.625,1.964l-5.747,30.071c-0.206,1.081-1.275,1.964-2.375,1.964h-41.269c-1.1,0-2.188,0.88-2.421,1.955
+							l-0.664,3.09C446.521,89.12,447.232,90,448.332,90h48.562c1.101,0,2.188-0.88,2.415-1.957l9.345-44.087
+							c0.229-1.076-0.485-1.957-1.585-1.957H466.27c-1.1,0-1.822-0.882-1.606-1.961l4.813-24.078c0.217-1.079,1.293-1.961,2.394-1.961
+							L513,14L513,14z"/>
+					</g>
+					<g>
+						<path fill="#FFFFFF" d="M224.84,14c-1.1,0-2.186,0.881-2.413,1.957l-5.075,24.086C217.125,41.119,217.84,42,218.94,42h18.91
+							c1.1,0,1.812,0.88,1.581,1.956l-0.662,3.089C238.539,48.12,237.45,49,236.35,49h-18.88c-1.1,0-2.186,0.881-2.412,1.957
+							l-6.336,30.086C208.496,82.119,209.21,83,210.31,83h34.72c1.1,0,1.812,0.88,1.581,1.956l-0.662,3.089
+							C245.718,89.12,244.63,90,243.53,90h-41.84c-1.1,0-1.814-0.881-1.588-1.957l16.646-79.086C216.975,7.881,218.06,7,219.16,7h42.22
+							c1.101,0,1.812,0.88,1.581,1.956l-0.662,3.089C262.068,13.12,260.98,14,259.88,14H224.84z"/>
+					</g>
+					<g>
+						<path fill="#FFFFFF" d="M101.405,85.939c0.002,0-0.107,0.521-0.245,1.156c-0.138,0.635-0.14,0.635-0.005,0
+							C101.29,86.459,101.402,85.939,101.405,85.939z"/>
+					</g>
+					<g>
+						<g>
+							<g>
+								<path fill="#FFFFFF" d="M158.727,24.343c0.227-1.077,0.732-1.116,1.122-0.087l24.224,63.874c0.39,1.029,1.609,1.87,2.709,1.87
+									h1.379c1.1,0,2.194-0.879,2.43-1.953l17.424-79.094C208.25,7.879,207.544,7,206.444,7h-3.176c-1.1,0-2.195,0.878-2.434,1.953
+									l-14.077,63.423c-0.239,1.074-0.753,1.11-1.143,0.083L161.5,8.87C161.11,7.841,159.891,7,158.791,7h-1.502
+									c-1.1,0-2.187,0.88-2.414,1.957l-16.741,79.087C137.907,89.12,138.62,90,139.72,90h3.153c1.1,0,2.186-0.881,2.413-1.957
+									L158.727,24.343z"/>
+							</g>
+						</g>
+					</g>
+					<g>
+						<path fill="#FFFFFF" d="M68.688,90c1.1,0,2.189-0.88,2.42-1.955l17.013-79.09C88.352,7.88,87.641,7,86.541,7h-3.16
+							c-1.1,0-2.189,0.88-2.42,1.955l-17.013,79.09C63.716,89.12,64.427,90,65.527,90H68.688z"/>
+					</g>
+					<g>
+						<g>
+							<g>
+								<path fill="#FFFFFF" d="M33.03,14c-1.1,0-2.189,0.88-2.42,1.955l-5.179,24.09C25.199,41.12,25.91,42,27.01,42h22.84
+									c1.1,0,1.812,0.88,1.581,1.956l-0.662,3.089C50.539,48.12,49.45,49,48.35,49H25.51c-1.1,0-2.189,0.88-2.42,1.955l-7.979,37.09
+									C14.879,89.12,13.79,90,12.69,90H9.53c-1.1,0-1.811-0.88-1.58-1.955l17.009-79.09C25.19,7.88,26.28,7,27.38,7h43
+									c1.1,0,1.812,0.88,1.581,1.956l-0.662,3.089C71.068,13.12,69.98,14,68.88,14H33.03z"/>
+							</g>
+						</g>
+					</g>
+					<g>
+						<path fill="#FFFFFF" d="M143.38,7c1.1,0,1.812,0.88,1.581,1.956l-0.662,3.089C144.068,13.12,142.98,14,141.88,14h-15.85
+							c-1.1,0-2.189,0.88-2.42,1.955l-15.499,72.09C107.879,89.12,106.79,90,105.69,90h-3.16c-1.1,0-1.811-0.88-1.58-1.955l15.5-72.09
+							c0.231-1.075-0.48-1.955-1.58-1.955H98.04c-1.1,0-1.812-0.88-1.581-1.956l0.662-3.089C97.352,7.88,98.44,7,99.54,7H143.38z"/>
+					</g>
+					</svg>
+				</a>
+				<ul>
+					<li><a href="docs">Documentation</a></li>
+					<li><a href="demo">Demo</a></li>
+				</ul>
+			</div>
+		</header>
+		
+		<section ng-app="demoApp">
+			<div class="inner-container" ng-controller="PersonOverviewCtrl">
+			
+				<article ng-controller="PersonIndexCtrl" ng-if="displayIndex">
+					<h1>Index</h1>
+				</article>
+				
+			
+				<aside ng-controller="PersonListCtrl">
+				
+				<div class="demo-menu">
+					<button ng-click="showIndex()"><i class="fa fa-home fa-lg fa-fw"></i></button>
+					<button ng-click="showAddForm()"><i class="fa fa-plus fa-lg fa-fw"></i></button>
+				</div>
+					
+					<ul>
+						<li ng-repeat="person in people"><span ng-click="show(person)">{{person.name}}</span><button ng-click="remove(person)"><i class="fa fa-times fa-lg fa-fw"></i></button></li>
+					</ul>
+				</aside>
+			
+				<article ng-controller="PersonNewCtrl" ng-if="displayAddForm">
+					<h2>Add someone</h2>
+					<form novalidate>
+						<p><label>Name</label><input type="text" ng-model="person.name"/></p>
+						<p><label>Gender</label><select type="text" ng-model="person.gender" ng-options="gender.value as gender.label for gender in genders"></select></p>
+						<p><label>Date of Birth</label><input type="date" ng-model="person.dob"/>years</p>
+						<p><label>Weight</label><input type="text" ng-model="person.weight"/>kg</p>
+						<p><label>Height</label><input type="text" ng-model="person.height"/>cm</p>
+						<p><button ng-click="create(person)"><i class="fa fa-plus fa-lg fa-fw"></i></button></p>
+					</form>
+				</article>
+			
+			
+				<article ng-controller="PersonDetailCtrl" ng-if="person">
+					
+					<div class="specs">
+						<h2>Provided information</h2>
+						<p><i class="fa fa-2x" ng-class="{'fa-female': person.gender === 'female', 'fa-male': person.gender === 'male' }" ></i> {{person.gender}}</p>
+						<p>Age:{{ person.getAge() | number:2 }} years old</p>
+						<p>Weight: {{ person.weight }} kg</p>
+						<p>Height: {{ person.weight }} cm</p>
+					</div>
+				
+					<h1>{{ person.name }}</h1>
+					
+					<form novalidate>
+						<h2>calculated information<h2>
+						
+						<h3>Body Fat</h3>
+						<p ng-repeat="(equation, val) in person.BMIToBodyFat()">{{equation}}: {{val}}</p>
+						
+						<h3>Body Surface Area</h3>
+						<p ng-repeat="(equation, val) in person.BSA()">{{equation}}: {{val}}</p>
+						
+						<h3>Resting Metabolic Rate</h3>
+						<p ng-repeat="(equation, val) in person.RMR()">{{equation}}: {{val}}</p>
+						
+						<h3>Predicted Total Energy Expenditure</h3>
+						<p ng-repeat="(equation, val) in person.PredictedTEE()">{{equation}}: {{val}}</p>
+						
+						<h3>Predicted Heart Rate Max</h3>
+						<p>{{ person.HeartRateMax() }}</p>
+						
+					</form>
+					
+				</article>
+			
+			</div>
+		</section>
+	
+	
+	</body>
+
+</html>
