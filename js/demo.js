@@ -102,5 +102,9 @@ PersonCtrl.controller('PersonNewCtrl', ['$scope','personService',function($scope
 }]);
 
 PersonCtrl.controller('PersonDetailCtrl',  ['$scope','personService',function($scope, personService) {
-	
+	$scope.bsa = $scope.person.BSA();
+	$scope.rmr = $scope.person.RMR();
+	$scope.predicted_tee = $scope.person.PredictedTEE();
+	$scope.bmi_to_bf = $scope.person.BMIToBodyFat();
+	$scope.hr_max = $scope.person.cardio.HeartRateMax();
 }]);
