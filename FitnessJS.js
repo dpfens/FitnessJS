@@ -48,9 +48,9 @@ var Fit = (function() {
 			{"met":8.0,"code":02040,"description":"circuit training, including kettlebells, some aerobic movement with minimal rest, general, vigorous intensity"},
 			{"met":3.5,"code":02045,"description": "Curves exercise routines in women"},
 			{"met":5.0,"code":02048,"description":"Elliptical trainer, moderate effort\u00a0"},
-			{"met":6.0,"code":02050,"description":"resistance training (weight lifting - free weight, nautilus or universal-type), power lifting or body building, vigorous effort (Taylor Code 210)"},
-			{"met":5.0,"code":02052,"description":"resistance (weight) training, squats , slow or explosive effort"},
-			{"met":3.5,"code":02054,"description":"resistance (weight) training, multiple exercises, 8-15 repetitions at varied resistance\u00a0"},
+			{"met":6.0,"code":02050,"description":"resistance training (wt lifting - free wt, nautilus or universal-type), power lifting or body building, vigorous effort (Taylor Code 210)"},
+			{"met":5.0,"code":02052,"description":"resistance (wt) training, squats , slow or explosive effort"},
+			{"met":3.5,"code":02054,"description":"resistance (wt) training, multiple exercises, 8-15 repetitions at varied resistance\u00a0"},
 			{"met":5.5,"code":02060,"description":"health club exercise, general (Taylor Code 160)"},
 			{"met":9.0,"code":02065,"description":"stair-treadmill ergometer, general"},
 			{"met":11.0,"code":02068,"description":"rope skipping, general"},
@@ -89,7 +89,7 @@ var Fit = (function() {
 			{"met":8.5,"code":03019,"description":"bench step class, general"},
 			{"met":5.0,"code":03020,"description":"aerobic, low impact"},
 			{"met":7.3,"code":03021,"description":"aerobic, high impact"},
-			{"met":10.0,"code":03022,"description":"aerobic dance wearing 10-15 lb weights"},
+			{"met":10.0,"code":03022,"description":"aerobic dance wearing 10-15 lb wts"},
 			{"met":4.5,"code":03025,"description":"ethnic or cultural dancing (e.g., Greek, Middle Eastern, hula, salsa, merengue, bamba y plena, flamenco, belly, and swing)"},
 			{"met":5.5,"code":03030,"description":"ballroom, fast (Taylor Code 125)"},
 			{"met":7.8,"code":03031,"description":"general dancing (e.g., disco, folk, Irish step dancing, line dancing, polka, contra, country)"},
@@ -176,7 +176,7 @@ var Fit = (function() {
 			{"met":2.0,"code":05131,"description":"scrubbing floors, on hands and knees, scrubbing bathroom, bathtub, light effort"},
 			{"met":6.5,"code":05132,"description":"scrubbing floors, on hands and knees, scrubbing bathroom, bathtub, vigorous effort"},
 			{"met":4.0,"code":05140,"description":"sweeping garage, sidewalk or outside of house"},
-			{"met":3.5,"code":05146,"description":"standing, packing/unpacking boxes, occasional lifting of lightweight household items, loading or unloading items in car, moderate effort"},
+			{"met":3.5,"code":05146,"description":"standing, packing/unpacking boxes, occasional lifting of lightwt household items, loading or unloading items in car, moderate effort"},
 			{"met":3.0,"code":05147,"description":"implied walking, putting away household items, moderate effort"},
 			{"met":2.5,"code":05148,"description":"watering  plants"},
 			{"met":2.5,"code":05149,"description":"building a fire inside"},
@@ -883,8 +883,8 @@ var Fit = (function() {
 		/*
 		*  Fat Free Body Mass (FFM) based on impedance
 		* resistance in ohms
-		* height in centimeters (cm)
-		* weight in kg
+		* ht in centimeters (cm)
+		* wt in kg
 		* returns fat free mass (FFM) in kg
 		*/
 		FFM : function(resistance, reactance) {
@@ -892,8 +892,8 @@ var Fit = (function() {
 			reactance = parseInt(reactance) || 0,
 			gender = this.gender,
 			age = this.getAge(),
-			weight = this.weight,
-			height = this.height,
+			wt = this.weight,
+			ht = this.height,
 		    results = {};
 		            		
 		    /*
@@ -901,7 +901,7 @@ var Fit = (function() {
 		    * Lohman(1992)
 		    */
 		    if(age >= 8 && age <= 15) {
-		    	results.child = (0.62*(Math.pow(height,2)/resistance)) + (0.21*weight) + (0.1*reactance) + 4.2;
+		    	results.child = (0.62*(Math.pow(ht,2)/resistance)) + (0.21*wt) + (0.1*reactance) + 4.2;
 		    }
 		            		
 		    /*
@@ -909,7 +909,7 @@ var Fit = (function() {
 		    * Houtkooper e al. (1992)
 		    */
 		    if(age >= 10 && age <= 19) {
-		    	results.adolescent = (0.61*(Math.pow(height,2)/resistance)) + (0.25*weight) + 1.31;
+		    	results.adolescent = (0.61*(Math.pow(ht,2)/resistance)) + (0.25*wt) + 1.31;
 		    	
 		    }
 		            		
@@ -920,19 +920,19 @@ var Fit = (function() {
 		            * American Indian, black, Hispanic, and White Men
 		            * %BF < .20 Segal et al. (1988)
 		            */ 
-		            lean: (0.00066360*Math.pow(height,2)) - (0.02117 * resistance) + (0.62854*weight) - (0.12380 * age) + 9.33285,
+		            lean: (0.00066360*Math.pow(ht,2)) - (0.02117 * resistance) + (0.62854*wt) - (0.12380 * age) + 9.33285,
 		            /*
 		            * American Indian, black, Hispanic, and White Men
 		            * %BF > .20 Segal et al. (1988)
 		            */ 
-		            obese: (0.00088580*Math.pow(height,2)) - (0.02999 * resistance) + (0.42688*weight) - (0.07002 * age) + 14.52435,
+		            obese: (0.00088580*Math.pow(ht,2)) - (0.02999 * resistance) + (0.42688*wt) - (0.07002 * age) + 14.52435,
 		    	}
 		    	/*
 		    	 * Male athletes 19-40 years
 		    	 * Oppliger et al. (1991)
 		    	 */
 		    	if (age >= 19 && age <= 40) {
-		    		results.athlete = (0.186*(Math.pow(height,2)/resistance)) + (0.701*weight) + 1.949;
+		    		results.athlete = (0.186*(Math.pow(ht,2)/resistance)) + (0.701*wt) + 1.949;
 		    	}
 		    	results.adult.average = (results.adult.lean + results.adult.obese) / 2;
 		    	}
@@ -944,12 +944,12 @@ var Fit = (function() {
 		    		* American Indian, black, Hispanic, and White Women
 		    		* %BF < .30 Segal et al. (1988)
 		    		*/ 
-		    		lean: (0.000646*Math.pow(height,2)) - (0.014 * resistance) + (0.421*weight) + 10.4,
+		    		lean: (0.000646*Math.pow(ht,2)) - (0.014 * resistance) + (0.421*wt) + 10.4,
 		    		/*
 		    		* American Indian, black, Hispanic, and White Women
 		    		* %BF > .30 Segal et al. (1988)
 		    		*/ 
-		    		obese: (0.00091186*Math.pow(height,2)) - (0.1466 * resistance) + (0.29990*weight) - (0.07012 * age) + 9.37938,
+		    		obese: (0.00091186*Math.pow(ht,2)) - (0.1466 * resistance) + (0.29990*wt) - (0.07012 * age) + 9.37938,
 		    	};
 		    	results.adult.average = (results.adult.lean + results.adult.obese) / 2;
 		    	}
@@ -958,7 +958,7 @@ var Fit = (function() {
 		    	 * Fornetti et al. (1999)
 		    	 */
 		    	if (age >= 18 && age <=27) {
-		    	results.athlete = (0.282*height) + (0.415*weight) - (0.037*resistance) + (0.096*reactance) - 9.734;
+		    	results.athlete = (0.282*ht) + (0.415*wt) - (0.037*resistance) + (0.096*reactance) - 9.734;
 		    	}
 		    
 		    }
@@ -970,7 +970,7 @@ var Fit = (function() {
 		FieldTestsV02Max: function(time, hr, speed) {
 			gender = this.gender,
 			age = this.getAge(),
-			weight = this.weight,
+			wt = this.weight,
 			bmi = (this.weight/Math.pow(this.height, 2)),
 			results = {};
 			            	        	
@@ -1018,20 +1018,20 @@ var Fit = (function() {
 			*  for gender field, 1 for male, 0 for female
 			*  
 			*/
-			if(age && weight && gender && time && hr) {
-				results.mileWalk = 132.853 - .0769*weight - 0.3877*age + 6.315*gender - 3.2649*time - 0.1565*hr;
+			if(age && wt && gender && time && hr) {
+				results.mileWalk = 132.853 - .0769*wt - 0.3877*age + 6.315*gender - 3.2649*time - 0.1565*hr;
 			}
 			            	        	
 			/*
 			* 1.0 mile steady-state jog
 			* George et al. (1993)
 			*/
-			if(time && hr && weight) {
-				results.mileSteady = 100.5 - 0.1636 * weight - 1.438 * time - 0.1928 * hr;
-				results.MileHalf = [88.02 - (0.1656*weight) - (2.76*time) + (3.716*gender),
-				100.16 + (7.30*gender) - (0.164*weight) - (1.273 * time) - (0.1563 * hr)];
+			if(time && hr && wt) {
+				results.mileSteady = 100.5 - 0.1636 * wt - 1.438 * time - 0.1928 * hr;
+				results.MileHalf = [88.02 - (0.1656*wt) - (2.76*time) + (3.716*gender),
+				100.16 + (7.30*gender) - (0.164*wt) - (1.273 * time) - (0.1563 * hr)];
 			}
-			if(hr && weight) {
+			if(hr && wt) {
 				/*
 				 * Astrand Step Test
 			     * Marley and Linnerud (1976)
@@ -1042,11 +1042,11 @@ var Fit = (function() {
 			     */
 			     // Male
 			     if(gender ==="male") {
-			    	 results.astrand = 3.744*((weight+5)/(hr-62));
+			    	 results.astrand = 3.744*((wt+5)/(hr-62));
 			    	 results.queenscollege = 111.33 - (0.42 * hr); 
 			     } // Female
 			     else if(gender === "female") { 
-			    	 results.astrand = 3.750*((weight-3)/(hr-65)); 
+			    	 results.astrand = 3.750*((wt-3)/(hr-65)); 
 			    	 results.queenscollege = 65.81 - (0.1847 * hr); 
 			     }	
 			 }
@@ -1146,10 +1146,10 @@ var Fit = (function() {
 		            	        
 		/* Stepping VO2
 		* frequency of stepping in steps per minute
-		* bench height in meters; 1 inch = 0.0254 meters
+		* bench ht in meters; 1 inch = 0.0254 meters
 		*/
-		SteppingVO2: function(frequency, height) {
-			return frequency * 0.2 + frequency * height * 1.8 * 1.33;
+		SteppingVO2: function(frequency, ht) {
+			return frequency * 0.2 + frequency * ht * 1.8 * 1.33;
 		},
 		            	        
 		// Submaximal Tests
@@ -1220,25 +1220,25 @@ var Fit = (function() {
 		RV: function(bsa) {
 			gender = this.gender,
 			age = this.getAge(),
-			height = this.height,
-			weight = this.weight,
+			ht = this.height,
+			wt = this.weight,
 			bsa = bsa || 0,
 			data = {};
 			if(gender === "male") {
 				data = {
-				Berglund: (0.0115*age) + (0.019* height) - 2.24,
-				Boren: (0.022*age) + (0.0198*height) - (0.015*weight) - 1.54,
-				Goldman: (0.017*age) + (0.027*height) - 3.477,
+				Berglund: (0.0115*age) + (0.019* ht) - 2.24,
+				Boren: (0.022*age) + (0.0198*ht) - (0.015*wt) - 1.54,
+				Goldman: (0.017*age) + (0.027*ht) - 3.477,
 				}
 			}
 			else if(gender === "female") {
 				data = {
-				Berglund: (0.0115*age) + (0.019* height) - 2.24,
-				Black: (0.021*age) + (0.023*height) - 2.978,
-				Goldman: (0.017*age) + (0.027*height) - 3.477,
+				Berglund: (0.0115*age) + (0.019* ht) - 2.24,
+				Black: (0.021*age) + (0.023*ht) - 2.978,
+				Goldman: (0.017*age) + (0.027*ht) - 3.477,
 				}
 				if (bsa) {
-					data.Obrien = (0.03*age) + (0.0387*height) - (0.73*bsa) - 4.78
+					data.Obrien = (0.03*age) + (0.0387*ht) - (0.73*bsa) - 4.78
 				}
 			}
 			return data;
@@ -1256,7 +1256,7 @@ var Fit = (function() {
 	}
 
 	// PT Muscular Module
-	function Muscle(gender, dob, wt, ht, race) {
+	function Muscle(gender, dob, ht, wt, race) {
 		this.gender = gender;
 		this.dateofbirth = dob;
 		this.weight = wt;
@@ -1297,17 +1297,17 @@ var Fit = (function() {
 		/*
 		* 1-RM Formula
 		* Based on number of repetitions to fatigue in one set
-		* weight is the weight lifted in lb
+		* wt is the wt lifted in lb
 		*/
-		FatigueRepMaximum: function(reps, weight) {
-			data = weight / (1.0278 - (reps * 0.0278));
+		FatigueRepMaximum: function(reps, wt) {
+			data = wt / (1.0278 - (reps * 0.0278));
 			return data;
 		},
 		            		
 		/*
 		* 1-RM Formula
 		* Based on the number of repetitions to fatigue obtained in two submaximal sets so long as number of reps is under 10
-		* weight1 and weight2 must be of same unit (kg or lb)
+		* wt1 and wt2 must be of same unit (kg or lb)
 		*/
 		TwoSetMaximum : function(rep1, wt1, rep2, wt2) {
 			rep1 = parseInt(rep1) || 1,
@@ -1340,24 +1340,24 @@ var Fit = (function() {
 		/*
 		* Relative Strength
 		* rm is 1-Rep Maximum
-		* weight is the body mass of the individual
-		* rm and weight must be of the same unit (kg or lbs)
+		* wt is the body mass of the individual
+		* rm and wt must be of the same unit (kg or lbs)
 		*/
-		RelativeStrength: function(rm, weight) {
-			return rm / weight;
+		RelativeStrength: function(rm) {
+			return rm / this.weight;
 		},
 
 		/*
 		* Middle Age (40-50 years old) & Older adult (60-70 years old) 1-RM
 		* Kuramoto & Payne (1995)
 		*/
-		FemaleRepMax: function(reps, weight) {
+		FemaleRepMax: function(reps, wt) {
 			age = this.getAge(),
 			data = 0;
 			if (age >= 40 && age <= 50) {
-				data = (1.06 * weight) + (0.58 * reps) - (0.20 * age) - 3.41;
+				data = (1.06 * wt) + (0.58 * reps) - (0.20 * age) - 3.41;
 			} else if(age >= 60 && age <= 70) {
-				data = (0.92 * weight) + (0.79 * reps) - (0.20 * age) - 3.73;
+				data = (0.92 * wt) + (0.79 * reps) - (0.20 * age) - 3.73;
 			}
 			return data;
 		},
@@ -1367,11 +1367,11 @@ var Fit = (function() {
 		this.name = name || "John Doe";
 		this.gender = gender;
 		this.dateofbirth = dob || new Date();
-		this.weight = wt || 1;
-		this.height = ht || 1;
+		this.weight = parseInt(wt) || 1;
+		this.height = parseInt(ht) || 1;
 		this.race = race || null;
-		this.cardio = new Cardiovascular(gender, this.dateofbirth, ht, wt, race);
-		this.muscle = new Muscle(gender, this.dateofbirth, ht, wt, race);
+		this.cardio = new Cardiovascular(gender, this.dateofbirth, this.height, this.weight, race);
+		this.muscle = new Muscle(gender, this.dateofbirth, this.height, this.weight, race);
 	};
 
 	Person.prototype = {
@@ -1390,27 +1390,24 @@ var Fit = (function() {
 		* Mets must be in MET form (not mL/kg/min)
 		*/
 		NetCaloricCost : function(mets) {
-			weight = this.weight,
-			data = mets * 3.5 * (weight/200);
+			wt = this.weight,
+			data = mets * 3.5 * (wt/200);
 			return data;
 		},
 		               	
-		BMIToBodyFat : function(options) {
+		BMIToBodyFat : function() {
 			gender = this.gender,
 			age = this.getAge(),
-			bmi = (this.weight/Math.pow(this.height, 2)),
-			data = {};
+			bmi = (this.weight/Math.pow(this.height, 2));
 			if(gender === "male") { // male
-			data = {
-				child: ((1.51*bmi) - (0.70*age) - (3.6) + 1.4) / 100,
-				adult: ((1.20*bmi) - (0.23*age) - (10.8) - 5.4) / 100
-			}
+				gender = 1;
 			} else if (gender === "female") { // male
-			data = {
-		            child: ((1.51*bmi) - (0.70*age) + 1.4) / 100,
-		            adult: ((1.20*bmi) - (0.23*age) - 5.4) / 100
-		        }
+				gender = 0;
 			}
+			data = {
+				child: ((1.51*bmi) - (0.70*age) - (3.6*gender) + 1.4) / 100,
+				adult: ((1.20*bmi) - (0.23*age) - (10.8*gender) - 5.4) / 100
+				}
 			return data;
 		},
 		            	
@@ -1473,51 +1470,51 @@ var Fit = (function() {
 		            	
 		/*
 		* ulation of body surface area in Meters^2
-		* weight in kilogams (kg)
-		* height in centimeters (cm)
+		* wt in kilogams (kg)
+		* ht in centimeters (cm)
 		*/
 		BSA : function() {
-			weight = this.weight,
-			height = this.height;
+			wt = this.weight,
+			ht = this.height;
 		    data = { 
-		    	Boyd: 0.03330 * Math.pow(weight,(0.7285-0.0188*Math.log(weight)))*Math.pow(height,0.3),
-		    	Costeff: (4*weight+7)/(90+weight),
-		        DuBois: 0.0087184 * Math.pow(weight,0.425) * Math.pow(height,0.725),
-		        Fujimoto: 0.008883 * Math.pow(weight, 0.444) * Math.pow(height, 0.663),
-		        GehanGeorge: 0.0235 * Math.pow(weight, 0.51456) * Math.pow(height, 0.42246),
-		        Haycock: 0.024265 * Math.pow(weight, 0.5378) * Math.pow(height, 0.3964),
-		        Mosteller: Math.sqrt(weight*height)/60,
-		        Takahira: 0.007241 * Math.pow(weight, 0.425) * Math.pow(height,0.725) 
+		    	Boyd: 0.03330 * Math.pow(wt,(0.7285-0.0188*Math.log(wt)))*Math.pow(ht,0.3),
+		    	Costeff: (4*wt+7)/(90+wt),
+		        DuBois: 0.0087184 * Math.pow(wt,0.425) * Math.pow(ht,0.725),
+		        Fujimoto: 0.008883 * Math.pow(wt, 0.444) * Math.pow(ht, 0.663),
+		        GehanGeorge: 0.0235 * Math.pow(wt, 0.51456) * Math.pow(ht, 0.42246),
+		        Haycock: 0.024265 * Math.pow(wt, 0.5378) * Math.pow(ht, 0.3964),
+		        Mosteller: Math.sqrt(wt*ht)/60,
+		        Takahira: 0.007241 * Math.pow(wt, 0.425) * Math.pow(ht,0.725) 
 		    };
 		    return data;
 		},
 		            	
 		/*
 		* Body volume ulation from hydrostatic weighing
-		* uww is Underwater Weight
+		* uww is Underwater wt
 		* rv is Residual Volume in mL
 		* gv is Volume of air in gastrointestinal tract (GV) (default: 100mL)
 		 */
 		BV : function(uww, rv, gv) {
-		    weight = this.weight,
+		    wt = this.weight,
 		    gv = gv || 100,
-		    data = ((weight - uww)/ waterdensity) - (rv - gv);
+		    data = ((wt - uww)/ waterdensity) - (rv - gv);
 		    return data;
 		},
 		
 		/*
 		* Resting Metabolic Rate
-		* weight in kg, height in cm, age in years
+		* wt in kg, ht in cm, age in years
 		*/
 		RMR : function() {
 			gender = this.gender;
 			age = this.getAge(),
-			weight = this.weight,
-			height = this.height;
+			wt = this.weight,
+			ht = this.height;
 			if(gender ==="male") {
-				data = {'Harris-Benedict': 66.473 + 13.751*weight + 5.0033*height - 6.755*age,'Mifflin': (9.99*weight + 6.25*height + - 4.92*age)+5} // male
+				data = {'Harris-Benedict': 66.473 + 13.751*wt + 5.0033*ht - 6.755*age,'Mifflin': (9.99*wt + 6.25*ht + - 4.92*age)+5} // male
 			} else if(gender === "female") {
-				data = {'Harris-Benedict': 655.0955 + 9.463*weight + 1.8496*height - 4.6756*age,'Mifflin': (9.99*weight + 6.25*height + - 4.92*age)-161}// female
+				data = {'Harris-Benedict': 655.0955 + 9.463*wt + 1.8496*ht - 4.6756*age,'Mifflin': (9.99*wt + 6.25*ht + - 4.92*age)-161}// female
 		    }
 			return data;
 		},
@@ -1525,49 +1522,49 @@ var Fit = (function() {
 		/*
 		* Total Daily Energy Expenditure of Children and Adults
 		* age in years
-		* weight in kilograms (kg)
-		* height in meters
+		* wt in kilograms (kg)
+		* ht in meters
 		* returns object with sedentary (1.0 < PAL < 1.4), low activity (1.4 < PAL < 1.6), active (1.6 < PAL < 1.9), and very active (1.9 < PAL < 2.5)
 		* 
 		*/
 		PredictedTEE : function() {
 			gender =  this.gender;
 			age = this.getAge(),
-			weight = this.weight,
-			height = this.height,
+			wt = this.weight,
+			ht = this.height /100,
 			data = {};
 		    if(gender === "male") { // male
-		    	if (age >= 3 && age >= 18) {
+		    	if (age >= 3 && age <= 18) {
 		    	data = {
-		    		sedentary: 88.5 - (61.9 * age) + 1*((26.7*weight)+(903*height)),
-		    		low: 88.5 - (61.9 * age) + 1.13*((26.7*weight)+(903*height)),
-		    		active: 88.5 - (61.9 * age) + 1.26*((26.7*weight)+(903*height)),
-		    		veryactive: 88.5 - (61.9 * age) + 1.42*((26.7*weight)+(903*height)),
+		    		sedentary: 88.5 - (61.9 * age) + 1*((26.7*wt)+(903*ht)),
+		    		low: 88.5 - (61.9 * age) + 1.13*((26.7*wt)+(903*ht)),
+		    		active: 88.5 - (61.9 * age) + 1.26*((26.7*wt)+(903*ht)),
+		    		veryactive: 88.5 - (61.9 * age) + 1.42*((26.7*wt)+(903*ht)),
 		           }
 		    	}
 		    	else if (age >= 19) {
 		    	data = {
-		    		sedentary: 662 - (9.53 * age) + 1*((15.9*weight)+(540*height)),
-		    		low: 662 - (9.53 * age) + 1.11*((15.9*weight)+(540*height)),
-		    		active: 662 - (9.53 * age) + 1.25*((15.9*weight)+(540*height)),
-		    		veryactive: 662 - (9.53 * age) + 1.48*((15.9*weight)+(540*height)),
+		    		sedentary: 662 - (9.53 * age) + 1*((15.9*wt)+(540*ht)),
+		    		low: 662 - (9.53 * age) + 1.11*((15.9*wt)+(540*ht)),
+		    		active: 662 - (9.53 * age) + 1.25*((15.9*wt)+(540*ht)),
+		    		veryactive: 662 - (9.53 * age) + 1.48*((15.9*wt)+(540*ht)),
 		            }
 		        }
 		    } else if(gender === "female") {
-		    	if (age >= 3 && age >= 18) {
+		    	if (age >= 3 && age <= 18) {
 		    	data = {
-		    		sedentary: 135.3 - (30.8 * age) + 1*((10*weight)+(934*height)),
-		    		low: 135.3 - (30.8 * age) + 1.16*((10*weight)+(934*height)),
-		    		active: 135.3 - (30.8 * age) + 1.31*((10*weight)+(934*height)),
-		    		veryactive: 135.3 - (30.8 * age) + 1.56*((10*weight)+(934*height)),
+		    		sedentary: 135.3 - (30.8 * age) + 1*((10*wt)+(934*ht)),
+		    		low: 135.3 - (30.8 * age) + 1.16*((10*wt)+(934*ht)),
+		    		active: 135.3 - (30.8 * age) + 1.31*((10*wt)+(934*ht)),
+		    		veryactive: 135.3 - (30.8 * age) + 1.56*((10*wt)+(934*ht)),
 		    	}
 		    	}
 		    	else if (age >= 19) {
 		    	data = {
-		    		sedentary: 354 - (6.91 * age) + 1*((9.36*weight)+(726*height)),
-		    		low: 662 - (9.53 * age) + 1.12*((15.9*weight)+(540*height)),
-		    		active: 662 - (9.53 * age) + 1.27*((15.9*weight)+(540*height)),
-		    		veryactive: 662 - (9.53 * age) + 1.45*((15.9*weight)+(540*height)),
+		    		sedentary: 354 - (6.91 * age) + 1*((9.36*wt)+(726*ht)),
+		    		low: 662 - (9.53 * age) + 1.12*((15.9*wt)+(540*ht)),
+		    		active: 662 - (9.53 * age) + 1.27*((15.9*wt)+(540*ht)),
+		    		veryactive: 662 - (9.53 * age) + 1.45*((15.9*wt)+(540*ht)),
 		    	}
 		    	}
 		    }
