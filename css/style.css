@@ -21,11 +21,11 @@ h1{
 	font-size: 1.5rem;
 }
 
-p, li, span, a {
+p, li, span {
 	font-family: 'Open Sans';
 }
 
-p {
+p, article li {
 	font-size: 0.80rem; 
 }
 
@@ -37,24 +37,7 @@ button {
 	padding: 0.5rem;
 }
 
-aside {
-	position: fixed;
-	top: 4rem;
-	bottom: 0;
-	overflow: auto;
-	width: 15rem;
-}
-aside ul {
-	padding: 1rem;
-}
-
-aside li {
-	cursor: pointer;
-	padding: 0.25rem 0;
-	list-style-type: none;
-}
-
-body section {
+body > section {
 	padding: 3rem 0 0 0;
 }
 
@@ -147,6 +130,35 @@ div.splash button, div.splash a {
 
 div.splash button:hover, div.splash a:hover {
 	background-color: rgba(40,40,40,1.0);
+}
+
+/************************* Aside Styles **************************/
+
+aside {
+	position: fixed;
+	top: 3.25rem;
+	bottom: 0;
+	overflow: auto;
+	width: 15rem;
+}
+
+aside span.module {
+	font-family: 'Oswald';
+	font-size: 1.3rem;	
+}
+
+aside ul {
+	padding: 1rem;
+}
+
+aside li {
+	cursor: pointer;
+	padding: 0.25rem 0;
+	list-style-type: none;
+}
+
+aside a {
+	color: #29ABE2;
 }
 
 /************************* Inline Styles **************************/
