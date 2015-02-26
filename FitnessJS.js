@@ -1416,7 +1416,12 @@ var Fit = (function() {
 		*/
 		dbToBodyFat : function(bd) {
 			bd = parseFloat(bd) || 0,
-			data = {Brozek: ((4.570/bd)-4.142) , Siri: ((495/bd)-450)};
+			data = {
+				// Brozek and colleagues (1963)
+				Brozek: (4.57/bd)-4.142,
+				// Siri (1961)
+				Siri: (4.95/bd)-4.50
+			};
 		    return data;
 		},
 		            	
@@ -1429,23 +1434,34 @@ var Fit = (function() {
 			data = {};
 			if(this.gender === "male" ) { // male
 			data = {
+				// Jackson and Pollock (1978)
 				black: 1.112 - (0.00043499*sum) + (0.00000055*Math.pow(sum, 2)) - (0.00028826*age),
+				// Jackson and Pollock (1978)
 				white: 1.10938 - (0.0008267*sum) + (0.0000016*Math.pow(sum, 2)) - (0.0002574*age),
+				// Jackson and Pollock (1978)
+				athlete: 1.112 - (0.00043499*sum) + (0.00000055*Math.pow(sum, 2)) - (0.00028826*age),
+				// Evans et al. (2005)
 				collegiateathlete: {
-				black: 8.997 - (0.2468*sum) - (6.343 * 1) - (1.998),
-				white: 8.997 - (0.2468*sum) - (6.343 * 1),
+					black: 8.997 + (0.2468*sum) - (6.343 * 1) - (1.998),
+					white: 8.997 + (0.2468*sum) - (6.343 * 1),
 				},
+				// Slaughter et al. (1988)
 				child: (0.735*sum) + 1.0
 				}
 			} else if(this.gender === "female") {
 			data = {
+				// Jackson et al(1980)
 				blackhispanic: 1.0970 - (0.00046971*sum) + (0.00000056*Math.pow(sum, 2)) - (0.00012828*age),
+				// Jackson et al. (1980)
 				whiteanorexic: 1.0994921 - (0.0009929*sum) + (0.0000023*Math.pow(sum, 2)) - (0.00001392*age),
+				// Jackson et al. (1980)
 				athlete: 1.096095 - (0.0006952*sum) + (0.0000011*Math.pow(sum, 2)) - (0.0000714*age),
+				// Evans et al. (2005)
 				collegiateathlete: {
-				black: 8.997 - (0.2468*sum) - (1.998),
-				white: 8.997 - (0.2468*sum),
+					black: 8.997 + (0.2468*sum) - (1.998),
+					white: 8.997 + (0.2468*sum),
 				},
+				// Slaughter et al. (1988)
 				child: (0.610*sum) + 5.1
 			}
 			}
