@@ -2,8 +2,8 @@
 	<head>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<script src="js/libs/jquery-1.11.1.min.js" type="text/js" ></script>
-		<script src="js/docs.js" type="text/js" ></script>
+		<script src="js/libs/jquery-1.11.1.min.js"></script>
+		<script src="js/docs.js"></script>
 	</head>
 	
 	<body>
@@ -101,10 +101,287 @@
 			
 			<aside>
 				
+				<span class="module"><a href="#person">Person</a></span>
+				
+				<ul>
+					<li><a href="#person-getAge">getAge</a></li>
+					<li><a href="#person-netCaloricCost">netCaloricCost</a></li>
+					<li><a href="#person-bmiToBodyFat">bmiToBodyFat</a></li>
+					<li><a href="#person-dbToBodyFat">dbToBodyFat</a></li>
+					<li><a href="#person-dbAtTLCNS">dbAtTLCNS</a></li>
+					<li><a href="#person-bodySurfaceArea">bodySurfaceArea</a></li>
+					<li><a href="#person-bodyVolume">bodyVolume</a></li>
+					<li><a href="#person-restingMetabolicRate">restingMetabolicRate</a></li>
+					<li><a href="#person-predictedTEE">predictedTEE</a></li>
+					<li><a href="#person-skinfoldDb">skinfoldDb</a></li>
+				</ul>
+				
+				<span class="module"><a href="#cardio">Cardiovascular</a></span>
+				
+				<ul>
+					<li><a href="#cardio-getAge">getAge</a></li>
+					<li><a href="#cardio-fatFreeMass">fatFreeMass</a></li>
+					<li><a href="#cardio-fieldTestsV02Max">fieldTestsV02Max</a></li>
+					<li><a href="#cardio-popV02Max">popV02Max</a></li>
+					<li><a href="#cardio-walkingVO2">walkingVO2</a></li>
+					<li><a href="#cardio-runningVO2">runningVO2</a></li>
+					<li><a href="#cardio-legErgometryVO2">legErgometryVO2</a></li>
+					<li><a href="#cardio-armErgometryVO2">armErgometryVO2</a></li>
+					<li><a href="#cardio-SteppingVO2">SteppingVO2</a></li>
+					<li><a href="#cardio-vO2Reserve">vO2Reserve</a></li>
+					
+					<li><a href="#cardio-targetVO2">targetVO2</a></li>
+					<li><a href="#cardio-heartRateMax">heartRateMax</a></li>
+					<li><a href="#cardio-targetHeartRate">targetHeartRate</a></li>
+					<li><a href="#cardio-stairMasterMets">stairMasterMets</a></li>
+					
+					<li><a href="#cardio-residualVolume">residualVolume</a></li>
+					<li><a href="#cardio-totalLungCapacity">totalLungCapacity</a></li>
+				</ul>
+				
+				<span class="module"><a href="#muscle">Muscle</a></span>
+				
+				<ul>
+					<li><a href="#muscle-getAge">getAge</a></li>
+					<li><a href="#muscle-balanceratios">balanceratios</a></li>
+					<li><a href="#muscle-isMuscleBalanced">isMuscleBalanced</a></li>
+					<li><a href="#muscle-fatigueRepMaximum">fatigueRepMaximum</a></li>
+					<li><a href="#muscle-twoSetMaximum">twoSetMaximum</a></li>
+					<li><a href="#muscle-YMCAUpperBodyRepMax">YMCAUpperBodyRepMax</a></li>
+					<li><a href="#muscle-relativeStrength">relativeStrength</a></li>
+					<li><a href="#muscle-femaleRepMax">femaleRepMax</a></li>
+				</ul>
 				
 			</aside>
 			
 			<article>
+				<h1>Documentation</h1>
+				
+				<section>
+				
+					<h2 id="person">Fit.Person(name, gender, dob, weight, height, race)</h2>
+					
+					<p>People are at the heart of health care, which why the <b>Person</b> object is the heart of the library. The Person object stores the
+					properties from which the Cardiovascular and Muscle objects obtain their properties for calculations, making it the most important object 
+					in the library.</p>
+					
+					<h4>Properties</h4>
+					<ul>
+						<li>name</li>
+						<li>gender</li>
+						<li>dob</li>
+						<li>height</li>
+						<li>weight</li>
+						<li><a href="#cardiovascular">cardio</a></li>
+						<li><a href="#muscle">muscle</a></li>
+					</ul>
+					
+					<h4>Usage</h4>
+					<pre>
+						<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ <kbd>// pick an equation from Person</kbd>
+ me.Predicted_TEE()['active'];  <samp>// 2537.0212935729905 (kcal)</samp>
+	
+ <kbd>// or from one of its components</kbd>
+ me.cardio.HeartRateMax();  <samp>// 190.538 (bpm)</samp>
+						</code>
+					</pre>
+					
+					<div id="person-getAge">
+						<h3>Person.getAge()</h3>
+						
+						<p>Returns the age of the Person in years. This method is used primarily to ensure the age used in calculations is accurate at the time 
+						of execution.</p>
+						
+						<h4>Usage</h4>
+					<pre>
+						<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ me.getAge();  <samp>// 24.96</samp>
+						</code>
+					</pre>
+						
+					</div>
+					
+					
+					
+					<div id="person-netCaloricCost">
+						<h3>Person.netCaloricCost(mets)</h3>
+						
+						<p>Returns the caloric cost in kilocalories.  METs can be obtained by manually entering the number or through the <a href="#mets">METs</a> module</p>
+						
+						<p><b>Note:</b> Mets must be in MET form, not mL/kg/minute</p>
+						
+						<h4>Usage</h4>
+						<pre>
+							<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ <kbd>// pick an equation from Person</kbd>
+ me.netCaloricCost(300);  <samp>// 283.5 (kcal)</samp>
+							</code>
+						</pre>
+						
+					</div>
+					
+					
+					
+					<div id="person-bmiToBodyFat">
+						<h3>Person.bmiToBodyFat()</h3>
+						
+						<p>Returns an object of percentage of body fat for adults, and a child.</p>
+						
+						<h4>Usage</h4>
+						<pre>
+							<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ <kbd>// pick an equation from Person</kbd>
+ me.bmiToBodyFat();  
+ <samp>{
+ child: -0.196009441271428,
+ adult: -0.219158504271645
+ }</samp>
+							</code>
+						</pre>
+						
+					</div>
+					
+					
+					
+					<div id="person-skinfoldDb">
+						<h3>Person.skinfoldDb(sum)</h3>
+						
+						<p>Where <b>sum</b> is the result of a skinfold test, returns an object of percentage of body fat for many populations.</p>
+						
+						<h4>Populations</h4>
+						<ul>
+							<li>black</li>
+							<li>white</li>
+							<li>collegiateathlete:
+								<ul>
+									<li>black</li>
+									<li>white</li>
+								</ul>
+							</li>
+							<li>child</li>
+						</ul>
+						
+						<h4>Usage</h4>
+						<pre>
+							<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ <kbd>// pick an equation from Person</kbd>
+ me.skinfoldDb();  
+ <samp>{
+ black: 1.094301868944607,
+ child: 19.375,
+ collegiateathlete: {
+ 	black: -5.514,
+ 	white: -3.516 },
+ white: 1.0833126542577594
+ }</samp>
+							</code>
+						</pre>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div id="person-dbAtTLCNS">
+						<h3>Person.dbAtTLCNS(db)</h3>
+						
+						<p>Where <b>db</b> is body density (g/mL), returns body density from hydrostatic weighing while total lung capacity without head submersion (TLCNS).</p>
+						
+						<h4>Usage</h4>
+						<pre>
+							<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ <kbd>// pick an equation from Person</kbd>
+ me.dbAtTLCNS(0.95);  <samp>// 0.959655</samp>
+							</code>
+						</pre>
+						
+					</div>
+					
+					
+					
+					<div id="person-bodySurfaceArea">
+						<h3>Person.bodySurfaceArea()</h3>
+						
+						<p>Where <b>db</b> is body density (g/mL), returns body surface in meters<sup>2</sup>.</p>
+						
+						<h4>Equations</h4>
+						
+						<ul> 
+		    				<li><b>Boyd</b>: 0.03330 * Math.pow(weight,(0.7285-0.0188*Math.log(weight)))*Math.pow(height,0.3)</li>
+		    				<li><b>Costeff</b>: (4*weight+7)/(90+weight)</li>
+		        			<li><b>DuBois</b>: 0.0087184 * Math.pow(weight,0.425) * Math.pow(height,0.725)</li>
+		        			<li><b>Fujimoto</b>: 0.008883 * Math.pow(weight, 0.444) * Math.pow(height, 0.663)</li>
+		        			<li><b>GehanGeorge</b>: 0.0235 * Math.pow(weight, 0.51456) * Math.pow(height, 0.42246)</li>
+		        			<li><b>Haycock</b>: 0.024265 * Math.pow(weight, 0.5378) * Math.pow(height, 0.3964)</li>
+		        			<li><b>Mosteller</b>: Math.sqrt(weight*height)/60</li>
+		        			<li><b>Takahira</b>: 0.007241 * Math.pow(weight, 0.425) * Math.pow(height,0.725)</li>
+						</ul>
+						
+						<h4>Usage</h4>
+						<pre>
+							<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ <kbd>// pick an equation from Person</kbd>
+ me.bodySurfaceArea();
+ <samp>{
+ Boyd: 2.045653492421787,
+ Costeff: 1.5486111111111112,
+ DuBois: 1.8308664274017985,
+ Fujimoto: 1.4725455220642767,
+ GehanGeorge: 1.5368390922502115,
+ Haycock: 1.5268447264673155,
+ Mosteller: 1.5198684153570663,
+ Takahira: 1.5206120160598762
+ }</samp>
+							</code>
+						</pre>
+						
+					</div>
+					
+					
+					
+					
+					<div id="person-bodyVolume">
+						<h3>Person.bodyVolume(uww, rv, gv=100)</h3>
+						
+						<p>Where <b>uww</b> is underwater weight(kg), <b>rv</b> is residual volume (mL), <b>gv</b> is gastrointestinal volume (mL), and <b>wd</b> is water density in (g/mL) returns body volume in m<sup>3</sup>.</p>
+						
+						<h4>Usage</h4>
+						<pre>
+							<code>
+ <kbd>// create a Person instance</kbd>
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+	
+ <kbd>// pick an equation from Person</kbd>
+ me.bodyVolume(50, 1200, 100);  <samp>// 0.05 (m<sup>3</sup>)</samp>
+							</code>
+						</pre>
+						
+					</div>
+					
+				</section>
 			
 			</article>
 			

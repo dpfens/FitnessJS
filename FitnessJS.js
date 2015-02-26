@@ -850,7 +850,7 @@ var Fit = (function() {
 			},
 		
 			getMetsByCode: function(code) {
-				code = parseInt(code) || 0;
+				code = parseFloat(code) || 0;
 				for (var i=0; i < metsList.length; i++) {
 					if(metsList[i]["code"] === code) {
 						return metsList[i];
@@ -888,8 +888,8 @@ var Fit = (function() {
 		* returns fat free mass (FFM) in kg
 		*/
 		fatFreeMass : function(resistance, reactance) {
-			resistance = parseInt(resistance) || 0,
-			reactance = parseInt(reactance) || 0,
+			resistance = parseFloat(resistance) || 0,
+			reactance = parseFloat(reactance) || 0,
 			gender = this.gender,
 			age = this.getAge(),
 			wt = this.weight,
@@ -1056,9 +1056,9 @@ var Fit = (function() {
 		            	        
 		// VO2 Max
 		popV02Max: function(time, time2, time3) {
-			time = parseInt(time),
-			time2 = parseInt(time2) || 0,
-			time3 = parseInt(time3) || 0;
+			time = parseFloat(time),
+			time2 = parseFloat(time2) || 0,
+			time3 = parseFloat(time3) || 0;
 			results = {
 				male: {
 					/*
@@ -1249,7 +1249,7 @@ var Fit = (function() {
 		// Functional Residual Capacity (FRC = RV + ERV)
 		// Total Lung Capacity (TLC = RV + VC)
 		totalLungCapacity: function(rv,vc) {
-			rv = parseInt(rv) || 1300, vc = parseInt(vc) || 4700;       	        	
+			rv = parseFloat(rv) || 1300, vc = parseFloat(vc) || 4700;       	        	
 			return rv + vc;
 		},
 		
@@ -1283,7 +1283,7 @@ var Fit = (function() {
 		},
 			
 		isMuscleBalanced: function( group, rm1, rm2) {
-			rm1 = parseInt(rm1), rm2 = parseInt(rm2);
+			rm1 = parseFloat(rm1), rm2 = parseFloat(rm2);
 			var ratio = rm1/rm2;
 			if(ratio > 0.9 * this.balanceratios[group] || ratio < 1.1 * balanceratios[group]) {
 				return true;
@@ -1310,9 +1310,9 @@ var Fit = (function() {
 		* wt1 and wt2 must be of same unit (kg or lb)
 		*/
 		twoSetMaximum : function(rep1, wt1, rep2, wt2) {
-			rep1 = parseInt(rep1) || 1,
+			rep1 = parseFloat(rep1) || 1,
 			wt1 = wt1 || 1,
-			rep2 = parseInt(rep2) || 1,
+			rep2 = parseFloat(rep2) || 1,
 			wt2 = wt2 || 1,
 			data = 0;
 			data = ((wt1 - wt2)/(rep2 - rep1)) * (rep1 - 1) + wt1;
@@ -1327,7 +1327,7 @@ var Fit = (function() {
 		*/
 		YMCAUpperBodyRepMax : function(reps) {
 			gender = this.gender;
-			reps = parseInt(reps) || 0,
+			reps = parseFloat(reps) || 0,
 			data = 0;
 			if (gender === "male") {
 				data = (1.55 * reps) + 37.9; // male
@@ -1367,8 +1367,8 @@ var Fit = (function() {
 		this.name = name || "John Doe";
 		this.gender = gender;
 		this.dateofbirth = dob || new Date();
-		this.weight = parseInt(wt) || 1;
-		this.height = parseInt(ht) || 1;
+		this.weight = parseFloat(wt) || 1;
+		this.height = parseFloat(ht) || 1;
 		this.race = race || null;
 		this.cardio = new Cardiovascular(gender, this.dateofbirth, this.height, this.weight, race);
 		this.muscle = new Muscle(gender, this.dateofbirth, this.height, this.weight, race);
@@ -1414,8 +1414,8 @@ var Fit = (function() {
 		/*
 		* Population-specific Formulas for converting Body Density (Db) to Percent Body Fat (%BF) 
 		*/
-		dbtoBF : function(bd) {
-			bd = parseInt(bd) || 0,
+		dbToBodyFat : function(bd) {
+			bd = parseFloat(bd) || 0,
 			data = {Brozek: ((4.570/bd)-4.142) , Siri: ((495/bd)-450)};
 		    return data;
 		},
@@ -1424,7 +1424,7 @@ var Fit = (function() {
 		* Skinfold tests
 		*/
 		skinfoldDb : function (sum) {
-			sum = parseInt(sum) || 0,
+			sum = parseFloat(sum) || 0,
 			age = this.getAge(),
 			data = {};
 			if(this.gender === "male" ) { // male
@@ -1453,10 +1453,10 @@ var Fit = (function() {
 		},
 		
 		/*
-		* ulate Body Density at TLCNS
+		* calculate Body Density at TLCNS
 		*/
 		dbAtTLCNS : function(bd) {
-			bd = parseInt(bd) || 0;
+			bd = parseFloat(bd) || 0;
 			gender = this.gender,
 			data=0;
 			if(gender === "female") {
@@ -1490,14 +1490,15 @@ var Fit = (function() {
 		},
 		            	
 		/*
-		* Body volume ulation from hydrostatic weighing
+		* Body volume calculation from hydrostatic weighing
 		* uww is Underwater wt
 		* rv is Residual Volume in mL
 		* gv is Volume of air in gastrointestinal tract (GV) (default: 100mL)
 		 */
-		bodyVolume : function(uww, rv, gv) {
+		bodyVolume : function(uww, rv, gv, wd) {
 		    wt = this.weight,
 		    gv = gv || 100,
+		    wd = parseFloat(wd) | 1,
 		    data = ((wt - uww)/ waterdensity) - (rv - gv);
 		    return data;
 		},
