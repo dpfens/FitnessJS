@@ -424,35 +424,36 @@
 					
 				<p>The library is built upon 3 objects: <b>Person</b>, <b>Cardiovascular</b>, and <b>Strength</b>.  Cardiovascular and Strength objects are the building blocks of
 				the Person object.</p>
-					
-				<pre>
-					<code>
+                <pre><code>
  <kbd>// create a Person for me</kbd>
- <var>var</var> me = new Person("Doug Fenstermacher", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+ <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
 	
  <kbd>// pick an equation from Person</kbd>
  me.Predicted_TEE()['active'];  <samp>// 2537.0212935729905 (kcal)</samp>
 	
  <kbd>// or from one of its components</kbd>
  me.cardio.HeartRateMax();  <samp>// 190.538 (bpm)</samp>
-					</code>
-				</pre>
+                </code></pre>
 			
+                <a class="cta" href="/Fitness/demo.html">Try out the Demo</a>
 			</div>
 		</section>
 	
 	<footer>
 		<div class="inner-container">
-		
+            <div class="center">
+                <a href="https://github.com/dpfens/FitnessJS"><i class="fa fa-github fa-lg"></i> Github Project</a> -
+                <a href="https://github.com/dpfens/FitnessJS/issues">Issues</a>
+            </div>
 		</div>
 	</footer>
 	
 	</body>
 	
-	<script src="js/libs/angular.min.js" type="text/js" ></script>
-	<script src="js/libs/angular-route.min.js" type="text/js" ></script>
-	<script src="js/libs/angular-animate.min.js" type="text/js" ></script>
-	<script src="js/libs/jquery-1.11.1.min.js" type="text/js" ></script>
-	<script src="js/home.js" type="text/js" ></script>
+	<script src="js/libs/angular.min.js" ></script>
+	<script src="js/libs/angular-route.min.js" ></script>
+	<script src="js/libs/angular-animate.min.js" ></script>
+	<script src="js/libs/jquery-1.11.1.min.js" ></script>
+	<script src="js/home.js" ></script>
 
 </html>

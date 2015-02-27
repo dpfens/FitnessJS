@@ -927,17 +927,39 @@ app.service("docsService", [  function() {
 	],
 	
 	get = function() {
-		return docs;
+        return docs;
 	};
+    
+    getModule = function(name){
+        for(var i =0; i<docs.length; i++) {
+            if (docs[i].name = name) {
+                return docs[i];
+            }
+        }
+        return false;
+    }
+    
+    getMethod = function(moduleName, method){
+        var module = getModule(moduleName);
+        for(var i =0; j<module.methods.length; i++) {
+            if(module.methods[i].name = method) {
+                return module.methods[i]
+            }
+        }
+        return false;
+    }
 	
 	return {
 		get: get,
+        getModule: getModule,
+        getMethod: getMethod,
 	};
 	
 }]);
 
 app.controller('overviewController', ['$scope','docsService', function($scope, docsService) {
 	$scope.docs = docsService.get();
+    $scope.index = true;
 	
 	$scope.$on('showIndex', function(e,d) {
 		$scope.index = d;
@@ -972,12 +994,27 @@ app.controller('listController', ['$scope', function($scope) {
 	}
 }]);
 
+app.controller('indexController', ['$scope','docsService', function($scope, docsService) {
+    $scope.showIndex = function() {
+		$scope.$emit('showIndex', true);
+	}
+	
+	$scope.showModule = function(name) {
+        var module = docsService.getModule(name);
+		$scope.$emit('showModule', module);
+	}
+	
+	$scope.showMethod = function(module,method) {
+        var method = docsService.getMethod(module, method);
+		$scope.$emit('showMethod', method);
+	}
+}]);
+
 app.controller('moduleController', ['$scope', function($scope) {
 	$scope.argumentsList = $scope.module.arguments.map(function(v) { return (v.units) ? v.name+' ('+v.units+')' : v.name;});
 	$scope.methodList = $scope.module.methods.map(function(v) { return v.name;});
 	
 	$scope.$watch('module', function(ov, nv) {
-		console.log('checking module');
 		if(nv!==ov) {
 			$scope.argumentsList = $scope.module.arguments.map(function(v) { return (v.units)? v.name+' ('+v.units+')' : v.name;});
 			$scope.methodList = $scope.module.methods.map(function(v) { return v.name;});
