@@ -7,6 +7,7 @@
 		<script src="js/libs/angular-sanitize.min.js"></script>
 		<script src="js/libs/jquery-1.11.1.min.js"></script>
 		<script src="js/docs.js"></script>
+		<script src="FitnessJS.js"></script>
 	</head>
 	
 	<body>
@@ -114,29 +115,31 @@
 			<article ng-controller="moduleController" ng-if="module">
 				<h2>Fit.{{module.name}}({{argumentsList.join(', ')}})</h2>
 				
-				<p>{{module.description}}</p>
+				<p ng-bind-html="module.description"></p>
 				
+				<h3>Methods</h3>
 				<ul>
 					<li ng-repeat="method in methodList">{{method}}</li>
 				</ul>
+				
+				<pre><code ng-bind-html="module.example"></code></pre>
 			</article>
 			
 			<article ng-controller="methodController" ng-if="method">
-				<h2>Fit.{{method.name}}({{argumentsList.join(', ')}})</h2>
+				<h2><span class="method-type" ng-bind-html="method.val"></span> {{method.name}}({{argumentsList.join(', ')}})</h2>
 				
-				<p>return type: <span ng-bind-html="method.val"></span> </p>
 				
-				<p ng->{{method.description}}</p>
+				<p ng-bind-html="method.description"></p>
 				
 				<div ng-if="method.equations.length">
 					<h3>Equations</h3>
 					
 					<ul>
-						<li ng-repeat="equation in method.equations"><b ng-if="equation.name">{{equation.name}} </b>{{equation.val}} <i ng-if="equation.source">({{equation.source}})</i></li>
+						<li ng-repeat="equation in method.equations"><b ng-if="equation.name">{{equation.name}}: </b>{{equation.val}} <i ng-if="equation.source">({{equation.source}})</i></li>
 					</ul>
 				</div>
 				
-				
+				<pre><code ng-bind-html="method.example"></code></pre>
 				
 			</article>
 			
