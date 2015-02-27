@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<script src="js/libs/angular.min.js"></script>
 		<script src="js/libs/angular-sanitize.min.js"></script>
-		<script src="js/libs/angular-sanitize.min.js"></script>
+		<script src="js/libs/angular-animate.min.js"></script>
 		<script src="js/libs/jquery-1.11.1.min.js"></script>
 		<script src="js/docs.js"></script>
 		<script src="FitnessJS.js"></script>
@@ -101,7 +101,7 @@
 		</header>
 		
 		<section ng-app="docsApp">
-			<div class="inner-container" ng-controller="overviewController">
+			<div class="inner-container view-container" ng-controller="overviewController">
 			
 			<aside ng-controller="listController">
 					<div ng-repeat="module in docs">
@@ -112,7 +112,7 @@
 					</div>
 			</aside>
 			
-			<article ng-controller="moduleController" ng-if="module">
+			<article ng-controller="moduleController" ng-if="module" class="view-container">
 				<h2>Fit.{{module.name}}({{argumentsList.join(', ')}})</h2>
 				
 				<p ng-bind-html="module.description"></p>
@@ -125,7 +125,7 @@
 				<pre><code ng-bind-html="module.example"></code></pre>
 			</article>
 			
-			<article ng-controller="methodController" ng-if="method">
+			<article ng-controller="methodController" ng-if="method" class="view-container">
 				<h2><span class="method-type" ng-bind-html="method.val"></span> {{method.name}}({{argumentsList.join(', ')}})</h2>
 				
 				

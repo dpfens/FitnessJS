@@ -1,4 +1,4 @@
-var app = angular.module('docsApp', ['ngSanitize']);
+var app = angular.module('docsApp', ['ngSanitize', "ngAnimate"]);
 
 app.service("docsService", [  function() {
 	var docs = [
