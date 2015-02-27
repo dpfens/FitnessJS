@@ -29,8 +29,14 @@ p, article li {
 	font-size: 0.80rem; 
 }
 
-.cta {
-	background-color: #29ABE2;
+a.cta {
+    background-color: #29ABE2;
+    color: #FFFFFF;
+    display: block;
+    font-family: 'Oswald';
+    font-size: 1.5rem; 
+    padding: 1rem;
+    text-align: center;
 }
 
 button {
@@ -43,6 +49,20 @@ body > section {
 
 article {
 	margin: 0 0 0 16rem;
+}
+
+/************************* Message Styles ***********************************/
+
+.error {
+    color: #FF0000;
+}
+
+.warning {
+    color: #FFFF00;
+}
+
+.success {
+    color: #00FF00;
 }
 
 /************************* Header Styles ***********************************/
@@ -220,8 +240,13 @@ form input, form select {
 code, pre {
 	background-color: #333;
 	color: #CCC;
+    display: inline-block;;
 	font-family: 'Ubuntu Mono';
-	width: 60rem;
+	width: 44rem;
+}
+
+code {
+    padding: 0.5rem;
 }
 
 var {
@@ -445,4 +470,33 @@ to { opacity: 0; }
 	to {
         left: -3rem; 
 	}
+}
+
+
+/****************************** Footer Styles ***************************************/
+
+footer {
+    background: -webkit-linear-gradient(#000, #222); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#000, #222); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#000, #222); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#000, #222); /* Standard syntax */
+    color: #FFF;
+	overflow: auto;
+	width: 100%;
+}
+
+footer div.center {
+    font-family: 'Open Sans';
+    text-align: center;
+}
+
+
+footer div.center a {
+    color: #CCC;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+footer div.center a:hover {
+    color: #FFF;
 }

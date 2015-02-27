@@ -104,6 +104,10 @@
 			<div class="inner-container view-container" ng-controller="overviewController">
 			
 			<aside ng-controller="listController">
+                <ul>
+                    <li><a ng-click="showIndex()"><i class="fa fa-home fa-lg"></i> Home</a></li>
+                </ul>
+            
 					<div ng-repeat="module in docs">
 						<h2><a ng-click="showModule(module)" ng-href="#{{module.name}}">{{module.name}}</a></h2>
 						<ul>
@@ -111,6 +115,43 @@
 						</ul>
 					</div>
 			</aside>
+            
+            
+            <article ng-controller="indexController" ng-if="index" class="view-container">
+				<h1>Documentation</h1>
+                
+                <p>Welcome to FitnessJS Documentation.  This documentation is divided into modules. After reading the extremely short installation guide, I recommend that you get started with the <a href="" ng-click="showModule('Person')">Person</a> module.</p>
+                
+                <h2>Installation</h2>
+                
+                <div>
+                    <h3>The Easiest Way</h3>
+                    <p>Have the library downloaded directly from this website.</p>
+                
+                    <ol>
+                        <li>Paste the following code into the &lt;head&gt; section of the page.
+                            <pre><code>&lt;script src=<kbd>"FitnessJS.min.js"</kbd>&gt;&lt;/script&gt;</pre></code>
+                        </li>
+                        <li>Start using FitnessJS!</li>
+                    </ol>
+                </div>
+                
+                
+                <div>
+                    <h3>The Easy Way</h3>
+                    <p>Download the library and host it yourself.</p>
+                
+                    <ol>
+                        <li><a href="/FitnessJS/FitnessJS.min.js">Download</a> FitnessJS</li>
+                        <li>In the &lt;head&gt; of your html, reference the location to your FitnessJS.min.js.
+                            <pre><code>&lt;script src=<kbd>"/path/to/FitnessJS.min.js"</kbd>&gt;&lt;/script&gt;</code></pre>
+                        </li>
+                        <li>Start using FitnessJS!</li>
+                    </ol>
+                </div>
+                
+                <a class="cta" href="" ng-click="showModule('Person')">Checkout Person Module</a>
+			</article>
 			
 			<article ng-controller="moduleController" ng-if="module" class="view-container">
 				<h2>Fit.{{module.name}}({{argumentsList.join(', ')}})</h2>
