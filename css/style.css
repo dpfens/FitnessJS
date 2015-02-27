@@ -21,7 +21,7 @@ h1{
 	font-size: 1.5rem;
 }
 
-p, li, span {
+p, li {
 	font-family: 'Open Sans';
 }
 
@@ -42,7 +42,7 @@ body > section {
 }
 
 article {
-	margin: 0 0 0 15rem;
+	margin: 0 0 0 16rem;
 }
 
 /************************* Header Styles ***********************************/
@@ -276,6 +276,14 @@ div.specs * {
 	margin-left: 1rem;
 }
 
+
+/****************************** Doc Styles ***************************************/
+
+.method-type {
+	font-size: 1rem;
+}
+
+
 /****************************** Angular-Specific ***************************************/
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -438,5 +446,3 @@ to { opacity: 0; }
         left: -3rem; 
 	}
 }
-
-
