@@ -967,7 +967,7 @@ var Fit = (function() {
 		            		
 		/****************************** Cardiovascular Assessments, Tests, and Formulas ****************************************/
 		            		
-		fieldTestsV02Max: function(time, hr, speed) {
+		fieldTestsV02Max: function(time, distance, hr, speed) {
 			gender = this.gender,
 			age = this.getAge(),
 			wt = this.weight,
@@ -1133,6 +1133,7 @@ var Fit = (function() {
 		* body mass in kilograms; 1 kg = 2.2 lb
 		*/
 		legErgometryVO2: function(work, mass) {
+			var mass= this.weight;
 			return work/mass * 1.8 + 3.5;
 		},
 		            	        
@@ -1140,7 +1141,8 @@ var Fit = (function() {
 		* work rate in kgm / min; 1 Watt = 6 kgm / min
 		* body mass in kilograms; 1 kg = 2.2 lb
 		*/
-		armErgometryVO2: function(work, mass) {
+		armErgometryVO2: function(wor55k) {
+			var mass= this.weight;
 			return work/mass * 3.0;
 		},
 		            	        
@@ -1271,7 +1273,12 @@ var Fit = (function() {
 			return diff / 31556900000;
 		},
 		
-		balanceratios: {
+		
+			
+		isMuscleBalanced: function( group, rm1, rm2) {
+			rm1 = parseFloat(rm1), rm2 = parseFloat(rm2)
+			var ratio = rm1/rm2,
+			balanceratios = {
 				hip: 1,
 				elbow: 1,
 				trunk: 1,
@@ -1280,12 +1287,8 @@ var Fit = (function() {
 				knee: 1.5,
 				shoulderrotation: 1.5,
 				ankleflexion: 3
-		},
-			
-		isMuscleBalanced: function( group, rm1, rm2) {
-			rm1 = parseFloat(rm1), rm2 = parseFloat(rm2);
-			var ratio = rm1/rm2;
-			if(ratio > 0.9 * this.balanceratios[group] || ratio < 1.1 * balanceratios[group]) {
+		};
+			if(ratio > 0.9 * balanceratios[group] || ratio < 1.1 * balanceratios[group]) {
 				return true;
 			} else {
 				return false;
@@ -1398,7 +1401,7 @@ var Fit = (function() {
 		bmiToBodyFat : function() {
 			gender = this.gender,
 			age = this.getAge(),
-			bmi = (this.weight/Math.pow(this.height, 2));
+			bmi = (this.weight/Math.pow(this.height/100, 2));
 			if(gender === "male") { // male
 				gender = 1;
 			} else if (gender === "female") { // male
@@ -1513,9 +1516,9 @@ var Fit = (function() {
 		 */
 		bodyVolume : function(uww, rv, gv, wd) {
 		    wt = this.weight,
-		    gv = gv || 100,
+		    gv = gv || 0.1,
 		    wd = parseFloat(wd) | 1,
-		    data = ((wt - uww)/ waterdensity) - (rv - gv);
+		    data = ((wt-uww)/wd)-(rv+gv);
 		    return data;
 		},
 		
