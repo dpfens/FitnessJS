@@ -222,11 +222,6 @@ div.list-item div.content {
 	display: inline-block;
 }
 
-#flexibility-icon, #strength-icon {
-	transform: translateY(1rem);
-}
-
-
 /************************* Form Styles **************************/
 
 form label {
