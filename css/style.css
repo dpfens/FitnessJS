@@ -220,6 +220,7 @@ div.list-item img, div.list-item svg {
 
 div.list-item div.content {
 	display: inline-block;
+	width: 22rem;
 }
 
 /************************* Form Styles **************************/
