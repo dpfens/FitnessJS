@@ -220,23 +220,84 @@ app.service("docsService", [  function() {
 			 description: "",
 			 equations: [
 			 	{
-			 		name: "sedentary",
-			 		val: "",
+			 		name: "Boy-Sedentary",
+			 		val: "88.5 - (61.9 * age) + ((26.7*wt)+(903*ht))",
 			 		source: ""
 			 	},
 			 	{
-			 		name: "low",
-			 		val: "",
+			 		name: "Boy-low",
+			 		val: "88.5 - (61.9 * age) + 1.13*((26.7*wt)+(903*ht))",
 			 		source: ""
 			 	},
 			 	{
-			 		name: "active",
-			 		val: "",
+			 		name: "Boy-active",
+			 		val: "88.5 - (61.9 * age) + 1.26*((26.7*wt)+(903*ht))",
 			 		source: ""
 			 	},
 			 	{
-			 		name: "veryactive",
-			 		val: "",
+			 		name: "Boy-veryactive",
+			 		val: "88.5 - (61.9 * age) + 1.42*((26.7*wt)+(903*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Man-Sedentary",
+			 		val: "662 - (9.53 * age) + 1*((15.9*wt)+(540*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Man-Low",
+			 		val: "662 - (9.53 * age) + 1.11*((15.9*wt)+(540*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Man-Active",
+			 		val: "662 - (9.53 * age) + 1.25*((15.9*wt)+(540*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Man-veryactive",
+			 		val: "662 - (9.53 * age) + 1.48*((15.9*wt)+(540*ht))",
+			 		source: ""
+			 	},
+			 	
+			 	{
+			 		name: "Girl-Sedentary",
+			 		val: "135.3 - (30.8 * age) + 1*((10*wt)+(934*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Girl-low",
+			 		val: "135.3 - (30.8 * age) + 1.16*((10*wt)+(934*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Girl-active",
+			 		val: "135.3 - (30.8 * age) + 1.31*((10*wt)+(934*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Girl-veryactive",
+			 		val: "135.3 - (30.8 * age) + 1.56*((10*wt)+(934*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Woman-Sedentary",
+			 		val: "354 - (6.91 * age) + 1*((9.36*wt)+(726*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Woman-Low",
+			 		val: "662 - (9.53 * age) + 1.11*((15.9*wt)+(540*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Woman-Active",
+			 		val: "662 - (9.53 * age) + 1.27*((15.9*wt)+(540*ht))",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Woman-veryactive",
+			 		val: "662 - (9.53 * age) + 1.45*((15.9*wt)+(540*ht))",
 			 		source: ""
 			 	},
 			 ],
@@ -250,13 +311,23 @@ app.service("docsService", [  function() {
 			 description: "",
 			 equations: [
 			 	{
-			 		name: "Harris-Benedict",
-			 		val: "",
+			 		name: "Harris-Benedict - Male",
+			 		val: "66.473 + 13.751*wt + 5.0033*ht - 6.755*age",
 			 		source: ""
 			 	},
 			 	{
-			 		name: "Mifflin",
-			 		val: "",
+			 		name: "Harris-Benedict - Female",
+			 		val: "655.0955 + 9.463*wt + 1.8496*ht - 4.6756*age",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Mifflin - Male",
+			 		val: "(9.99*wt + 6.25*ht + - 4.92*age)+5",
+			 		source: ""
+			 	},
+			 	{
+			 		name: "Mifflin - Female",
+			 		val: "(9.99*wt + 6.25*ht + - 4.92*age)-161",
 			 		source: ""
 			 	},
 			 ],
@@ -274,23 +345,27 @@ app.service("docsService", [  function() {
 			 equations: [
 			 	{
 			 		name: "black",
-			 		source: ""
+			 		source: "Jackson and Pollock (1978)"
 			 	},
 			 	{
 			 		name: "white",
-			 		source: ""
+			 		source: "Jackson and Pollock (1978)"
 			 	},
 			 	{
 			 		name: "athlete",
-			 		source: ""
+			 		source: "Jackson and Pollock (1978)"
 			 	},
 			 	{
-			 		name: "collegeathlete",
-			 		source: ""
+			 		name: "collegeathlete - black",
+			 		source: "Evans et al. (2005)"
+			 	},
+			 	{
+			 		name: "collegeathlete - white",
+			 		source: "Evans et al. (2005)"
 			 	},
 			 	{
 			 		name: "child",
-			 		source: ""
+			 		source: "Slaughter et al. (1988)"
 			 	},
 			 ],
 			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
@@ -357,8 +432,14 @@ app.service("docsService", [  function() {
 						source: "Segal et al. (1980)"
 					},
 					{
-						name: "athlete",
-						source: ""
+						name: "athlete - male",
+						val: "(0.186*(Math.pow(ht,2)/resistance)) + (0.701*wt) + 1.949",
+						source: "Oppliger et al. (1991)"
+					},
+					{
+						name: "athlete - female",
+						val: "(0.282*ht) + (0.415*wt) - (0.037*resistance) + (0.096*reactance) - 9.734",
+						source: "Fornetti et al. (1999)"
 					}
 				 ],
 				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
