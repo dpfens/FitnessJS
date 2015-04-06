@@ -48,9 +48,7 @@ body > section {
 }
 
 article {
-	float: right;
-	width: 50%;
-	max-width:60rem;
+	margin: 0 0 0 33%;
 }
 
 /************************* Message Styles ***********************************/
