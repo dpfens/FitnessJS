@@ -129,9 +129,12 @@ div.splash {
 }
 
 div.splash h1 {
+	color: #333;
+	display: block;
 	position: relative;
 	left: 12rem;
-	bottom: 10rem;
+	bottom: 8rem;
+	width: 20rem;
 }
 
 div.splash p {
@@ -185,14 +188,14 @@ aside a {
 
 div.row {
 	overflow:hidden;
-	width: 60rem;
 }
 
 div.cell-3 {
 	float: left;
 	height: 10rem;
-	margin: 0.625rem;
-	width: 18.75rem;
+	margin: 1%;
+	min-width: 15rem;
+	width: 31%;
 }
 
 div.cell-3 h2 {
@@ -210,18 +213,20 @@ div.main.list {
 
 
 div.list-item {
-	height: 8rem;
-	width:29rem;
+	height: 10rem;
+	min-width: 25rem;
+	width:100%;
 }
 
 div.list-item img, div.list-item svg {
-	width: 5rem;
+	width: 22%;
 }
 
 div.list-item div.content {
 	display: inline-block;
-	width: 22rem;
+	width: 75%; 
 }
+
 
 /************************* Form Styles **************************/
 
