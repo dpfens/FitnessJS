@@ -481,12 +481,11 @@ to { opacity: 0; }
 /****************************** Footer Styles ***************************************/
 
 footer {
-    background: -webkit-linear-gradient(#000, #222); /* For Safari 5.1 to 6.0 */
+	background: -webkit-linear-gradient(#000, #222); /* For Safari 5.1 to 6.0 */
 	background: -o-linear-gradient(#000, #222); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(#000, #222); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(#000, #222); /* Standard syntax */
-    color: #FFF;
-	overflow: auto;
+	color: #FFF;
 	width: 100%;
 }
 
