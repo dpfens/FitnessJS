@@ -503,3 +503,15 @@ footer div.center a {
 footer div.center a:hover {
     color: #FFF;
 }
+
+@media screen and (max-width: 800px) {
+	header svg {
+		width: 100%;	
+	}
+}
+
+@media screen and (min-width: 800px) {
+	header svg {
+		width: 100%;	
+	}
+}
