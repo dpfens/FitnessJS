@@ -48,7 +48,7 @@ body > section {
 }
 
 article {
-	margin: 0 0 0 16rem;
+	margin: 0 0 0 33%;
 }
 
 /************************* Message Styles ***********************************/
@@ -96,6 +96,7 @@ header ul {
 	float: right;
 	list-style-type: none;
 	margin: 0;
+	padding: 0;
 }
 
 header li {
@@ -162,7 +163,8 @@ aside {
 	top: 3.25rem;
 	bottom: 0;
 	overflow: auto;
-	width: 15rem;
+	width:33%;
+	max-width: 15rem;
 }
 
 aside span.module {
