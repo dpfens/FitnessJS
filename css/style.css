@@ -240,6 +240,7 @@ form label {
 
 form input, form select {
 	text-align: left;
+	max-width: 33%;
 }
 
 /************************* Code Sample Styles **************************/
