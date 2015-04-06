@@ -93,7 +93,7 @@ header #logo {
 }
 
 header ul {
-	float: left;
+	float: right;
 	list-style-type: none;
 	margin: 0;
 }
@@ -502,4 +502,13 @@ footer div.center a {
 
 footer div.center a:hover {
     color: #FFF;
+}
+
+@media 
+  (max-device-width: 800px) {
+	.splash h1 {
+		left: 6rem;
+		width: 15rem;
+	}
+
 }
