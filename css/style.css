@@ -125,6 +125,7 @@ div.splash {
 	background: -ms-linear-gradient(top,  #000000 0%,#222222 100%);
 	background: linear-gradient(to bottom,  #000000 0%,#222222 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#222222',GradientType=0 );
+	min-height: 20rem;
 	height:50%;
 	max-height: 40rem;
 }
