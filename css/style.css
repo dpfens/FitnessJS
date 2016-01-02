@@ -285,7 +285,7 @@ div.specs * {
 
 /****************************** Doc Styles ***************************************/
 
-.method-type {
+.method-type, .parameter-type {
 	font-size: 1rem;
 }
 
