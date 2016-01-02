@@ -150,7 +150,7 @@
 			</article>
 			
 			<article ng-controller="moduleController" ng-if="module" class="view-container">
-				<h2>Fit.{{module.name}}({{argumentsList.join(', ')}})</h2>
+				<h2>Fit.{{module.name}}(<span ng-bind-html="argumentsList.join(', ')"></span>)</h2>
 				
 				<p ng-bind-html="module.description"></p>
 				
@@ -163,7 +163,7 @@
 			</article>
 			
 			<article ng-controller="methodController" ng-if="method" class="view-container">
-				<h2><span class="method-type" ng-bind-html="method.val"></span> {{method.name}}({{argumentsList.join(', ')}})</h2>
+				<h2><span class="method-type" ng-bind-html="method.val"></span> {{method.name}}(<span ng-bind-html="argumentsList.join(', ')"></span>)</h2>
 				
 				
 				<p ng-bind-html="method.description"></p>

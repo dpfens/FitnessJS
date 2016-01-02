@@ -27,7 +27,11 @@ app.service("docsService", [  function() {
 	    {
 		 name: "Person",
 		 description: "As people are the focus of healthcare, they are focus of FitnessJS. The Person object is capable of performing all calculations that FitnessJS has to offer.",
-		 arguments: [{
+		 arguments: [ {
+			 name: "name",
+			 units: "string",
+		 },
+		 {
 			 name: "gender",
 			 units: "string",
 		 },
@@ -1114,23 +1118,23 @@ app.controller('indexController', ['$scope','docsService', function($scope, docs
 }]);
 
 app.controller('moduleController', ['$scope', function($scope) {
-	$scope.argumentsList = $scope.module.arguments.map(function(v) { return (v.units) ? v.name+' ('+v.units+')' : v.name;});
+	$scope.argumentsList = $scope.module.arguments.map(function(v) { return (v.units)? '<span class="parameter-type">'+v.units+'</span> '+ v.name : v.name;});
 	$scope.methodList = $scope.module.methods.map(function(v) { return v.name;});
 	
 	$scope.$watch('module', function(ov, nv) {
 		if(nv!==ov) {
-			$scope.argumentsList = $scope.module.arguments.map(function(v) { return (v.units)? v.name+' ('+v.units+')' : v.name;});
+			$scope.argumentsList = $scope.module.arguments.map(function(v) { return (v.units)? '<span class="parameter-type">'+v.units+'</span> '+ v.name : v.name; });
 			$scope.methodList = $scope.module.methods.map(function(v) { return v.name;});
 		}
 	});
 }]);
 
 app.controller('methodController', ['$scope', function($scope) {
-	$scope.argumentsList = $scope.method.arguments.map(function(v) { return (v.units)? v.name+' ('+v.units+')' : v.name;});
+	$scope.argumentsList = $scope.method.arguments.map(function(v) { return (v.units)? '<span class="parameter-type">'+v.units+'</span> '+ v.name : v.name;});
 	
 	$scope.$watch('method', function(ov, nv) {
 		if(nv!==ov) {
-			$scope.argumentsList = $scope.method.arguments.map(function(v) { return (v.units)? v.name+' ('+v.units+')' : v.name;});
+			$scope.argumentsList = $scope.method.arguments.map(function(v) { return (v.units)? ' <span class="parameter-type">'+v.units+'</span> '+ v.name : v.name;});
 		}
 	});
 }]);
