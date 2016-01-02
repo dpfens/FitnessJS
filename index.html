@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/prism.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	</head>
 	
@@ -424,15 +425,15 @@
 					
 				<p>The library is built upon 3 objects: <b>Person</b>, <b>Cardiovascular</b>, and <b>Strength</b>.  Cardiovascular and Strength objects are the building blocks of
 				the Person object.</p>
-                <pre><code>
- <kbd>// create a Person for me</kbd>
- <var>var</var> me = new Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154);
+                <pre><code class="language-javascript">
+// create a Person for me
+me = new Person("John Doe", "male", new Date(1990, 3,17), 54, 154);
 	
- <kbd>// pick an equation from Person</kbd>
- me.Predicted_TEE()['active'];  <samp>// 2537.0212935729905 (kcal)</samp>
+// pick an equation from Person
+me.Predicted_TEE()['active'];  // 2537.0212935729905 (kcal)
 	
- <kbd>// or from one of its components</kbd>
- me.cardio.HeartRateMax();  <samp>// 190.538 (bpm)</samp>
+// or from one of its components
+me.cardio.HeartRateMax();  // 190.538 (bpm)
                 </code></pre>
 			
                 <a class="cta" href="/FitnessJS/demo.html">Try out the Demo</a>
@@ -449,7 +450,7 @@
 	</footer>
 	
 	</body>
-	
+	<script src="js/libs/prism.js" ></script>
 	<script src="js/libs/angular.min.js" ></script>
 	<script src="js/libs/angular-route.min.js" ></script>
 	<script src="js/libs/angular-animate.min.js" ></script>
