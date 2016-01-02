@@ -243,32 +243,6 @@ form input, form select {
 	max-width: 33%;
 }
 
-/************************* Code Sample Styles **************************/
-
-code, pre {
-	background-color: #333;
-	color: #CCC;
-    display: inline-block;;
-	font-family: 'Ubuntu Mono';
-}
-
-code {
-    padding: 0.5rem;
-}
-
-var {
-	color: #29ABE2;
-}
-
-kbd {
-	color: #FFFF99;
-}
-
-samp {
-	color: #FFF;
-}
-
-
 /************************* Demo Specific Styles **************************/
 
 div.demo-menu {
