@@ -2,12 +2,7 @@
 	<head>
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<script src="js/libs/angular.min.js"></script>
-		<script src="js/libs/angular-sanitize.min.js"></script>
-		<script src="js/libs/angular-animate.min.js"></script>
-		<script src="js/libs/jquery-1.11.1.min.js"></script>
-		<script src="js/docs.js"></script>
-		<script src="FitnessJS.js"></script>
+		<link rel="stylesheet" href="css/prism.css">
 		<meta name="viewport" content="width=device-width">
 	</head>
 	
@@ -164,7 +159,7 @@
 					<li ng-repeat="method in methodList">{{method}}</li>
 				</ul>
 				
-				<pre><code ng-bind-html="module.example"></code></pre>
+				<prism language="javascript" code="{{module.example}}"></prism>
 			</article>
 			
 			<article ng-controller="methodController" ng-if="method" class="view-container">
@@ -181,7 +176,7 @@
 					</ul>
 				</div>
 				
-				<pre><code ng-bind-html="method.example"></code></pre>
+				<prism language="javascript" code="{{method.example}}"><prism>
 				
 			</article>
 			
@@ -190,6 +185,13 @@
 	
 	
 	</body>
+	<script src="js/libs/prism.js"></script>
+	<script src="js/libs/angular.min.js"></script>
+	<script src="js/libs/angular-sanitize.min.js"></script>
+	<script src="js/libs/angular-animate.min.js"></script>
+	<script src="js/libs/jquery-1.11.1.min.js"></script>
+	<script src="js/docs.js"></script>
+	<script src="FitnessJS.js"></script>
 	<script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

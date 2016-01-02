@@ -1,5 +1,27 @@
 var app = angular.module('docsApp', ['ngSanitize', "ngAnimate"]);
 
+app.directive('prism', [function() {
+    return {
+        restrict: 'E',
+        scope: {
+        	code: '@',
+        	language: '@'
+        },
+        template: '<pre><code class="language-{{language}}" ng-bind="code">{{ code }}</code></pre>',
+        replace: true,
+        link: function (scope, element, attrs) {
+            element.ready(function() {
+                Prism.highlightElement(element.find("code")[0]);
+            });
+            scope.$watch('code', function(v,o) {
+            	if(v!==o) {
+            		Prism.highlightElement(element.find("code")[0]);
+            	}
+			});
+        }
+    } 
+}]);
+
 app.service("docsService", [  function() {
 	var docs = [
 	    {
@@ -26,17 +48,17 @@ app.service("docsService", [  function() {
 			 name: "race",
 			 units: "string"
 		 }],
-		 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-		 '\n\n<kbd>// call methods from Person</kbd>\nme.getAge() <kbd>24.96</kbd>'+
-		 '\nme.cardio.getAge() <kbd>24.96</kbd>',
+		 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+		 '\n\n// call methods from Person\nme.getAge() 24.96'+
+		 '\nme.cardio.getAge() 24.96',
 		 methods: [{
 			 name: "getAge",
 			 arguments: [],
 			 val: "years",
 			 description: "",
 			 equations: [],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call getAge from Person</kbd>\nme.getAge() <kbd>24.96</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call getAge from Person\nme.getAge() 24.96',
 		 },
 		 {
 			 name: "bmiToBodyFat",
@@ -55,8 +77,8 @@ app.service("docsService", [  function() {
 					source: ""
 				}
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call bmiToBodyFat from Person</kbd>\nme.bmiToBodyFat() <kbd>{\nchild: 0.2496275022760703,\nadult: 0.13499907862776397 }</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call bmiToBodyFat from Person\nme.bmiToBodyFat() {\nchild: 0.2496275022760703,\nadult: 0.13499907862776397 }',
 		 },
 		 {
 			 name: "bodySurfaceArea",
@@ -105,8 +127,8 @@ app.service("docsService", [  function() {
 					source: ""
 				},
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call bodySurfaceArea from Person</kbd>\nme.bmiToBodyFat() <kbd>\n{ Boyd: 2.045653492421787,\nCosteff: 1.5486111111111112,\nDuBois: 1.8308664274017985,\nFujimoto: 1.4725455220642767,\nGehanGeorge: 1.5368390922502115,\nHaycock: 1.5268447264673155,\nMosteller: 1.5198684153570663,\nTakahira: 1.5206120160598762\n}</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call bodySurfaceArea from Person\nme.bmiToBodyFat() \n{ Boyd: 2.045653492421787,\nCosteff: 1.5486111111111112,\nDuBois: 1.8308664274017985,\nFujimoto: 1.4725455220642767,\nGehanGeorge: 1.5368390922502115,\nHaycock: 1.5268447264673155,\nMosteller: 1.5198684153570663,\nTakahira: 1.5206120160598762\n}',
 		 },
 		 {
 			 name: "bodyVolume",
@@ -141,8 +163,8 @@ app.service("docsService", [  function() {
 					source: ""
 				}
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call bodyVolume from Person</kbd>\nme.bodyVolume() <kbd>2.7</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call bodyVolume from Person\nme.bodyVolume() 2.7',
 		 },
 		 {
 			 name: "dbToBodyFat",
@@ -164,8 +186,8 @@ app.service("docsService", [  function() {
 			 		source: ""
 			 	}
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call dbToBodyFat from Person</kbd>\nme.dbToBodyFat(1.0054) <kbd>{\nBrozek: 0.4034545454545455,\nSiri: 0.4234135667396064\n}</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call dbToBodyFat from Person\nme.dbToBodyFat(1.0054) {\nBrozek: 0.4034545454545455,\nSiri: 0.4234135667396064\n}',
 		 },
 		 {
 			 name: "dbAtTLCNS",
@@ -187,8 +209,8 @@ app.service("docsService", [  function() {
 			 		source: ""
 			 	},
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call dbAtTLCNS from Person</kbd>\nme.dbAtTLCNS(1.0054) <kbd>0.9919476599999999</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call dbAtTLCNS from Person\nme.dbAtTLCNS(1.0054) 0.9919476599999999',
 		 },
 		 {
 			 name: "netCaloricCost",
@@ -210,8 +232,8 @@ app.service("docsService", [  function() {
 			 		source: ""
 			 	},
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call netCaloricCost from Person</kbd>\nme.netCaloricCost(300) <kbd>283.5</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call netCaloricCost from Person\nme.netCaloricCost(300) 283.5',
 		 },
 		 {
 			 name: "predictedTEE",
@@ -301,8 +323,8 @@ app.service("docsService", [  function() {
 			 		source: ""
 			 	},
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call predictedTEE from Person</kbd>\nme.predictedTEE() <kbd>{\nsedentary: 2115.226775083932,\nlow: 2301.148775083932,\nactive: 2537.7767750839316,\nveryactive: 2926.5227750839317\n}</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call predictedTEE from Person\nme.predictedTEE() {\nsedentary: 2115.226775083932,\nlow: 2301.148775083932,\nactive: 2537.7767750839316,\nveryactive: 2926.5227750839317\n}',
 		 },
 		 {
 			 name: "restingMetabolicRate",
@@ -331,8 +353,8 @@ app.service("docsService", [  function() {
 			 		source: ""
 			 	},
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call restingMetabolicRate from Person</kbd>\nme.restingMetabolicRate() <kbd>{\nHarris-Benedict: 1411.5651693627854,\nMifflin: 1384.619133866011\n}</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call restingMetabolicRate from Person\nme.restingMetabolicRate() {\nHarris-Benedict: 1411.5651693627854,\nMifflin: 1384.619133866011\n}',
 		 },
 		 {
 			 name: "skinfoldDb",
@@ -368,8 +390,8 @@ app.service("docsService", [  function() {
 			 		source: "Slaughter et al. (1988)"
 			 	},
 			 ],
-			 example: '<kbd>// create instance of Person</kbd>\n<var>var</var> me = new Fit.Person("John Doe", "male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call skinfoldDb from Person</kbd>\nme.skinfoldDb() <kbd>{\nathlete: 1.1048321172156006,\nblack: 1.1048321172156006,\nchild: 1,\ncollegiateathlete: {\n\tblack: 0.6559999999999999,\n\twhite: 2.654 },\nwhite: 1.1029794830059514 }</kbd>',
+			 example: '// create instance of Person\nvar me = new Fit.Person("John Doe", "male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call skinfoldDb from Person\nme.skinfoldDb() {\nathlete: 1.1048321172156006,\nblack: 1.1048321172156006,\nchild: 1,\ncollegiateathlete: {\n\tblack: 0.6559999999999999,\n\twhite: 2.654 },\nwhite: 1.1029794830059514 }',
 		 },
 		 ],
 		},
@@ -397,16 +419,16 @@ app.service("docsService", [  function() {
 				 name: "race",
 				 units: "string"
 			 }],
-			 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-			 '\n\n<kbd>// call method from instance of Cardiovascular</kbd>\nmycardio.getAge() <kbd>24.96</kbd>',
+			 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+			 '\n\n// call method from instance of Cardiovascular\nmycardio.getAge() 24.96',
 			 methods: [{
 				 name: "getAge",
 				 arguments: [],
 				 val: "years",
 				 description: "",
 				 equations: [],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call getAge from instance of Cardiovascular</kbd>\nmycardio.getAge() <kbd>24.96</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call getAge from instance of Cardiovascular\nmycardio.getAge() 24.96',
 			 },
 			 {
 				 name: "fatFreeMass",
@@ -442,8 +464,8 @@ app.service("docsService", [  function() {
 						source: "Fornetti et al. (1999)"
 					}
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call fatFreeMass from instance of Cardiovascular</kbd>\nmycardio.fatFreeMass(1000,3) <kbd>{\nadult: {\n\taverage: 30.807956114636898,\n\tlean: 34.76353038022957,\n\tobese: 26.852381849044228 }\nathlete: 44.214175999999995 }</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call fatFreeMass from instance of Cardiovascular\nmycardio.fatFreeMass(1000,3) {\nadult: {\n\taverage: 30.807956114636898,\n\tlean: 34.76353038022957,\n\tobese: 26.852381849044228 }\nathlete: 44.214175999999995 }',
 			 },
 			 {
 				 name: "fieldTestsV02Max",
@@ -507,8 +529,8 @@ app.service("docsService", [  function() {
 						source: "McArdle et al. (1972)"
 					},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call fieldTestsV02Max from instance of Cardiovascular</kbd>\nmycardio.fieldTestsV02Max(30, 50, 140, 9) <kbd>{\nFifteenMinuteTest: 10.49,\nMileHalf: [-0.006400000000007289, 38.532000000000004],\nTwelveMinuteTest: -9.96,\nmileRunWalk: 167.85996125929756,\nmileSteady: 21.533599999999996,\nmileWalk: 5.517826152501623,\nshuttle: 13.776866985058128 }</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call fieldTestsV02Max from instance of Cardiovascular\nmycardio.fieldTestsV02Max(30, 50, 140, 9) {\nFifteenMinuteTest: 10.49,\nMileHalf: [-0.006400000000007289, 38.532000000000004],\nTwelveMinuteTest: -9.96,\nmileRunWalk: 167.85996125929756,\nmileSteady: 21.533599999999996,\nmileWalk: 5.517826152501623,\nshuttle: 13.776866985058128 }',
 			 },
 			 {
 				 name: "popV02Max",
@@ -559,8 +581,8 @@ app.service("docsService", [  function() {
 						source: "McConnell and Clark (1987)"
 					}
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call popV02Max from instance of Cardiovascular</kbd>\nmycardio.popV02Max(20,30,40) <kbd>{\nfemale: {\n\tbalke: 32.82,\n\tbruce: 83.69999999999999 },\nmale: {\n\tbalke: 43.87,\n\tbruce: 0.23000000000000265,\n\tnaughton: 35.800000000000004 },\nelderlycardiac: 54.185 }</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call popV02Max from instance of Cardiovascular\nmycardio.popV02Max(20,30,40) {\nfemale: {\n\tbalke: 32.82,\n\tbruce: 83.69999999999999 },\nmale: {\n\tbalke: 43.87,\n\tbruce: 0.23000000000000265,\n\tnaughton: 35.800000000000004 },\nelderlycardiac: 54.185 }',
 			 },
 			 {
 				 name: "walkingVO2",
@@ -581,8 +603,8 @@ app.service("docsService", [  function() {
 				 		source: ""
 				 	},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call walkingVO2 from instance of Cardiovascular</kbd>\nmycardio.walkingVO2(100,0.2) <kbd>46</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call walkingVO2 from instance of Cardiovascular\nmycardio.walkingVO2(100,0.2) 46',
 			 },
 			 {
 				 name: "runningVO2",
@@ -603,8 +625,8 @@ app.service("docsService", [  function() {
 				 		source: ""
 				 	},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call walkingVO2 from instance of Cardiovascular</kbd>\nmycardio.walkingVO2(200,0.2) <kbd>76</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call walkingVO2 from instance of Cardiovascular\nmycardio.walkingVO2(200,0.2) 76',
 			 },
 			 {
 				 name: "legErgometryVO2",
@@ -621,8 +643,8 @@ app.service("docsService", [  function() {
 				 		source: ""
 				 	},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call legErgometryVO2 from instance of Cardiovascular</kbd>\nmycardio.legErgometryVO2(1234) <kbd>44.633333333333</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call legErgometryVO2 from instance of Cardiovascular\nmycardio.legErgometryVO2(1234) 44.633333333333',
 			 },
 			 {
 				 name: "armErgometryVO2",
@@ -639,8 +661,8 @@ app.service("docsService", [  function() {
 				 		source: ""
 				 	},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call armErgometryVO2 from instance of Cardiovascular</kbd>\nmycardio.armErgometryVO2(800) <kbd>44.444444444444</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call armErgometryVO2 from instance of Cardiovascular\nmycardio.armErgometryVO2(800) 44.444444444444',
 			 },
 			 {
 				 name: "steppingVO2",
@@ -661,8 +683,8 @@ app.service("docsService", [  function() {
 				 		source: ""
 				 	},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call steppingVO2 from instance of Cardiovascular</kbd>\nmycardio.steppingVO2(50,0.3) <kbd>45.910000000000004</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call steppingVO2 from instance of Cardiovascular\nmycardio.steppingVO2(50,0.3) 45.910000000000004',
 			 },
 			 {
 				 name: "vO2Reserve",
@@ -683,8 +705,8 @@ app.service("docsService", [  function() {
 				 		source: ""
 				 	},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call vO2Reserve from instance of Cardiovascular</kbd>\nmycardio.vO2Reserve(300,189) <kbd>111</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call vO2Reserve from instance of Cardiovascular\nmycardio.vO2Reserve(300,189) 111',
 			 },
 			 {
 				 name: "targetVO2",
@@ -710,8 +732,8 @@ app.service("docsService", [  function() {
 				 		source: ""
 				 	},
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call targetVO2 from instance of Cardiovascular</kbd>\nmycardio.targetVO2(.80,300,189) <kbd>88.8</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call targetVO2 from instance of Cardiovascular\nmycardio.targetVO2(.80,300,189) 88.8',
 			 },
 			 {
 				 name: "heartRateMax",
@@ -721,8 +743,8 @@ app.service("docsService", [  function() {
 				 equations: [{
 					 val: "208 - (0.7 * age)",
 				 }],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call heartRateMax from instance of Cardiovascular</kbd>\nmycardio.heartRateMax() <kbd>190.528</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call heartRateMax from instance of Cardiovascular\nmycardio.heartRateMax() 190.528',
 			 },
 			 {
 				 name: "stairMasterMets",
@@ -736,8 +758,8 @@ app.service("docsService", [  function() {
 				 equations: [{
 					 val: "0.556 + 7.45 * setting",
 				 }],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call stairMasterMets from instance of Cardiovascular</kbd>\nmycardio.stairMasterMets(56) <kbd>417.756</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call stairMasterMets from instance of Cardiovascular\nmycardio.stairMasterMets(56) 417.756',
 			 },
 			 {
 				 name: "residualVolume",
@@ -775,8 +797,8 @@ app.service("docsService", [  function() {
 				    	 source: ""
 				     },
 				 ],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call residualVolume from instance of Cardiovascular</kbd>\nmycardio.residualVolume(56) <kbd>{\nBerglund: 0.9719603859433432,\nBoren: 1.246254651369875,\nGoldman: 1.1037240487858129 }</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call residualVolume from instance of Cardiovascular\nmycardio.residualVolume(56) {\nBerglund: 0.9719603859433432,\nBoren: 1.246254651369875,\nGoldman: 1.1037240487858129 }',
 			 },
 			 {
 				 name: "targetHeartRate",
@@ -798,8 +820,8 @@ app.service("docsService", [  function() {
 				 equations: [{
 					 val: "(intensity * (max - rest)) + rest",
 				 }],
-				 example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call targetHeartRate from instance of Cardiovascular</kbd>\nmycardio.targetHeartRate(.8,290.528,78) <kbd>120.50559999999999</kbd>',
+				 example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call targetHeartRate from instance of Cardiovascular\nmycardio.targetHeartRate(.8,290.528,78) 120.50559999999999',
 			 },
 			 {
 				 name: "totalLungCapacity",
@@ -819,8 +841,8 @@ app.service("docsService", [  function() {
 			    	 val: "residual volumev + vital capacity",
 			    	 source: ""
 			     },],
-			     example: '<kbd>// create instance of Cardiovascular</kbd>\n<var>var</var> mycardio = new Fit.Cardiovascular("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call totalLungCapacity from instance of Cardiovascular</kbd>\nmycardio.totalLungCapacity(1300, 4700) <kbd>6000</kbd>',
+			     example: '// create instance of Cardiovascular\nvar mycardio = new Fit.Cardiovascular("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call totalLungCapacity from instance of Cardiovascular\nmycardio.totalLungCapacity(1300, 4700) 6000',
 			 },
 			 ],
 			},
@@ -848,17 +870,17 @@ app.service("docsService", [  function() {
 					 name: "race",
 					 units: "string"
 				 }],
-				 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-				 '\n\n<kbd>// call methods from Muscle</kbd>\nmuscles.getAge() <kbd>24.96</kbd>'+
-				 '\nme.muscles.getAge() <kbd>24.96</kbd>',
+				 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("male", new Date(1990, 3,17), 54, 154)'+
+				 '\n\n// call methods from Muscle\nmuscles.getAge() 24.96'+
+				 '\nme.muscles.getAge() 24.96',
 				 methods: [{
 					 name: "getAge",
 					 arguments: [],
 					 val: "years",
 					 description: "",
 					 equations: [],
-					 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-					 '\n\n<kbd>// call getAge from Muscle</kbd>\nmuscles.getAge() <kbd>24.96</kbd>',
+					 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("male", new Date(1990, 3,17), 54, 154)'+
+					 '\n\n// call getAge from Muscle\nmuscles.getAge() 24.96',
 				 },
 				 {
 					 name: "isMuscleBalanced",
@@ -879,8 +901,8 @@ app.service("docsService", [  function() {
 					 description: "",
 					 equations: [
 					 ],
-					 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-					 '\n\n<kbd>// call isMuscleBalanced from Muscle</kbd>\nmuscles.isMuscleBalanced("hip", 50, 60) <kbd>false</kbd>',
+					 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("male", new Date(1990, 3,17), 54, 154)'+
+					 '\n\n// call isMuscleBalanced from Muscle\nmuscles.isMuscleBalanced("hip", 50, 60) false',
 				 },
 				 {
 					 name: "fatigueRepMaximum",
@@ -903,8 +925,8 @@ app.service("docsService", [  function() {
 							source: ""
 						},
 					 ],
-					 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-					 '\n\n<kbd>// call fatigueRepMaximum from Muscle</kbd>\nmuscles.fatigueRepMaximum(10, 95) <kbd>126.70045345425446</kbd>',
+					 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("male", new Date(1990, 3,17), 54, 154)'+
+					 '\n\n// call fatigueRepMaximum from Muscle\nmuscles.fatigueRepMaximum(10, 95) 126.70045345425446',
 				 },
 				 {
 					 name: "femaleRepMax",
@@ -931,8 +953,8 @@ app.service("docsService", [  function() {
 							source: "Kuramoto & Payne (1995)"
 						},
 					 ],
-					 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("female", <var>new</var> Date(1990, 3,17), 54, 154)'+
-					 '\n\n<kbd>// returns 0 is less than 40 or over 70</kbd>\nmuscles.femaleRepMax(10, 95) <kbd>0</kbd>',
+					 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("female", new Date(1990, 3,17), 54, 154)'+
+					 '\n\n// returns 0 is less than 40 or over 70\nmuscles.femaleRepMax(10, 95) 0',
 				 },
 				 {
 					 name: "twoSetMaximum",
@@ -961,8 +983,8 @@ app.service("docsService", [  function() {
 					 		source: ""
 					 	},
 					 ],
-					 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-					 '\n\n<kbd>// call twoSetMaximum from Muscle</kbd>\nmuscles.twoSetMaximum(12,85,7,90) <kbd>96</kbd>',
+					 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("male", new Date(1990, 3,17), 54, 154)'+
+					 '\n\n// call twoSetMaximum from Muscle\nmuscles.twoSetMaximum(12,85,7,90) 96',
 				 },
 				 {
 					 name: "YMCAUpperBodyRepMax",
@@ -983,8 +1005,8 @@ app.service("docsService", [  function() {
 					 		source: "Kim, Mayhew, and Peterson (2002)"
 					 	},
 					 ],
-					 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-					 '\n\n<kbd>// call YMCAUpperBodyRepMax from Muscle</kbd>\nmuscles.YMCAUpperBodyRepMax(55) <kbd>123.15</kbd>',
+					 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("male", new Date(1990, 3,17), 54, 154)'+
+					 '\n\n// call YMCAUpperBodyRepMax from Muscle\nmuscles.YMCAUpperBodyRepMax(55) 123.15',
 				 },
 				 {
 					 name: "relativeStrength",
@@ -1000,8 +1022,8 @@ app.service("docsService", [  function() {
 					 		val: "rm / weight",
 					 	},
 					 ],
-					 example: '<kbd>// create instance of Muscle</kbd>\n<var>var</var> muscles = new Fit.Muscle("male", <var>new</var> Date(1990, 3,17), 54, 154)'+
-					 '\n\n<kbd>// call relativeStrength from Muscle</kbd>\nmuscles.relativeStrength(40) <kbd>0.7407407407407407</kbd>',
+					 example: '// create instance of Muscle\nvar muscles = new Fit.Muscle("male", new Date(1990, 3,17), 54, 154)'+
+					 '\n\n// call relativeStrength from Muscle\nmuscles.relativeStrength(40) 0.7407407407407407',
 				 },
 				 ],
 				}
