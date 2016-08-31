@@ -14,9 +14,9 @@ namespace Fit {
 
 		/*
 		All equations take
-		this.weight in kg
-		this.height in meters
-		this.age in years
+    weight in kg
+		height in meters
+		age in years
 		*/
 
 		childSedentaryTee = function() {
