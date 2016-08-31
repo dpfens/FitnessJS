@@ -17,15 +17,16 @@ namespace Fit {
 		/*
 		For use with older adults
 		*/
-		hrMax = function(): number {
-			return 208.0 - (0.7 * this.age);
+		max = function(): number {
+      let age = this.dob.delta("years");
+			return 208.0 - (0.7 * age);
 		}
 
 		/*
 		Gellish et al.
 		http://www.myfitnesspal.com/blog/mmmaddox/view/american-college-of-sports-medicine-american-heart-association-training-recommendations-254928
 		*/
-		hrMaxGellish = function(): number {
+		maxGellish = function(): number {
       let age = this.dob.delta("years");
 			return 206.9 - (0.67 * age);
 		}
@@ -42,7 +43,7 @@ namespace Fit {
 		rest is resting heart rate in BPM
 		max is maximum heart rate in BPM
 		*/
-		targetHR = function(intensity: number, rest: number, max: number): number {
+		target = function(intensity: number, rest: number, max: number): number {
 			return intensity * (max - rest) + rest;
 		}
 
