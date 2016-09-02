@@ -1,4 +1,4 @@
-/// <reference path="assessment.ts" />
+/// <reference path="vo2.ts" />
 /// <reference path="hr.ts" />
 /// <reference path="rmr.ts" />
 /// <reference path="tee.ts" />
@@ -9,8 +9,8 @@ namespace Fit {
     public dob: Date;
     public height: number;
     public weight: number;
-    
-    public assessment: Assessment;
+
+    public vo2: VO2;
     public hr: HR;
     public rmr: RMR;
     public tee: TEE;
@@ -20,7 +20,7 @@ namespace Fit {
       this.dob = dob;
       this.height = height;
       this.weight = weight;
-      this.assessment = new Assessment(gender, dob, height, weight);
+      this.vo2 = new VO2(gender, dob, height, weight);
       this.hr = new HR(gender, dob, height, weight);;
       this.rmr = new RMR(gender, dob, height, weight);;
       this.tee = new TEE(gender, dob, height, weight);;
