@@ -1,7 +1,7 @@
 /// <reference path="../enums.ts" />
 
 namespace Fit {
-  export class Assessment {
+  export class VO2 {
     private gender: Gender;
     private dob: Date;
     private height: number;
@@ -14,7 +14,7 @@ namespace Fit {
       this.weight = weight;
     }
 
-		vo2Reserve = function(max: number, rest: number): number {
+		vo2Reserve = function(max: number, rest=3.5): number {
 			return max - rest;
 		}
 
@@ -240,9 +240,28 @@ namespace Fit {
 			return 31.025 + (3.238*speed) - (3.248*age) + 0.1536*(age*speed);
 		}
 
+    /*
+    Cooper Test for VO2Max
+    distance in meters ran in 12 minutes
+    returns VO2Max in ml/kg/min
+    */
+    cooperVo2 = function(distance: number): number {
+      return (distance - 504.9) /44.73;
+    }
+
+    /*
+    Cooper Test for VO2Max using miles
+    distance in miles ran in 12 minutes
+    returns VO2Max in ml/kg/min
+    */
+    cooperMiles = function(distance: number): number {
+      return (35.97*distance) - 11.29;
+    }
+
+
 		/*
 		Daniels Gilbert Equation for VO2max
-		Daniels and Gilbert devised an equation for approximating VO₂ max based on tabulated race results data.
+		Daniels and Gilbert devised an equation for approximating VO2 max based on tabulated race results data.
 		velocity in meters/minute
 		time in minutes
 		*/
@@ -251,7 +270,6 @@ namespace Fit {
 			let denominator= 0.2989558*Math.pow(Math.E, -0.1932605*time)+0.1894393*Math.pow(Math.E,-0.012778*time)+0.8;
 			return numerator/denominator;
 		}
-
 
   }
 
