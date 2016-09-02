@@ -5,8 +5,6 @@
 /// <reference path="composition/composition.ts" />
 /// <reference path="flexibility/flexibility.ts" />
 /// <reference path="strength/strength.ts" />
-/// <reference path="mets.ts"/>
-/// <reference path="enums.ts" />
 
 namespace Fit {
   export class Person {
