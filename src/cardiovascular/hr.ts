@@ -15,21 +15,50 @@ namespace Fit {
     }
 
 		/*
-		For use with older adults
+		Fox(1971)
 		*/
-		max = function(): number {
+		maxFox = function(): number {
       let age = this.dob.delta("years");
 			return 208.0 - (0.7 * age);
 		}
 
 		/*
-		Gellish et al.
+		Gellish (2007)
+    For use on men and women participants in an adult fitness program with broad range of age and fitness levels
 		http://www.myfitnesspal.com/blog/mmmaddox/view/american-college-of-sports-medicine-american-heart-association-training-recommendations-254928
 		*/
 		maxGellish = function(): number {
       let age = this.dob.delta("years");
-			return 206.9 - (0.67 * age);
+			return 207 - (0.7 * age);
 		}
+
+    /*
+    Astrand (1952)
+    For use on men and women ages 4 to 34 yr
+    */
+    maxAstrand = function(): number {
+      let age = this.dob.delta("years");
+      return 216.6-(0.84*age);
+    }
+
+    /*
+    Tanaka (2001)
+    For use on healthy men and women
+    */
+    maxTanaka = function(): number {
+      let age = this.dob.delta("years");
+      return 208-(0.7*age);
+    }
+
+    /*
+    Gulati (2010)
+    For use on asymptomatic middle aged women referred for stress testing
+    */
+    maxGulati = function(): number {
+      let age = this.dob.delta("years");
+      return 206-(0.88*age);
+    }
+
 
 		meanArterialPressure = function(diastolic_bp: number, systolic_bp: number): number {
 			return ( (2*diastolic_bp) + systolic_bp) / 3;
