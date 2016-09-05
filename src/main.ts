@@ -1,3 +1,5 @@
+/// <reference path="polyfills.ts"/>
+/// <reference path="utilities/date.ts"/>
 /// <reference path="conversion/conversion.ts" />
 /// <reference path="enums.ts" />
 /// <reference path="mets.ts"/>
