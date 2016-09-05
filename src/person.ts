@@ -1,5 +1,3 @@
-/// <reference path="polyfills.ts"/>
-/// <reference path="utilities/date.ts"/>
 /// <reference path="balance/balance.ts" />
 /// <reference path="cardiovascular/cardiovascular.ts" />
 /// <reference path="composition/composition.ts" />
@@ -13,11 +11,11 @@ namespace Fit {
     public height: number; // in meters
     public weight: number; // in kg
 
-    public balance: Balance;
-    public cardio: Cardiovascular;
-    public composition: Composition;
-    public flexibility: Flexibility;
-    public strength: Strength;
+    public balance: balance.Balance;
+    public cardio: cardio.Cardiovascular;
+    public composition: composition.Composition;
+    public flexibility: flexibility.Flexibility;
+    public strength: strength.Strength;
 
 
     constructor(gender: Gender, dob: Date, height: number, weight: number) {
@@ -25,10 +23,10 @@ namespace Fit {
       this.dob = dob;
       this.height = height;
       this.weight = weight;
-      this.balance = new Balance(gender, dob, height, weight);
-      this.cardio = new Cardiovascular(gender, dob, height, weight);
-      this.composition = new Composition(gender, dob, height, weight);
-      this.strength = new Strength(gender, dob, height, weight);
+      this.balance = new balance.Balance(gender, dob, height, weight);
+      this.cardio = new cardio.Cardiovascular(gender, dob, height, weight);
+      this.composition = new composition.Composition(gender, dob, height, weight);
+      this.strength = new strength.Strength(gender, dob, height, weight);
     }
   }
 
