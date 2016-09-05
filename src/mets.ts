@@ -1,6 +1,12 @@
 namespace Fit {
 
 	export namespace mets {
+
+		/*
+	  creates a new MET instance
+	  @class
+	  @classdesc creates a container class for MET values
+	  */
 		class MET {
 			public value: number;
 			public code: string;
@@ -21,7 +27,7 @@ namespace Fit {
 			}
 
 		}
-
+		/* @const */
 		const mets = [
 			new MET( 14.0,"01003","bicycling, mountain, uphill, vigorous"),
 			new MET( 16.0,"01004","bicycling, mountain, competitive, racing"),
@@ -856,7 +862,11 @@ namespace Fit {
 			new MET( 3.0,"21070","walk/stand combination, for volunteer purposes")
 		];
 
-		// get METs from 2011 Compendium of Physical Activities
+		/*
+		@description get METs from 2011 Compendium of Physical Activities
+		@param {string} code of MET
+		@return {MET} MET instance of selected code
+		*/
 		export function byCode(code: string): MET {
 			for (let entry of mets) {
 				if( entry.code === code) return entry;
@@ -864,22 +874,46 @@ namespace Fit {
 			return null;
 		};
 
-		// estimate METs based on kcals, weight in kg, and time spent exercisin
+		/*
+		 @description estimate METs based on kcals, weight in kg, and time spent exercisin
+		 @param {Number} kcal expended in exercise
+		 @param {Number} body mass prior to exercise in kg
+		 @param {Number} hours spent performing exercise
+		 @returns {Number} MET value
+		*/
 		export function estimateMETs(kcal: number, kg: number, hours: number): number {
 			return kcal/kg/hours;
 		}
 
-		// estimate kcals expended during exercise
+		/*
+		 @description estimate kcals expended during exercise
+		 @param {Number} mets MET value of exercise
+		 @param {Number} body mass prior to exercise in kg
+		 @param {Number} hours spent performing exercise
+		 @returns {Number} kcals expended in exercise
+		*/
 		export function estimateKcal( mets: number, kg: number, hours: number): number {
 			return mets * kg * hours;
 		}
 
-		// estimate weight of individual in exercise
+		/*
+		 @description estimate weight of individual in exercise
+		 @param {Number} kcals expended in exercise
+		 @param {Number} mets MET value of exercise
+		 @param {Number} hours spent performing exercise
+		 @returns {Number} body mass prior to exercise in kg
+		*/
 		export function estimateKg(kcal: number, mets: number, hours: number): number {
 			return kcal / (mets * hours);
 		}
 
-		// estimate time spent exercising in hours
+		/*
+		 @description estimate time spent exercising in hours
+		 @param {Number} kcals expended in exercise
+		 @param {Number} mets MET value of exercise
+		 @param {Number} body mass prior to exercise in kg
+		 @returns {Number} hours spent performing exercise
+		*/
 		export function estimateHours(kcal: number, mets: number, kg: number): number {
 			return kcal/(mets * kg);
 		}
