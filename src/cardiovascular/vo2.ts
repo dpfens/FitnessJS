@@ -2,7 +2,6 @@
 
 namespace Fit {
 
-
   export namespace cardio {
 
     /*
@@ -374,14 +373,37 @@ namespace Fit {
   		/*
   		Daniels Gilbert Equation for VO2max
   		Daniels and Gilbert devised an equation for approximating VO2 max based on tabulated race results data.
-  		velocity in meters/minute
-  		time in minutes
+  		@param {Number} velocity in meters/minute
+  		@param {Number} time in minutes
+      @returns {Number}  VO2Max in ml/kg/min
   		*/
   		gilbertGaniels = function(velocity: number, time: number): number {
   			let numerator= 0.000104*Math.pow(velocity,2)+0.182258* velocity-4.6;
   			let denominator= 0.2989558*Math.pow(Math.E, -0.1932605*time)+0.1894393*Math.pow(Math.E,-0.012778*time)+0.8;
   			return numerator/denominator;
   		}
+
+    }
+
+    export namespace energy {
+
+      /*
+      @description obtained from http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000960
+      @param {Number} percentVO2 being exercised at
+      @returns {Number} percentage carbohydrate contribute to energy when exercising at a given percent of VO2Max
+      */
+      function carbohydrate(percentVO2: number): number {
+        return 0.565973 * Math.pow(percentVO2,2)+0.376443 * percentVO2-0.000295601;
+      }
+
+      /*
+      @description obtained from http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000960
+      @param {Number} percentVO2 being exercised at
+      @returns {Number} percentage fat contribute to energy when exercising at a given percent of VO2Max
+      */
+      function fat(percentVO2: number): number {
+        return -0.565973 * Math.pow(percentVO2,2)-.376443 * percentVO2+1.0003;
+      }
 
     }
 
