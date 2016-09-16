@@ -1,6 +1,6 @@
 namespace Fit {
 
-  export namespace conversion {
+  export module conversion {
 
     export module SwainConverter {
       /*
