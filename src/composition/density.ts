@@ -207,6 +207,20 @@ namespace Fit {
 			  return ((1.20*bmi) - (0.23*age) - (10.8) - 5.4) / 100;
 			}
 
+
+			/*
+			@param {Number} weight in lb
+			@param {Number} waist in inches
+			@returns percent body fat
+			*/
+			WaistBF = function (waist: number): number {
+				let weightLb = this.weight * 2.2;
+  			if(this.gender === Gender.Female) {
+    			return 100*(-76.76 + 4.15*waist - 0.082*weightLb)/weightLb;
+  			}
+  			return 100*(-98.42 + 4.15*waist - 0.082*weightLb)/weightLb;
+			}
+
 		}
 
 	}
