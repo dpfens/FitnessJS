@@ -1,7 +1,7 @@
 namespace Fit {
 
-  export namespace conversion {
-    var unitTable: any = {};
+  export module conversion {
+    let unitTable: any = {};
 
     export class UnitConverter {
       private value;
@@ -95,6 +95,7 @@ namespace Fit {
     UnitConverter.addUnit('m/s', 'cm/s', 0.01);
     UnitConverter.addUnit('m/s', 'm/s', 1);
     UnitConverter.addUnit('m/s', 'kps', 1000);
+    UnitConverter.addUnit('m/s', 'm/min', 0.0166667);
     UnitConverter.addUnit('m/s', 'cm/h', 2.77778e-6);
     UnitConverter.addUnit('m/s', 'm/h', 0.000277778);
     UnitConverter.addUnit('m/s', 'kph', 0.277778);
