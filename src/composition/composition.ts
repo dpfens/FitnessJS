@@ -3,6 +3,7 @@
 /// <reference path="mass.ts" />
 /// <reference path="stature.ts" />
 /// <reference path="surfacearea.ts" />
+/// <reference path="ideal.ts" />
 
 namespace Fit {
 
@@ -20,6 +21,7 @@ namespace Fit {
       public weight: number;
 
       public density: Density;
+      public ideal: Ideal;
       public indices: Indices;
       public mass: Mass;
       public stature: Stature;
@@ -30,10 +32,11 @@ namespace Fit {
         this.dob = dob;
         this.height = height;
         this.weight = weight;
-        this.density = new Density(gender, dob, height, weight);;
-        this.indices = new Indices(gender, dob, height, weight);;
-        this.mass = new Mass(gender, dob, height, weight);;
-        this.surfaceArea = new SurfaceArea(gender, dob, height, weight);;
+        this.density = new Density(gender, dob, height, weight);
+        this.ideal = new Ideal(gender, dob, height, weight);
+        this.indices = new Indices(gender, dob, height, weight);
+        this.mass = new Mass(gender, dob, height, weight);
+        this.surfaceArea = new SurfaceArea(gender, dob, height, weight);
       }
 
     }
