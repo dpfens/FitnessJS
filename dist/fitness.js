@@ -1581,6 +1581,25 @@ var Fit;
 (function (Fit) {
     var composition;
     (function (composition) {
+        var Hydration = (function () {
+            function Hydration(gender, dob, height, weight) {
+                this.dailyNeeds = function () {
+                    return 0.033 * this.weight;
+                };
+                this.gender = gender;
+                this.dob = dob;
+                this.height = height;
+                this.weight = weight;
+            }
+            return Hydration;
+        }());
+        composition.Hydration = Hydration;
+    })(composition = Fit.composition || (Fit.composition = {}));
+})(Fit || (Fit = {}));
+var Fit;
+(function (Fit) {
+    var composition;
+    (function (composition) {
         var Indices = (function () {
             function Indices(gender, dob, height, weight) {
                 this.bmi = function () {
@@ -1607,30 +1626,35 @@ var Fit;
         var Mass = (function () {
             function Mass(gender, dob, height, weight) {
                 this.ffmChild = function (resistance, reactance) {
-                    return (0.62 * (Math.pow(this.this.height, 2) / resistance)) + (0.21 * this.weight) + (0.1 * reactance) + 4.2;
+                    var heightCm = this.height * 100;
+                    return (0.62 * (Math.pow(heightCm, 2) / resistance)) + (0.21 * this.weight) + (0.1 * reactance) + 4.2;
                 };
                 this.ffmAdolescent = function (resistance, reactance) {
-                    return (0.61 * (Math.pow(this.height, 2) / resistance)) + (0.25 * this.weight) + 1.31;
+                    var heightCm = this.height * 100;
+                    return (0.61 * (Math.pow(heightCm, 2) / resistance)) + (0.25 * this.weight) + 1.31;
                 };
                 this.ffmAdultLean = function (resistance, reactance) {
                     var age = this.dob.delta("years");
+                    var heightCm = this.height * 100;
                     if (this.gender === this.Gender.Female) {
-                        return (0.000646 * Math.pow(this.height, 2)) - (0.014 * resistance) + (0.421 * this.weight) + 10.4;
+                        return (0.000646 * Math.pow(heightCm, 2)) - (0.014 * resistance) + (0.421 * this.weight) + 10.4;
                     }
-                    return (0.00066360 * Math.pow(this.height, 2)) - (0.02117 * resistance) + (0.62854 * this.weight) - (0.12380 * age) + 9.33285;
+                    return (0.00066360 * Math.pow(heightCm, 2)) - (0.02117 * resistance) + (0.62854 * this.weight) - (0.12380 * age) + 9.33285;
                 };
                 this.ffmAdultObese = function (resistance, reactance) {
                     var age = this.dob.delta("years");
+                    var heightCm = this.height * 100;
                     if (this.gender === this.Gender.Female) {
-                        return (0.00091186 * Math.pow(this.height, 2)) - (0.1466 * resistance) + (0.29990 * this.weight) - (0.07012 * age) + 9.37938;
+                        return (0.00091186 * Math.pow(heightCm, 2)) - (0.1466 * resistance) + (0.29990 * this.weight) - (0.07012 * age) + 9.37938;
                     }
-                    return (0.00088580 * Math.pow(this.height, 2)) - (0.02999 * resistance) + (0.42688 * this.weight) - (0.07002 * age) + 14.52435;
+                    return (0.00088580 * Math.pow(heightCm, 2)) - (0.02999 * resistance) + (0.42688 * this.weight) - (0.07002 * age) + 14.52435;
                 };
                 this.ffmAdultAthlete = function (resistance, reactance) {
+                    var heightCm = this.height * 100;
                     if (this.gender === this.Gender.Female) {
-                        return (0.282 * this.height) + (0.415 * this.weight) - (0.037 * resistance) + (0.096 * reactance) - 9.734;
+                        return (0.282 * heightCm) + (0.415 * this.weight) - (0.037 * resistance) + (0.096 * reactance) - 9.734;
                     }
-                    return (0.186 * (Math.pow(this.height, 2) / resistance)) + (0.701 * this.weight) + 1.949;
+                    return (0.186 * (Math.pow(heightCm, 2) / resistance)) + (0.701 * this.weight) + 1.949;
                 };
                 this.gender = gender;
                 this.dob = dob;
@@ -1681,37 +1705,45 @@ var Fit;
         var SurfaceArea = (function () {
             function SurfaceArea(gender, dob, height, weight) {
                 this.boyd = function () {
+                    var heightCm = this.height * 100;
                     return 0.03330 * Math.pow(this.weight, (0.7285 - 0.0188 * Math.log(this.weight))) * Math.pow(this.height, 0.3);
                 };
                 this.costeff = function () {
                     return (4 * this.weight + 7) / (90 + this.weight);
                 };
                 this.dubois = function () {
-                    return 0.007184 * Math.pow(this.weight, 0.425) * Math.pow(this.height, 0.725);
+                    var heightCm = this.height * 100;
+                    return 0.007184 * Math.pow(this.weight, 0.425) * Math.pow(heightCm, 0.725);
                 };
                 this.fujimoto = function () {
-                    return 0.008883 * Math.pow(this.weight, 0.444) * Math.pow(this.height, 0.663);
+                    var heightCm = this.height * 100;
+                    return 0.008883 * Math.pow(this.weight, 0.444) * Math.pow(heightCm, 0.663);
                 };
                 this.gehangeorge = function () {
-                    return 0.0235 * Math.pow(this.weight, 0.51456) * Math.pow(this.height, 0.42246);
+                    var heightCm = this.height * 100;
+                    return 0.0235 * Math.pow(this.weight, 0.51456) * Math.pow(heightCm, 0.42246);
                 };
                 this.haycock = function () {
-                    return 0.024265 * Math.pow(this.weight, 0.5378) * Math.pow(this.height, 0.3964);
+                    var heightCm = this.height * 100;
+                    return 0.024265 * Math.pow(this.weight, 0.5378) * Math.pow(heightCm, 0.3964);
                 };
                 this.mosteller = function () {
                     return Math.sqrt(this.weight * this.height) / 6;
                 };
                 this.schlich = function () {
+                    var heightCm = this.height * 100;
                     if (this.gender === Fit.Gender.Female) {
-                        return 0.000975482 * Math.pow(this.weight, 0.46) * Math.pow(this.height, 1.08);
+                        return 0.000975482 * Math.pow(this.weight, 0.46) * Math.pow(heightCm, 1.08);
                     }
-                    return 0.000579479 * Math.pow(this.weight, 0.38) * Math.pow(this.height, 1.24);
+                    return 0.000579479 * Math.pow(this.weight, 0.38) * Math.pow(heightCm, 1.24);
                 };
                 this.shuterAslani = function () {
-                    return 0.00949 * Math.pow(this.weight, 0.441) * Math.pow(this.height, 0.655);
+                    var heightCm = this.height * 100;
+                    return 0.00949 * Math.pow(this.weight, 0.441) * Math.pow(heightCm, 0.655);
                 };
                 this.takahira = function () {
-                    return 0.007241 * Math.pow(this.weight, 0.425) * Math.pow(this.height, 0.725);
+                    var heightCm = this.height * 100;
+                    return 0.007241 * Math.pow(this.weight, 0.425) * Math.pow(heightCm, 0.725);
                 };
                 this.gender = gender;
                 this.dob = dob;
@@ -1795,6 +1827,7 @@ var Fit;
                 this.height = height;
                 this.weight = weight;
                 this.density = new composition.Density(gender, dob, height, weight);
+                this.hydration = new composition.Hydration(gender, dob, height, weight);
                 this.ideal = new composition.Ideal(gender, dob, height, weight);
                 this.indices = new composition.Indices(gender, dob, height, weight);
                 this.mass = new composition.Mass(gender, dob, height, weight);
@@ -1827,6 +1860,30 @@ var Fit;
     (function (strength) {
         var Lifting = (function () {
             function Lifting(gender, dob, height, weight) {
+                this.oCarroll = function (weightLifted) {
+                    return weightLifted / Math.pow(this.weight - 35, 1 / 3);
+                };
+                this.siffWeightLifting = function () {
+                    var a = 512.245;
+                    var b = 146230;
+                    var c = 1.605;
+                    if (this.gender === Fit.Gender.Female) {
+                        a = 943.063;
+                        b = 0.05142;
+                        c = 257.314;
+                        return c - a * Math.exp(-b * this.weight);
+                    }
+                    return a - b * Math.pow(this.weight, -c);
+                };
+                this.siffPowerLifting = function () {
+                    var a = 1270.4;
+                    var b = 172970;
+                    var c = 1.3925;
+                    if (this.gender === Fit.Gender.Female) {
+                        return 0;
+                    }
+                    return a - b * Math.pow(this.weight, -c);
+                };
                 this.sinclair = function (obtainedTotal) {
                     var coefficientA = 0.794358141;
                     var coefficientB = 174.393;
@@ -2179,7 +2236,7 @@ var Fit;
                 }
                 jackDaniels.vO2 = vO2;
                 function vO2Percentage(time) {
-                    return 0.8 + Math.pow(0.1894393, -0.012778 * time) + Math.pow(0.2989558, -0.1932605 * time);
+                    return 0.8 + Math.pow(0.1894393, -0.012778 * time) + Math.exp(-0.1932605 * time);
                 }
                 jackDaniels.vO2Percentage = vO2Percentage;
             })(jackDaniels = running.jackDaniels || (running.jackDaniels = {}));
