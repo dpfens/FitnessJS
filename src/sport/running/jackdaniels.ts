@@ -31,7 +31,7 @@ namespace Fit {
           @returns {Number} VO2 percentage in decimal form
           */
           export function vO2Percentage(time: number): number  {
-            return 0.8 + Math.pow(0.1894393, -0.012778*time)+ Math.pow(0.2989558, -0.1932605*time);
+            return 0.8 + Math.pow(0.1894393, -0.012778*time)+ Math.exp(-0.1932605*time);
           }
 
       }
