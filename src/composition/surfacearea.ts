@@ -29,7 +29,8 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       boyd = function(): number {
-          return 0.03330 * Math.pow(this.weight,(0.7285-0.0188*Math.log(this.weight)))*Math.pow(this.height,0.3);
+        let heightCm = this.height * 100;
+        return 0.03330 * Math.pow(this.weight,(0.7285-0.0188*Math.log(this.weight)))*Math.pow(this.height,0.3);
       }
 
       /*
@@ -37,7 +38,7 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       costeff = function(): number {
-          return (4*this.weight+7)/(90+this.weight);
+        return (4*this.weight+7)/(90+this.weight);
       }
 
       /*
@@ -46,7 +47,8 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       dubois = function(): number {
-          return 0.007184 * Math.pow(this.weight,0.425) * Math.pow(this.height,0.725);
+        let heightCm = this.height * 100;
+        return 0.007184 * Math.pow(this.weight,0.425) * Math.pow(heightCm,0.725);
       }
 
       /*
@@ -55,7 +57,8 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       fujimoto = function(): number {
-          return 0.008883 * Math.pow(this.weight, 0.444) * Math.pow(this.height, 0.663);
+        let heightCm = this.height * 100;
+        return 0.008883 * Math.pow(this.weight, 0.444) * Math.pow(heightCm, 0.663);
       }
 
       /*
@@ -64,7 +67,8 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       gehangeorge = function(): number {
-          return 0.0235 * Math.pow(this.weight, 0.51456) * Math.pow(this.height, 0.42246);
+        let heightCm = this.height * 100;
+        return 0.0235 * Math.pow(this.weight, 0.51456) * Math.pow(heightCm, 0.42246);
       }
 
       /*
@@ -73,7 +77,8 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       haycock = function(): number {
-          return 0.024265 * Math.pow(this.weight, 0.5378) * Math.pow(this.height, 0.3964);
+        let heightCm = this.height * 100;
+        return 0.024265 * Math.pow(this.weight, 0.5378) * Math.pow(heightCm, 0.3964);
       }
 
       /*
@@ -92,10 +97,11 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       schlich = function(): number {
+        let heightCm = this.height * 100;
         if(this.gender === Gender.Female) {
-          return 0.000975482 * Math.pow(this.weight, 0.46) * Math.pow(this.height,1.08);
+          return 0.000975482 * Math.pow(this.weight, 0.46) * Math.pow(heightCm, 1.08);
         }
-        return 0.000579479 * Math.pow(this.weight, 0.38) * Math.pow(this.height,1.24);
+        return 0.000579479 * Math.pow(this.weight, 0.38) * Math.pow(heightCm, 1.24);
       }
 
       /*
@@ -104,7 +110,8 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       shuterAslani = function(): number {
-          return 0.00949 * Math.pow(this.weight, 0.441) * Math.pow(this.height,0.655);
+        let heightCm = this.height * 100;
+        return 0.00949 * Math.pow(this.weight, 0.441) * Math.pow(heightCm, 0.655);
       }
 
       /*
@@ -113,7 +120,8 @@ namespace Fit {
       @returns {Number} surface area in meters^2
       */
       takahira = function(): number {
-          return 0.007241 * Math.pow(this.weight, 0.425) * Math.pow(this.height,0.725);
+        let heightCm = this.height * 100;
+        return 0.007241 * Math.pow(this.weight, 0.425) * Math.pow(heightCm, 0.725);
       }
 
     }
