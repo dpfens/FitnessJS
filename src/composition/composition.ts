@@ -1,4 +1,5 @@
 /// <reference path="density.ts" />
+/// <reference path="hydration.ts" />
 /// <reference path="indices.ts" />
 /// <reference path="mass.ts" />
 /// <reference path="stature.ts" />
@@ -21,6 +22,7 @@ namespace Fit {
       public weight: number;
 
       public density: Density;
+      public hydration: Hydration;
       public ideal: Ideal;
       public indices: Indices;
       public mass: Mass;
@@ -33,6 +35,7 @@ namespace Fit {
         this.height = height;
         this.weight = weight;
         this.density = new Density(gender, dob, height, weight);
+        this.hydration = new Hydration(gender, dob, height, weight);
         this.ideal = new Ideal(gender, dob, height, weight);
         this.indices = new Indices(gender, dob, height, weight);
         this.mass = new Mass(gender, dob, height, weight);
