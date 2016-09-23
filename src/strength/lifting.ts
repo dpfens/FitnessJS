@@ -23,6 +23,49 @@ namespace Fit {
       }
 
       /*
+      @param {Number} weight lifted in kg
+      @param {Number} weight in kg
+      @return {Number} adjusted for weight of lifter
+      */
+      oCarroll = function(weightLifted: number): number {
+      	return weightLifted/Math.pow(this.weight-35, 1/3);
+      }
+
+      /*
+      @description For use in non-power lifts
+      @param {Number} weight in kg
+      @return {Number} adjusted for weight of lifter
+      */
+      siffWeightLifting = function(): number {
+      	let a = 512.245;
+      	let b = 146230;
+      	let c = 1.605;
+        if(this.gender === Gender.Female) {
+          a = 943.063;
+        	b = 0.05142 ;
+        	c = 257.314;
+          return c-a*Math.exp(-b*this.weight);
+        }
+      	return a-b*Math.pow(this.weight, -c);
+      }
+
+      /*
+      @description For use in power lifts by men
+      @param {Number} weight lifted in kg
+      @param {Number} weight in kg
+      @return {Number} adjusted for weight of lifter
+      */
+      siffPowerLifting = function(): number {
+      	let a = 1270.4;
+      	let b = 172970;
+      	let c = 1.3925;
+        if(this.gender === Gender.Female) {
+          return 0;
+        }
+      	return a-b*Math.pow(this.weight, -c);
+      }
+
+      /*
         @param {Number} obtainedTotal weight in kg
         @returns {Number} sinclair coefficient
       */
