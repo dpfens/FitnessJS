@@ -1709,7 +1709,7 @@ var Fit;
                 this.boyd = function () {
                     var heightCm = this.height * 100;
                     var weightG = this.weight * 1000;
-                    return 0.03330 * Math.pow(weightG, (0.7285 - 0.0188 * Math.log(weightG))) * Math.pow(heightCm, 0.3);
+                    return 0.03330 * Math.pow(this.weight, (0.6157 - 0.0188 * Math.log(this.weight))) * Math.pow(heightCm, 0.3);
                 };
                 this.costeff = function () {
                     return (4 * this.weight + 7) / (90 + this.weight);
