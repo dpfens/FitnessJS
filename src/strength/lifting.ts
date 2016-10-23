@@ -51,7 +51,6 @@ namespace Fit {
 
       /*
       @description For use in power lifts by men  To compare the performances of lifters of different bodymass, simply substitute each lifter's bodymass in the relevant equations above to calculate the Total (or lift) expected for a top world class lifter. Then divide each lifter's actual Total by this value to obtain the percentage of the world class lift achieved by each lifter.
-      @param {Number} weight lifted in kg
       @param {Number} weight in kg
       @return {Number} adjusted for weight of lifter
       */
