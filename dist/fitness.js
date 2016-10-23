@@ -1353,17 +1353,19 @@ var Fit;
             function RMR(gender, dob, height, weight) {
                 this.revisedHB = function () {
                     var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return (447.6 + 9.25 * this.weight) + (3.10 * this.height) - (4.33 * age);
+                    var cm = this.height * 100;
+                    if (this.gender === Fit.Gender.Female) {
+                        return (447.6 + 9.25 * this.weight) + (3.10 * cm) - (4.33 * age);
                     }
-                    return (88.4 + 13.4 * this.weight) + (4.8 * this.height) - (5.68 * age);
+                    return (88.4 + 13.4 * this.weight) + (4.8 * cm) - (5.68 * age);
                 };
                 this.msj = function () {
                     var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return (9.99 * this.weight + 6.25 * this.height - 4.92 * age - 151);
+                    var cm = this.height * 100;
+                    if (this.gender === Fit.Gender.Female) {
+                        return (9.99 * this.weight + 6.25 * cm - 4.92 * age - 151);
                     }
-                    return (9.99 * this.weight + 6.25 * this.height - 4.92 * age + 5);
+                    return (9.99 * this.weight + 6.25 * cm - 4.92 * age + 5);
                 };
                 this.kma = function (lbm) {
                     return 370 + (21.6 * lbm);
@@ -1706,7 +1708,8 @@ var Fit;
             function SurfaceArea(gender, dob, height, weight) {
                 this.boyd = function () {
                     var heightCm = this.height * 100;
-                    return 0.03330 * Math.pow(this.weight, (0.7285 - 0.0188 * Math.log(this.weight))) * Math.pow(this.height, 0.3);
+                    var weightG = this.weight * 1000;
+                    return 0.03330 * Math.pow(weightG, (0.7285 - 0.0188 * Math.log(weightG))) * Math.pow(heightCm, 0.3);
                 };
                 this.costeff = function () {
                     return (4 * this.weight + 7) / (90 + this.weight);
