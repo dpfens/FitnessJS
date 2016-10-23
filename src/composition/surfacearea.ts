@@ -31,7 +31,7 @@ namespace Fit {
       boyd = function(): number {
         let heightCm = this.height * 100;
         let weightG = this.weight * 1000;
-        return 0.03330 * Math.pow(weightG,(0.7285-0.0188*Math.log(weightG)))*Math.pow(heightCm,0.3);
+        return 0.03330 * Math.pow(this.weight,(0.6157-0.0188*Math.log(this.weight)))*Math.pow(heightCm,0.3);
       }
 
       /*
