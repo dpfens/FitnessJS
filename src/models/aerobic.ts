@@ -23,7 +23,7 @@ namespace Fit {
       export class Riegel extends PerformanceModel {
         /*
           Riegel Running Model
-          @description t2 = t1 * (d2/d1) ^ 1.06
+          @description Error rate 4.1% according to http://cs229.stanford.edu/proj2015/247_report.pdf
           @static
           @param {Number} t1 = time
           @param {Number} d1 = old distance
