@@ -4,6 +4,7 @@ namespace Fit {
 
   export namespace cardio {
 
+
     /*
     creates a new RMR
     @class
@@ -31,8 +32,8 @@ namespace Fit {
       */
       revisedHB = function(): number {
         let age = this.dob.delta("years");
-        let cm = this.height * 1000;
-        if(this.gender === this.Gender.Female) {
+        let cm = this.height * 100;
+        if(this.gender === Gender.Female) {
           return (447.6 + 9.25 * this.weight ) + (3.10 * cm) - (4.33 * age);
         }
       	return (88.4 + 13.4 * this.weight) + (4.8 * cm) - (5.68 * age);
@@ -48,8 +49,8 @@ namespace Fit {
       */
       msj = function(): number {
         let age = this.dob.delta("years");
-        let cm = this.height * 1000;
-        if(this.gender === this.Gender.Female) {
+        let cm = this.height * 100;
+        if(this.gender === Gender.Female) {
           return (9.99 * this.weight + 6.25 * cm - 4.92 * age - 151);
         }
       	return (9.99 * this.weight + 6.25 * cm - 4.92 * age + 5);
