@@ -52,7 +52,8 @@ namespace Fit {
       @returns {Number} power (watts)
       */
       meanPowerHarman = function(jumpHeight: number): number {
-        return 21.1 *jumpHeight + 2.3*this.weight + 1393;
+        let jumpHeightCm = jumpHeight * 100;
+        return 21.1 *jumpHeightCm + 2.3*this.weight + 1393;
       }
 
       /*
@@ -65,6 +66,7 @@ namespace Fit {
       */
       peakPowerJB = function(jumpHeight: number): number {
         let height = this.height * 100;
+        let jumpHeightCm = jumpHeight * 100;
         return 78.6*jumpHeight +60.3*this.weight + 15.3*height + 1308;
       }
 
@@ -78,7 +80,8 @@ namespace Fit {
       */
       meanPowerJB = function(jumpHeight: number): number {
         let height = this.height * 100;
-        return 43.8*jumpHeight + 32.7*this.weight - 16.8*height + 431;
+        let jumpHeightCm = jumpHeight * 100;
+        return 43.8*jumpHeightCm + 32.7*this.weight - 16.8*height + 431;
       }
 
       /*
@@ -89,7 +92,8 @@ namespace Fit {
       @returns {Number} power (watts)
       */
       peakPowerSayer = function(jumpHeight: number): number {
-        return 60.7*jumpHeight + 45.3*this.weight - 2055;
+        let jumpHeightCm = jumpHeight * 100;
+        return 60.7*jumpHeightCm + 45.3*this.weight - 2055;
       }
 
       /*
