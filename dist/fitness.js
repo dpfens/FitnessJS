@@ -231,6 +231,13 @@ var Fit;
         Race[Race["Hispanic"] = 2] = "Hispanic";
     })(Fit.Race || (Fit.Race = {}));
     var Race = Fit.Race;
+    (function (PAL) {
+        PAL[PAL["Sedentary"] = 0] = "Sedentary";
+        PAL[PAL["Low"] = 1] = "Low";
+        PAL[PAL["Active"] = 2] = "Active";
+        PAL[PAL["VeryActive"] = 3] = "VeryActive";
+    })(Fit.PAL || (Fit.PAL = {}));
+    var PAL = Fit.PAL;
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
@@ -238,14 +245,6 @@ var Fit;
     (function (mets_1) {
         var MET = (function () {
             function MET(value, code, description) {
-                this.correctedValue = function (person) {
-                    var weightGrams = person.weight * 1000;
-                    var hbRMR = person.cardio.rmr.revisedHB();
-                    var kcalMinute = hbRMR / (1440);
-                    var litersMinute = kcalMinute / 5;
-                    var hbRMRmLKgMin = litersMinute / weightGrams;
-                    return this.value * (3.5 / hbRMRmLKgMin);
-                };
                 this.value = value;
                 this.code = code;
                 this.description = description;
@@ -1099,10 +1098,6 @@ var Fit;
             return kcal / kg / hours;
         }
         mets_1.estimateMETs = estimateMETs;
-        function estimateKcal(mets, kg, hours) {
-            return mets * kg * hours;
-        }
-        mets_1.estimateKcal = estimateKcal;
         function estimateKg(kcal, mets, hours) {
             return kcal / (mets * hours);
         }
@@ -1111,368 +1106,566 @@ var Fit;
             return kcal / (mets * kg);
         }
         mets_1.estimateHours = estimateHours;
+        function toKCal(mets, weight) {
+            return (mets * 3.5 * weight) / 200;
+        }
+        mets_1.toKCal = toKCal;
+        function fromVO2(vO2) {
+            return vO2 / 3.5;
+        }
+        mets_1.fromVO2 = fromVO2;
+        function karvonen(mets, intensity) {
+            return intensity * (mets - 1) + 1;
+        }
+        mets_1.karvonen = karvonen;
+        function target(vO2Max, intensity) {
+            var mets = fromVO2(vO2Max);
+            var targetMets = karvonen(mets, intensity);
+            return targetMets;
+        }
+        mets_1.target = target;
     })(mets = Fit.mets || (Fit.mets = {}));
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
-    var balance;
-    (function (balance) {
-        var Balance = (function () {
-            function Balance(gender, dob, height, weight) {
+    var cardio;
+    (function (cardio) {
+        var cardiac;
+        (function (cardiac) {
+            var Astrand = (function () {
+                function Astrand() {
+                }
+                Astrand.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 216.6 - (0.84 * age);
+                };
+                Astrand.prototype.age = function (hr) {
+                    return (hr - 216.6) / -0.84;
+                };
+                return Astrand;
+            }());
+            cardiac.Astrand = Astrand;
+            var HF = (function () {
+                function HF() {
+                }
+                HF.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 220 - age;
+                };
+                HF.prototype.age = function (hr) {
+                    return 220 - hr;
+                };
+                return HF;
+            }());
+            cardiac.HF = HF;
+            var Gellish = (function () {
+                function Gellish() {
+                }
+                Gellish.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 207 - (0.7 * age);
+                };
+                Gellish.prototype.age = function (hr) {
+                    return (hr - 207.0) / -0.7;
+                };
+                return Gellish;
+            }());
+            cardiac.Gellish = Gellish;
+            var Gulati = (function () {
+                function Gulati() {
+                }
+                Gulati.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 206 - (0.88 * age);
+                };
+                Gulati.prototype.age = function (hr) {
+                    return (hr - 206.0) / -0.88;
+                };
+                return Gulati;
+            }());
+            cardiac.Gulati = Gulati;
+            var LM = (function () {
+                function LM() {
+                }
+                LM.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 206.3 - (0.711 * age);
+                };
+                LM.prototype.age = function (hr) {
+                    return (hr - 206.3) / -0.711;
+                };
+                return LM;
+            }());
+            cardiac.LM = LM;
+            var Miller = (function () {
+                function Miller() {
+                }
+                Miller.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 217 - (0.85 * age);
+                };
+                Miller.prototype.age = function (hr) {
+                    return (hr - 217) / -0.85;
+                };
+                return Miller;
+            }());
+            cardiac.Miller = Miller;
+            var Nes = (function () {
+                function Nes() {
+                }
+                Nes.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 211 - (0.64 * age);
+                };
+                Nes.prototype.age = function (hr) {
+                    return (hr - 211) / -0.64;
+                };
+                return Nes;
+            }());
+            cardiac.Nes = Nes;
+            var OaklandL = (function () {
+                function OaklandL() {
+                }
+                OaklandL.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 206.9 - (0.67 * age);
+                };
+                OaklandL.prototype.age = function (hr) {
+                    return (hr - 206.9) / -0.67;
+                };
+                return OaklandL;
+            }());
+            cardiac.OaklandL = OaklandL;
+            var OaklandNL1 = (function () {
+                function OaklandNL1() {
+                }
+                OaklandNL1.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 191.5 - (0.002 * Math.pow(age, 2));
+                };
+                OaklandNL1.prototype.age = function (hr) {
+                    return 5 * Math.sqrt(3830 - 20 * hr);
+                };
+                return OaklandNL1;
+            }());
+            cardiac.OaklandNL1 = OaklandNL1;
+            var OaklandNL2 = (function () {
+                function OaklandNL2() {
+                }
+                OaklandNL2.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 163 + (1.16 * age) - (0.018 * Math.pow(age, 2));
+                };
+                OaklandNL2.prototype.age = function (hr) {
+                    return (-10. / 9) * (Math.sqrt(8176 - 45 * hr) - 29);
+                };
+                return OaklandNL2;
+            }());
+            cardiac.OaklandNL2 = OaklandNL2;
+            var RL = (function () {
+                function RL() {
+                }
+                RL.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 205.8 - (0.685 * age);
+                };
+                RL.prototype.age = function (hr) {
+                    return (hr - 205.8) / -0.685;
+                };
+                return RL;
+            }());
+            cardiac.RL = RL;
+            var TMS = (function () {
+                function TMS() {
+                }
+                TMS.prototype.predict = function (dob) {
+                    var age = dob.delta("years");
+                    return 208 - (0.7 * age);
+                };
+                TMS.prototype.age = function (hr) {
+                    return (hr - 208) / -0.7;
+                };
+                return TMS;
+            }());
+            cardiac.TMS = TMS;
+            function mean_arterial_pressure(diastolic_bp, systolic_bp) {
+                return ((2 * diastolic_bp) + systolic_bp) / 3;
+            }
+            cardiac.mean_arterial_pressure = mean_arterial_pressure;
+            function karvonen(intensity, rest, maximum) {
+                return intensity * (maximum - rest) + rest;
+            }
+            cardiac.karvonen = karvonen;
+            function zoladz(hrMax, adjuster) {
+                return hrMax - adjuster;
+            }
+            cardiac.zoladz = zoladz;
+        })(cardiac = cardio.cardiac || (cardio.cardiac = {}));
+    })(cardio = Fit.cardio || (Fit.cardio = {}));
+})(Fit || (Fit = {}));
+var Fit;
+(function (Fit) {
+    var energy;
+    (function (energy) {
+        var BMREstimator = (function () {
+            function BMREstimator(gender) {
+                this.gender = gender;
+            }
+            BMREstimator.prototype.predict = function (dob, weight, height) {
+                throw new Error("The prediction method is not implemented");
+            };
+            return BMREstimator;
+        }());
+        var HB = (function (_super) {
+            __extends(HB, _super);
+            function HB() {
+                _super.apply(this, arguments);
+            }
+            HB.prototype.predict = function (dob, weight, height) {
+                var age = dob.delta("years");
+                if (this.gender === Fit.Gender.Female) {
+                    return (9.5634 * weight) + (1.8496 * height) - (4.6756 * age) + 655.0955;
+                }
+                return (13.7516 * weight) + (5.0033 * height) - (6.7550 * age) + 66.4730;
+            };
+            return HB;
+        }(BMREstimator));
+        energy.HB = HB;
+        var RevisedHB = (function (_super) {
+            __extends(RevisedHB, _super);
+            function RevisedHB() {
+                _super.apply(this, arguments);
+            }
+            RevisedHB.prototype.predict = function (dob, weight, height) {
+                var age = dob.delta("years");
+                if (this.gender === Fit.Gender.Female) {
+                    return (9.5634 * weight) + (1.8496 * height) - (4.6756 * age) + 655.0955;
+                }
+                return (13.7516 * weight) + (5.0033 * height) - (6.7550 * age) + 66.4730;
+            };
+            return RevisedHB;
+        }(BMREstimator));
+        energy.RevisedHB = RevisedHB;
+        var MSJ = (function (_super) {
+            __extends(MSJ, _super);
+            function MSJ() {
+                _super.apply(this, arguments);
+            }
+            MSJ.prototype.predict = function (dob, weight, height) {
+                var age = dob.delta("years");
+                if (this.gender === Fit.Gender.Female) {
+                    return (9.99 * weight + 6.25 * height - 4.92 * age - 161);
+                }
+                return (9.99 * weight + 6.25 * height - 4.92 * age + 5);
+            };
+            return MSJ;
+        }(BMREstimator));
+        energy.MSJ = MSJ;
+        var RMR = (function () {
+            function RMR(gender, dob, weight, height) {
                 this.gender = gender;
                 this.dob = dob;
-                this.height = height;
                 this.weight = weight;
+                this.height = height;
             }
-            return Balance;
+            RMR.prototype.quick = function () {
+                if (this.gender === Fit.Gender.Female) {
+                    return this.weight * 22;
+                }
+                return this.weight * 24.2;
+            };
+            RMR.prototype.bsa = function (bsa) {
+                if (this.gender === Fit.Gender.Female) {
+                    return bsa * 840;
+                }
+                return bsa * 912;
+            };
+            return RMR;
         }());
-        balance.Balance = Balance;
-    })(balance = Fit.balance || (Fit.balance = {}));
+        energy.RMR = RMR;
+        function kma(lbm) {
+            return 370 + (21.6 * lbm);
+        }
+        energy.kma = kma;
+        function cunningham(lbm) {
+            return 500 + (22 * lbm);
+        }
+        energy.cunningham = cunningham;
+        var TEEEstimator = (function () {
+            function TEEEstimator(gender, pal) {
+                this.gender = gender;
+                this.pal = pal;
+            }
+            TEEEstimator.prototype.predict = function (dob, weight, height) {
+                throw new Error("The prediction method is not implemented");
+            };
+            TEEEstimator.prototype.fromActivity = function (weight, mets) {
+                return (mets * 3.5 * weight) / 200;
+            };
+            return TEEEstimator;
+        }());
+        var ChildTEE = (function (_super) {
+            __extends(ChildTEE, _super);
+            function ChildTEE() {
+                _super.apply(this, arguments);
+            }
+            ChildTEE.prototype.predict = function (dob, weight, height) {
+                var age = dob.delta("years");
+                if (this.pal === Fit.PAL.Sedentary && this.gender === Fit.Gender.Male) {
+                    return 88.5 - (61.9 * age) + 1 * ((26.7 * weight) + (903 * height));
+                }
+                else if (this.pal === Fit.PAL.Sedentary && this.gender === Fit.Gender.Female) {
+                    return 135.3 - (30.8 * age) + 1 * ((10 * weight) + (934 * height));
+                }
+                else if (this.pal === Fit.PAL.Low && this.gender === Fit.Gender.Male) {
+                    return 88.5 - (61.9 * age) + 1.13 * ((26.7 * weight) + (903 * height));
+                }
+                else if (this.pal === Fit.PAL.Low && this.gender === Fit.Gender.Female) {
+                    return 135.3 - (30.8 * age) + 1.16 * ((10 * weight) + (934 * height));
+                }
+                else if (this.pal === Fit.PAL.Active && this.gender === Fit.Gender.Male) {
+                    return 88.5 - (61.9 * age) + 1.26 * ((26.7 * weight) + (903 * height));
+                }
+                else if (this.pal === Fit.PAL.Active && this.gender === Fit.Gender.Female) {
+                    return 135.3 - (30.8 * age) + 1.31 * ((10 * weight) + (934 * height));
+                }
+                else if (this.pal === Fit.PAL.VeryActive && this.gender === Fit.Gender.Male) {
+                    return 88.5 - (61.9 * age) + 1.42 * ((26.7 * weight) + (903 * height));
+                }
+                else if (this.pal === Fit.PAL.VeryActive && this.gender === Fit.Gender.Female) {
+                    return 135.3 - (30.8 * age) + 1.56 * ((10 * weight) + (934 * height));
+                }
+                return 0;
+            };
+            return ChildTEE;
+        }(TEEEstimator));
+        energy.ChildTEE = ChildTEE;
+        var AdultTEE = (function (_super) {
+            __extends(AdultTEE, _super);
+            function AdultTEE() {
+                _super.apply(this, arguments);
+            }
+            AdultTEE.prototype.predict = function (dob, weight, height) {
+                var age = dob.delta("years");
+                if (this.pal === Fit.PAL.Sedentary && this.gender === Fit.Gender.Male) {
+                    return 662 - (9.53 * age) + 1 * ((15.9 * weight) + (540 * height));
+                }
+                else if (this.pal === Fit.PAL.Sedentary && this.gender === Fit.Gender.Female) {
+                    return 354 - (6.91 * age) + 1 * ((9.36 * weight) + (726 * height));
+                }
+                else if (this.pal === Fit.PAL.Low && this.gender === Fit.Gender.Male) {
+                    return 662 - (9.53 * age) + 1.11 * ((15.9 * weight) + (540 * height));
+                }
+                else if (this.pal === Fit.PAL.Low && this.gender === Fit.Gender.Female) {
+                    return 662 - (9.53 * age) + 1.12 * ((15.9 * weight) + (540 * height));
+                }
+                else if (this.pal === Fit.PAL.Active && this.gender === Fit.Gender.Male) {
+                    return 662 - (9.53 * age) + 1.25 * ((15.9 * weight) + (540 * height));
+                }
+                else if (this.pal === Fit.PAL.Active && this.gender === Fit.Gender.Female) {
+                    return 662 - (9.53 * age) + 1.27 * ((15.9 * weight) + (540 * height));
+                }
+                else if (this.pal === Fit.PAL.VeryActive && this.gender === Fit.Gender.Male) {
+                    return 662 - (9.53 * age) + 1.48 * ((15.9 * weight) + (540 * height));
+                }
+                else if (this.pal === Fit.PAL.VeryActive && this.gender === Fit.Gender.Female) {
+                    return 662 - (9.53 * age) + 1.45 * ((15.9 * weight) + (540 * height));
+                }
+                return 0;
+            };
+            return AdultTEE;
+        }(TEEEstimator));
+        energy.AdultTEE = AdultTEE;
+    })(energy = Fit.energy || (Fit.energy = {}));
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
     var cardio;
     (function (cardio) {
-        var VO2 = (function () {
-            function VO2(gender, dob, height, weight) {
-                this.vo2Reserve = function (max, rest) {
-                    if (rest === void 0) { rest = 3.5; }
-                    return max - rest;
-                };
-                this.twelveMinVo2 = function (distance) {
-                    return 0.0268 * distance - 11.3;
-                };
-                this.mileSteadyJogVo2 = function (time, hr) {
-                    if (this.gender === this.Gender.Female) {
-                        return 100.5 - 0.1636 * this.weight - 1.438 * time - 0.1928 * hr;
-                    }
-                    return 108.44 - (0.164 * this.weight) - (1.438 * time) - (0.193 * hr);
-                };
-                this.WalkingGrossVO2 = function (speed, grade) {
-                    return (0.1 * speed) + (1.8 * speed * grade) + 3.5;
-                };
-                this.runningGrossVO2 = function (speed, grade) {
-                    return (0.2 * speed) + (0.9 * speed * grade) + 3.5;
-                };
-                this.legErgometryGrossVO2 = function (mass, work) {
-                    return 1.8 * work / mass + 3.5;
-                };
-                this.armErgometryGrossVO2 = function (mass, work) {
-                    return 3.0 * work / mass;
-                };
-                this.steppingVo2 = function (height, frequency) {
-                    return (frequency * 0.2) + (frequency * this.height * 1.8 * 1.33);
-                };
-                this.stairmasterMets = function (setting) {
-                    return 0.556 + 7.45 * setting;
-                };
-                this.usopVO2Max = function (HRMax, HRResting) {
-                    return 15.3 * (HRMax / HRResting);
-                };
-                this.foxErgometryVo2max = function (hr5) {
-                    return 6300.0 - (19.26 * hr5);
-                };
-                this.treadmillWalkVo2max = function (speed, hr) {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 15.1 + (21.8 * speed) - (0.327 * hr) - (0.263 * age) + (0.00504 * (hr * this.age)) + (5.48 * 0.0);
-                    }
-                    return 15.1 + (21.8 * speed) - (0.327 * hr) - (0.263 * age) + (0.00504 * (hr * this.age)) + (5.48 * 1.0);
-                };
-                this.mileWalkVo2 = function (time, hrPeak) {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 132.853 - 0.0769 * this.weight - 0.3877 * age + 6.315 * 0.0 - 3.2649 * time - 0.1565 * hrPeak;
-                    }
-                    return 132.853 - 0.0769 * this.weight - 0.3877 * age + 6.315 * 1.0 - 3.2649 * time - 0.1565 * hrPeak;
-                };
-                this.mileHalfVo2George = function (time) {
-                    if (this.gender === this.Gender.Female) {
-                        return 88.02 - (0.1656 * this.weight) - (2.76 * time) + (3.716 * 0.0);
-                    }
-                    return 88.02 - (0.1656 * this.weight) - (2.76 * time) + (3.716 * 1.0);
-                };
-                this.mileHalfVo2Larson = function (time, hr) {
-                    if (this.gender === this.Gender.Female) {
-                        return 100.16 + (7.30 * 0.0) - (0.164 * this.weight) - (1.273 * time) - (0.1563 * hr);
-                    }
-                    return 100.16 + (7.30 * 1.0) - (0.164 * this.weight) - (1.273 * time) - (0.1563 * hr);
-                };
-                this.stepTestAstrand = function (hr) {
-                    if (this.gender === this.Gender.Female) {
-                        return 3.750 * ((this.weight + 3) / (hr - 65));
-                    }
-                    return 3.744 * ((this.weight + 5) / (hr - 62));
-                };
-                this.stepTestQueensCollege = function (hr) {
-                    if (this.gender === this.Gender.Female) {
-                        return 65.81 - (0.1847 * hr);
-                    }
-                    return 111.33 - (0.42 * hr);
-                };
-                this.treadmillJoggingVo2max = function (speed, hr) {
-                    if (this.gender === this.Gender.Female) {
-                        return 54.07 - (0.1938 * this.weight) - (4.47 * speed) + (0.01453 * hr) + (7.062 * 0.0);
-                    }
-                    return 54.07 - (0.1938 * this.weight) - (4.47 * speed) + (0.01453 * hr) + (7.062 * 1.0);
-                };
-                this.treadmillSubmaxVo2SingleStage = function (sm1, hr1, hrmax) {
-                    if (this.gender === this.Gender.Female) {
-                        return sm1 * ((hrmax - 72) / (hr1 - 72));
-                    }
-                    return sm1 * ((hrmax - 61) / (hr1 - 61));
-                };
-                this.treadmillSubmaxVo2Multistage = function (sm1, hr1, sm2, hr2, hrmax) {
-                    var b = (sm2 - sm1) / (hr2 - hr1);
-                    return sm2 + b * (hrmax - hr2);
-                };
-                this.mileVo2Child = function (time) {
-                    var age = this.dob.delta("years");
-                    var bmi = (this.weight / Math.pow(this.height / 100, 2));
-                    return 108.94 - (8.41 * time) + 0.34 * Math.pow(time, 2) + 0.21 * age - (0.84 * bmi);
-                };
-                this.vo2maxBalke = function (time) {
-                    if (this.gender === this.Gender.Female) {
-                        return 1.38 * time + 5.22;
-                    }
-                    return 1.444 * time + 14.99;
-                };
-                this.vo2maxNaughtonMale = function (time) {
-                    return (1.61 * time) + 3.60;
-                };
-                this.vo2maxBruce = function (time, time2, time3) {
-                    if (this.gender === this.Gender.Female) {
-                        return 4.38 * time - 3.90;
-                    }
-                    return 14.76 - 1.379 * time + 0.451 * time2 - 0.012 * time3;
-                };
-                this.vo2maxElderlyCardiac = function (time) {
-                    return (2.282 * time) + 8.545;
-                };
-                this.shuttleRunVo2 = function (speed) {
-                    var age = this.dob.delta("years");
-                    return 31.025 + (3.238 * speed) - (3.248 * age) + 0.1536 * (age * speed);
-                };
-                this.cooperVo2 = function (distance) {
-                    return (distance - 504.9) / 44.73;
-                };
-                this.cooperMiles = function (distance) {
-                    return (35.97 * distance) - 11.29;
-                };
-                this.gilbertGaniels = function (velocity, time) {
-                    var numerator = 0.000104 * Math.pow(velocity, 2) + 0.182258 * velocity - 4.6;
-                    var denominator = 0.2989558 * Math.pow(Math.E, -0.1932605 * time) + 0.1894393 * Math.pow(Math.E, -0.012778 * time) + 0.8;
-                    return numerator / denominator;
-                };
+        var ResidualVolume = (function () {
+            function ResidualVolume(gender, dob, weight, height) {
                 this.gender = gender;
                 this.dob = dob;
-                this.height = height;
                 this.weight = weight;
+                this.height = height;
             }
+            ResidualVolume.prototype.normal = function () {
+                var age = this.dob.delta("years");
+                var heightCm = this.height * 100;
+                return 0.0275 * age + 0.0189 * heightCm - 2.6139;
+            };
+            ResidualVolume.prototype.overweight = function () {
+                var age = this.dob.delta("years");
+                var heightCm = this.height * 100;
+                return 0.0277 * age + 0.0138 * heightCm - 2.3967;
+            };
+            ResidualVolume.prototype.berglund = function () {
+                var age = this.dob.delta("years");
+                var heightCm = this.height * 100;
+                if (this.gender === Fit.Gender.Female) {
+                    return 0.007 * age + 0.0268 * this.height - 3.42;
+                }
+                return (0.022 * age) + (0.0198 * heightCm) - (0.015 * this.weight) - 1.54;
+            };
+            ResidualVolume.prototype.black = function () {
+                var age = this.dob.delta("years");
+                var heightCm = this.height * 100;
+                return 0.21 * age + 0.023 * heightCm - 2.978;
+            };
+            ResidualVolume.prototype.boren = function () {
+                var age = this.dob.delta("years");
+                var heightCm = this.height * 100;
+                return (0.0115 * age) + (0.019 * heightCm) - 2.24;
+            };
+            ResidualVolume.prototype.goldman = function () {
+                var age = this.dob.delta("years");
+                var heightCm = this.height * 100;
+                if (this.gender === Fit.Gender.Female) {
+                    return 0.009 * age + 0.032 * heightCm - 3.9;
+                }
+                return (0.017 * age) + (0.027 * heightCm) - 3.477;
+            };
+            ResidualVolume.prototype.obrien = function (bsa) {
+                var age = this.dob.delta("years");
+                var heightCm = this.height * 100;
+                return (0.03 * age) + (0.0387 * heightCm) - (0.73 * bsa) - 4.78;
+            };
+            return ResidualVolume;
+        }());
+        cardio.ResidualVolume = ResidualVolume;
+        var VO2 = (function () {
+            function VO2(gender, dob, weight, height) {
+                this.gender = gender;
+                this.dob = dob;
+                this.weight = weight;
+                this.height = height;
+            }
+            VO2.prototype.reserve = function (vo2Max, vo2Rest) {
+                if (vo2Rest === void 0) { vo2Rest = 3.5; }
+                return vo2Max - vo2Rest;
+            };
+            VO2.prototype.target = function (vo2Max, vo2Rest, intensity) {
+                return intensity * (vo2Max - vo2Rest) + vo2Rest;
+            };
+            VO2.prototype.cooper = function (distance) {
+                return 0.0268 * distance - 11.3;
+            };
+            VO2.prototype.walkingGross = function (speed, grade) {
+                return (0.1 * speed) + (1.8 * speed * grade);
+            };
+            VO2.prototype.runningGross = function (speed, grade) {
+                return (0.2 * speed) + (0.9 * speed * grade);
+            };
+            VO2.prototype.legErgometryGross = function (mass, work) {
+                return 3.5 + 1.8 * (work / mass);
+            };
+            VO2.prototype.armErgometryGross = function (mass, work) {
+                return (3.0 * work / mass);
+            };
+            VO2.prototype.steppingGross = function (height, frequency) {
+                return (0.2 * frequency) + (frequency * this.height * 1.8 * 1.33);
+            };
+            VO2.prototype.usop = function (hrMax, restingHR) {
+                return 15.3 * (hrMax / restingHR);
+            };
+            VO2.prototype.foxErgometry = function (hr5) {
+                return 6300.0 - (19.26 * hr5);
+            };
+            VO2.prototype.ebbelingTreadmill = function (speed, hr) {
+                var age = this.dob.delta("years");
+                if (this.gender === Fit.Gender.Female) {
+                    return 15.1 + (21.8 * speed) - (0.327 * hr) - (0.263 * age) + (0.00504 * (hr * age)) + (5.48 * 0.0);
+                }
+                return 15.1 + (21.8 * speed) - (0.327 * hr) - (0.263 * age) + (0.00504 * (hr * age)) + (5.48 * 1.0);
+            };
+            VO2.prototype.kline = function (time, hrPeak) {
+                var age = this.dob.delta("years");
+                if (this.gender === Fit.Gender.Female) {
+                    return 132.853 - 0.0769 * this.weight - 0.3877 * age + 6.315 * 0.0 - 3.2649 * time - 0.1565 * hrPeak;
+                }
+                return 132.853 - 0.0769 * this.weight - 0.3877 * age + 6.315 * 1.0 - 3.2649 * time - 0.1565 * hrPeak;
+            };
+            VO2.prototype.larsen = function (time, hr) {
+                if (this.gender === Fit.Gender.Female) {
+                    return 100.16 + (7.30 * 0.0) - (0.164 * this.weight) - (1.273 * time) - (0.1563 * hr);
+                }
+                return 100.16 + (7.30 * 1.0) - (0.164 * this.weight) - (1.273 * time) - (0.1563 * hr);
+            };
+            VO2.prototype.astrandStep = function (hr) {
+                if (this.gender === Fit.Gender.Female) {
+                    return 3.750 * ((this.weight + 3) / (hr - 65));
+                }
+                return 3.744 * ((this.weight + 5) / (hr - 62));
+            };
+            VO2.prototype.qcStep = function (hr) {
+                if (this.gender === Fit.Gender.Female) {
+                    return 65.81 - (0.1847 * hr);
+                }
+                return 111.33 - (0.42 * hr);
+            };
+            VO2.prototype.georgeRW = function (time) {
+                if (this.gender === Fit.Gender.Female) {
+                    return 88.02 - (0.1656 * this.weight) - (2.76 * time) + (3.716 * 0.0);
+                }
+                return 88.02 - (0.1656 * this.weight) - (2.76 * time) + (3.716 * 1.0);
+            };
+            VO2.prototype.georgeSteady = function (time, hr) {
+                if (this.gender === Fit.Gender.Female) {
+                    return 100.5 - 0.1636 * this.weight - 1.438 * time - 0.1928 * hr;
+                }
+                return 100.5 - 0.1636 * this.weight - 1.438 * time - 0.1928 * hr + 8.344;
+            };
+            VO2.prototype.georgeTreadmill = function (speed, hr) {
+                if (this.gender === Fit.Gender.Female) {
+                    return 54.07 - (0.1938 * this.weight) - (4.47 * speed) + (0.01453 * hr) + (7.062 * 0.0);
+                }
+                return 54.07 - (0.1938 * this.weight) - (4.47 * speed) + (0.01453 * hr) + (7.062 * 1.0);
+            };
+            VO2.prototype.treadmillSubmaxSingleStage = function (sm1, hr1, hrmax) {
+                if (this.gender === Fit.Gender.Female) {
+                    return sm1 * ((hrmax - 72) / (hr1 - 72));
+                }
+                return sm1 * ((hrmax - 61) / (hr1 - 61));
+            };
+            VO2.prototype.treadmillSubmaxVO2Multistage = function (sm1, hr1, sm2, hr2, hrMax) {
+                var b = (sm2 - sm1) / (hr2 - hr1);
+                return sm2 + b * (hrMax - hr2);
+            };
+            VO2.prototype.curetonChild = function (time) {
+                var age = this.dob.delta("years");
+                var bmi = (this.weight / Math.pow(this.height / 100, 2));
+                return 108.94 - (8.41 * time) + 0.34 * 108.94 - (8.41 * time) + 0.34 * Math.pow(time, 2) + 0.21 * age - (0.84 * bmi);
+            };
+            VO2.prototype.balke = function (time) {
+                if (this.gender === Fit.Gender.Female) {
+                    return 1.38 * time + 5.22;
+                }
+                return 1.444 * time + 14.99;
+            };
+            VO2.prototype.balke15MinRun = function (distance) {
+                return 0.0178 * distance + 9.6;
+            };
+            VO2.prototype.bruceMale = function (time, time2, time3) {
+                return 14.76 - 1.379 * time + 0.451 * time2 - 0.012 * time3;
+            };
+            VO2.prototype.bruceFemale = function (time) {
+                return 4.38 * time - 3.90;
+            };
+            VO2.prototype.bruceEC = function (time) {
+                return (2.282 * time) + 8.545;
+            };
+            VO2.prototype.leger = function (speed) {
+                var age = this.dob.delta("years");
+                return 31.025 + (3.238 * speed) - (3.248 * age) + 0.1536 * (age * speed);
+            };
+            VO2.prototype.gilbertDaniels = function (velocity, time) {
+                var numerator = 0.000104 * Math.pow(velocity, 2) + 0.182258 * velocity - 4.6;
+                var denominator = 0.2989558 * Math.exp(-0.1932605 * time) + 0.1894393 * Math.exp(-0.012778 * time) + 0.8;
+                return numerator / denominator;
+            };
             return VO2;
         }());
         cardio.VO2 = VO2;
-        var energy;
-        (function (energy) {
-            function carbohydrate(percentVO2) {
-                return 0.565973 * Math.pow(percentVO2, 2) + 0.376443 * percentVO2 - 0.000295601;
-            }
-            function fat(percentVO2) {
-                return -0.565973 * Math.pow(percentVO2, 2) - .376443 * percentVO2 + 1.0003;
-            }
-        })(energy = cardio.energy || (cardio.energy = {}));
-    })(cardio = Fit.cardio || (Fit.cardio = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var cardio;
-    (function (cardio) {
-        var HR = (function () {
-            function HR(gender, dob, height, weight) {
-                this.maxFox = function () {
-                    var age = this.dob.delta("years");
-                    return 208.0 - (0.7 * age);
-                };
-                this.maxGellish = function () {
-                    var age = this.dob.delta("years");
-                    return 207 - (0.7 * age);
-                };
-                this.maxAstrand = function () {
-                    var age = this.dob.delta("years");
-                    return 216.6 - (0.84 * age);
-                };
-                this.maxTanaka = function () {
-                    var age = this.dob.delta("years");
-                    return 208 - (0.7 * age);
-                };
-                this.maxGulati = function () {
-                    var age = this.dob.delta("years");
-                    return 206 - (0.88 * age);
-                };
-                this.meanArterialPressure = function (diastolic_bp, systolic_bp) {
-                    return ((2 * diastolic_bp) + systolic_bp) / 3;
-                };
-                this.target = function (intensity, rest, max) {
-                    return intensity * (max - rest) + rest;
-                };
-                this.rvBerglund = function () {
-                    var age = this.dob.delta("years");
-                    return (0.0115 * age) + (0.019 * this.height) - 2.24;
-                };
-                this.rvBoren = function () {
-                    var age = this.dob.delta("years");
-                    return (0.022 * age) + (0.0198 * this.height) - (0.015 * this.weight) - 1.54;
-                };
-                this.rvGoldman = function () {
-                    var age = this.dob.delta("years");
-                    return (0.017 * age) + (0.027 * this.height) - 3.477;
-                };
-                this.rvObrienFemale = function (bsa) {
-                    var age = this.dob.delta("years");
-                    return (0.03 * age) + (0.0387 * this.height) - (0.73 * bsa) - 4.78;
-                };
-                this.metsEstimator = function (maxHR, restingHR) {
-                    var hrIndex = maxHR / restingHR;
-                    return 6.0 * hrIndex - 5;
-                };
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-            }
-            return HR;
-        }());
-        cardio.HR = HR;
-    })(cardio = Fit.cardio || (Fit.cardio = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var cardio;
-    (function (cardio) {
-        var RMR = (function () {
-            function RMR(gender, dob, height, weight) {
-                this.revisedHB = function () {
-                    var age = this.dob.delta("years");
-                    var cm = this.height * 100;
-                    if (this.gender === Fit.Gender.Female) {
-                        return (447.6 + 9.25 * this.weight) + (3.10 * cm) - (4.33 * age);
-                    }
-                    return (88.4 + 13.4 * this.weight) + (4.8 * cm) - (5.68 * age);
-                };
-                this.msj = function () {
-                    var age = this.dob.delta("years");
-                    var cm = this.height * 100;
-                    if (this.gender === Fit.Gender.Female) {
-                        return (9.99 * this.weight + 6.25 * cm - 4.92 * age - 151);
-                    }
-                    return (9.99 * this.weight + 6.25 * cm - 4.92 * age + 5);
-                };
-                this.kma = function (lbm) {
-                    return 370 + (21.6 * lbm);
-                };
-                this.cunningham = function (lbm) {
-                    return 500 + (22 * lbm);
-                };
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-            }
-            return RMR;
-        }());
-        cardio.RMR = RMR;
-    })(cardio = Fit.cardio || (Fit.cardio = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var cardio;
-    (function (cardio) {
-        var TEE = (function () {
-            function TEE(gender, dob, height, weight) {
-                this.childSedentaryTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 135.3 - (30.8 * age) + 1 * ((10 * this.weight) + (934 * this.height));
-                    }
-                    return 88.5 - (61.9 * age) + 1 * ((26.7 * this.weight) + (903 * this.height));
-                };
-                this.childLowTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 135.3 - (30.8 * age) + 1.16 * ((10 * this.weight) + (934 * this.height));
-                    }
-                    return 88.5 - (61.9 * age) + 1.13 * ((26.7 * this.weight) + (903 * this.height));
-                };
-                this.childActiveTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 135.3 - (30.8 * age) + 1.31 * ((10 * this.weight) + (934 * this.height));
-                    }
-                    return 88.5 - (61.9 * age) + 1.26 * ((26.7 * this.weight) + (903 * this.height));
-                };
-                this.childVeryActiveTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 135.3 - (30.8 * age) + 1.56 * ((10 * this.weight) + (934 * this.height));
-                    }
-                    return 88.5 - (61.9 * age) + 1.42 * ((26.7 * this.weight) + (903 * this.height));
-                };
-                this.adultSedentaryTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 354 - (6.91 * age) + 1 * ((9.36 * this.weight) + (726 * this.height));
-                    }
-                    return 662 - (9.53 * age) + 1 * ((15.9 * this.weight) + (540 * this.height));
-                };
-                this.adultLowTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 662 - (9.53 * age) + 1.12 * ((15.9 * this.weight) + (540 * this.height));
-                    }
-                    return 662 - (9.53 * age) + 1.11 * ((15.9 * this.weight) + (540 * this.height));
-                };
-                this.adultActiveTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 662 - (9.53 * age) + 1.27 * ((15.9 * this.weight) + (540 * this.height));
-                    }
-                    return 662 - (9.53 * age) + 1.25 * ((15.9 * this.weight) + (540 * this.height));
-                };
-                this.adultVeryActiveTee = function () {
-                    var age = this.dob.delta("years");
-                    if (this.gender === this.Gender.Female) {
-                        return 662 - (9.53 * age) + 1.45 * ((15.9 * this.weight) + (540 * this.height));
-                    }
-                    return 662 - (9.53 * age) + 1.48 * ((15.9 * this.weight) + (540 * this.height));
-                };
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-            }
-            return TEE;
-        }());
-        cardio.TEE = TEE;
-    })(cardio = Fit.cardio || (Fit.cardio = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var cardio;
-    (function (cardio) {
-        var Cardiovascular = (function () {
-            function Cardiovascular(gender, dob, height, weight) {
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-                this.vo2 = new cardio.VO2(gender, dob, height, weight);
-                this.hr = new cardio.HR(gender, dob, height, weight);
-                this.rmr = new cardio.RMR(gender, dob, height, weight);
-                this.tee = new cardio.TEE(gender, dob, height, weight);
-            }
-            return Cardiovascular;
-        }());
-        cardio.Cardiovascular = Cardiovascular;
     })(cardio = Fit.cardio || (Fit.cardio = {}));
 })(Fit || (Fit = {}));
 var Fit;
@@ -1583,19 +1776,10 @@ var Fit;
 (function (Fit) {
     var composition;
     (function (composition) {
-        var Hydration = (function () {
-            function Hydration(gender, dob, height, weight) {
-                this.dailyNeeds = function () {
-                    return 0.033 * this.weight;
-                };
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-            }
-            return Hydration;
-        }());
-        composition.Hydration = Hydration;
+        function dailyWaterNeed() {
+            return 0.033 * this.weight;
+        }
+        composition.dailyWaterNeed = dailyWaterNeed;
     })(composition = Fit.composition || (Fit.composition = {}));
 })(Fit || (Fit = {}));
 var Fit;
@@ -1608,14 +1792,35 @@ var Fit;
                     var meters = this.height / 100;
                     return this.weight / (meters * meters);
                 };
-                this.ponderal = function () {
+                this.corpulence = function () {
                     return this.weight / Math.pow(this.height, 3);
+                };
+                this.sbsi = function (bsa, vertical_trunk_circumference, waist_circumference) {
+                    return (Math.pow(this.height, 7 / 4) * Math.pow(waist_circumference, 5 / 6)) / (bsa * vertical_trunk_circumference);
+                };
+                this.WHR = function (waistCircumference, hipCircumference) {
+                    return waistCircumference / hipCircumference;
+                };
+                this.WHtR = function (waistCircumference) {
+                    return waistCircumference / this.height;
                 };
                 this.gender = gender;
                 this.dob = dob;
                 this.height = height;
                 this.weight = weight;
             }
+            Indices.prototype.bai = function (hipCircumference) {
+                var numerator = 100 * hipCircumference;
+                var denominator = this.height * Math.sqrt(this.height);
+                return (numerator / denominator) - 18;
+            };
+            Indices.prototype.bmi_prime = function (upper_limit) {
+                if (upper_limit === void 0) { upper_limit = 25.9; }
+                return this.bmi() / upper_limit;
+            };
+            Indices.prototype.bsi = function (waist_circumference) {
+                return waist_circumference / Math.pow(this.bmi(), 2 / 3) * Math.pow(this.height, 0.5);
+            };
             return Indices;
         }());
         composition.Indices = Indices;
@@ -1695,6 +1900,17 @@ var Fit;
                 this.height = height;
                 this.weight = weight;
             }
+            Stature.prototype.strideLength = function () {
+                var heightCm = this.height * 100;
+                var strideLength;
+                if (this.gender === Fit.Gender.Female) {
+                    var strideLength_1 = 0.413 * heightCm;
+                }
+                else {
+                    var strideLength_2 = 0.415 * heightCm;
+                }
+                return strideLength / 100;
+            };
             return Stature;
         }());
         composition.Stature = Stature;
@@ -1821,254 +2037,327 @@ var Fit;
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
-    var composition;
-    (function (composition) {
-        var Composition = (function () {
-            function Composition(gender, dob, height, weight) {
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-                this.density = new composition.Density(gender, dob, height, weight);
-                this.hydration = new composition.Hydration(gender, dob, height, weight);
-                this.ideal = new composition.Ideal(gender, dob, height, weight);
-                this.indices = new composition.Indices(gender, dob, height, weight);
-                this.mass = new composition.Mass(gender, dob, height, weight);
-                this.surfaceArea = new composition.SurfaceArea(gender, dob, height, weight);
-            }
-            return Composition;
-        }());
-        composition.Composition = Composition;
-    })(composition = Fit.composition || (Fit.composition = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var flexibility;
-    (function (flexibility) {
-        var Flexibility = (function () {
-            function Flexibility(gender, dob, height, weight) {
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-            }
-            return Flexibility;
-        }());
-        flexibility.Flexibility = Flexibility;
-    })(flexibility = Fit.flexibility || (Fit.flexibility = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
     var strength;
     (function (strength) {
-        var Lifting = (function () {
-            function Lifting(gender, dob, height, weight) {
-                this.oCarroll = function (weightLifted) {
-                    return weightLifted / Math.pow(this.weight - 35, 1 / 3);
-                };
-                this.siffWeightLifting = function () {
-                    var a = 512.245;
-                    var b = 146230;
-                    var c = 1.605;
-                    if (this.gender === Fit.Gender.Female) {
-                        a = 943.063;
-                        b = 0.05142;
-                        c = 257.314;
-                        return c - a * Math.exp(-b * this.weight);
-                    }
-                    return a - b * Math.pow(this.weight, -c);
-                };
-                this.siffPowerLifting = function () {
-                    var a = 1270.4;
-                    var b = 172970;
-                    var c = 1.3925;
-                    if (this.gender === Fit.Gender.Female) {
-                        return 0;
-                    }
-                    return a - b * Math.pow(this.weight, -c);
-                };
-                this.sinclair = function (obtainedTotal) {
-                    var coefficientA = 0.794358141;
-                    var coefficientB = 174.393;
-                    if (this.gender === this.Gender.Female) {
-                        coefficientA = 0.897260740;
-                        coefficientB = 148.026;
-                    }
-                    if (this.weight >= coefficientB)
-                        return 1;
-                    var exponent = Math.pow(coefficientA * Math.log10(this.weight / coefficientB), 2);
-                    return Math.pow(10, exponent);
-                };
-                this.wilks = function (weightLifted) {
-                    var coefficient;
-                    var a = -216.0475144;
-                    var b = 16.2606339;
-                    var c = -0.002388645;
-                    var d = -0.00113732;
-                    var e = 7.01863E-06;
-                    var f = -1.291E-08;
-                    if (this.gender === this.Gender.Female) {
-                        a = 594.31747775582;
-                        b = -27.23842536447;
-                        c = 0.82112226871;
-                        d = -0.00930733913;
-                        e = 4.731582E-05;
-                        f = -9.054E-08;
-                    }
-                    coefficient = 500 / (a + b * this.weight + c * Math.pow(this.weight, 2) + d * Math.pow(this.weight, 3) + e * Math.pow(this.weight, 4) + f * Math.pow(this.weight, 5));
-                    return coefficient * weightLifted;
-                };
+        var Compare = (function () {
+            function Compare(gender, weight) {
                 this.gender = gender;
-                this.dob = dob;
-                this.height = height;
                 this.weight = weight;
             }
-            return Lifting;
+            Compare.prototype.oCarroll = function (weightLifted) {
+                return weightLifted / Math.pow(this.weight - 35, 1 / 3);
+            };
+            Compare.prototype.siffWeight = function () {
+                var a = 512.245;
+                var b = 146230;
+                var c = 1.605;
+                if (this.gender === Fit.Gender.Female) {
+                    a = 943.063;
+                    b = 0.05142;
+                    c = 257.314;
+                    return c - a * Math.exp(-b * this.weight);
+                }
+                return a - b * Math.pow(this.weight, -c);
+            };
+            Compare.prototype.siffPower = function () {
+                var a = 512.245;
+                var b = 172970;
+                var c = 1.3925;
+                if (this.gender === Fit.Gender.Female) {
+                    return 0;
+                }
+                return a - b * Math.pow(this.weight, -c);
+            };
+            Compare.prototype.siff = function (power) {
+                if (power === void 0) { power = false; }
+                if (power) {
+                    return this.siffPower();
+                }
+                return this.siffWeight();
+            };
+            Compare.prototype.sinclair = function (obtainedTotal) {
+                var coefficientA = 0.794358141;
+                var coefficientB = 174.393;
+                if (this.gender === Fit.Gender.Female) {
+                    coefficientA = 0.897260740;
+                    coefficientB = 148.026;
+                }
+                if (this.weight > coefficientB) {
+                    return 1;
+                }
+                var exponent = Math.pow(coefficientA * Math.log10(this.weight / coefficientB), 2);
+                var multiplier = Math.pow(10, exponent);
+                return multiplier * obtainedTotal;
+            };
+            Compare.prototype.wilks = function (weightLifted) {
+                var a = -216.0475144;
+                var b = 16.2606339;
+                var c = -0.002388645;
+                var d = -0.00113732;
+                var e = 7.01863E-06;
+                var f = -1.291E-08;
+                if (this.gender === Fit.Gender.Female) {
+                    a = 594.31747775582;
+                    b = -27.23842536447;
+                    c = 0.82112226871;
+                    d = -0.00930733913;
+                    e = 4.731582E-05;
+                    f = -9.054E-08;
+                }
+                var coefficient = 500 / (a + b * this.weight + c * Math.pow(this.weight, 2) + d * Math.pow(this.weight, 3) + e * Math.pow(this.weight, 4) + f * Math.pow(this.weight, 5));
+                return coefficient * weightLifted;
+            };
+            return Compare;
         }());
-        strength.Lifting = Lifting;
-    })(strength = Fit.strength || (Fit.strength = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var strength;
-    (function (strength) {
-        var Power = (function () {
-            function Power(gender, dob, height, weight) {
-                this.lewis = function (jumpHeight) {
-                    return Math.sqrt(4.9 * this.weight) * Math.sqrt(jumpHeight) * 9.81;
-                };
-                this.peakPowerHarman = function (jumpHeight) {
-                    return 61.9 * jumpHeight + 36 * this.weight + 1822;
-                };
-                this.meanPowerHarman = function (jumpHeight) {
-                    return 21.1 * jumpHeight + 2.3 * this.weight + 1393;
-                };
-                this.peakPowerJB = function (jumpHeight) {
-                    var height = this.height * 100;
-                    return 78.6 * jumpHeight + 60.3 * this.weight + 15.3 * height + 1308;
-                };
-                this.meanPowerJB = function (jumpHeight) {
-                    var height = this.height * 100;
-                    return 43.8 * jumpHeight + 32.7 * this.weight - 16.8 * height + 431;
-                };
-                this.peakPowerSayer = function (jumpHeight) {
-                    return 60.7 * jumpHeight + 45.3 * this.weight - 2055;
-                };
-                this.powerMK = function (verticalHeight, time) {
-                    return (this.weight * (verticalHeight / time)) * 9.81;
-                };
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
+        strength.Compare = Compare;
+        var Jump = (function () {
+            function Jump(weight, height) {
                 this.weight = weight;
+                this.height = height;
             }
-            return Power;
+            Jump.prototype.bosco = function (duration, jump_count, total_flight_time) {
+                return (total_flight_time * duration * Math.pow(9.81, 2)) / (4 * jump_count * (duration - total_flight_time));
+            };
+            Jump.prototype.lewis = function (vJumpHeight) {
+                return Math.sqrt(4.9 * this.weight) * Math.sqrt(vJumpHeight) * 9.81;
+            };
+            Jump.prototype.harman = function (vJumpHeight, peak) {
+                if (peak === void 0) { peak = false; }
+                var vJumpHeightCm = vJumpHeight * 100;
+                if (peak) {
+                    return 61.9 * vJumpHeightCm + 36 * this.weight + 1822;
+                }
+                return 21.1 * vJumpHeightCm + 2.3 * this.weight + 1393;
+            };
+            Jump.prototype.jb = function (vJumpHeight, peak) {
+                if (peak === void 0) { peak = false; }
+                var bodyHeightCm = this.height * 100;
+                var vJumpHeightCm = vJumpHeight * 100;
+                if (peak) {
+                    return 78.6 * vJumpHeightCm + 60.3 * this.weight + 15.3 * bodyHeightCm + 1308;
+                }
+                return 43.8 * vJumpHeightCm + 32.7 * this.weight - 16.8 * bodyHeightCm + 431;
+            };
+            Jump.prototype.sayer = function (vJumpHeight) {
+                var vJumpHeightCm = vJumpHeight * 100;
+                return 60.7 * vJumpHeightCm + 45.3 * this.weight - 2055;
+            };
+            Jump.prototype.mk = function (vJumpHeight, time) {
+                return (this.weight * (vJumpHeight / time)) * 9.81;
+            };
+            return Jump;
         }());
-        strength.Power = Power;
-    })(strength = Fit.strength || (Fit.strength = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var strength;
-    (function (strength) {
+        var RMEstimator = (function () {
+            function RMEstimator(reps) {
+                this.reps = reps;
+            }
+            RMEstimator.prototype.predict = function (weight) {
+                throw new Error("The prediction method is not implemented");
+            };
+            return RMEstimator;
+        }());
+        var Abadie = (function (_super) {
+            __extends(Abadie, _super);
+            function Abadie() {
+                _super.apply(this, arguments);
+            }
+            Abadie.prototype.predict = function (weight) {
+                return 7.24 + (1.05 * weight);
+            };
+            Abadie.prototype.weight = function (rm) {
+                return (4. / 105) * (25 * rm - 181);
+            };
+            return Abadie;
+        }(RMEstimator));
+        strength.Abadie = Abadie;
+        var Baechle = (function (_super) {
+            __extends(Baechle, _super);
+            function Baechle() {
+                _super.apply(this, arguments);
+            }
+            Baechle.prototype.predict = function (weight) {
+                return weight * (1 + (0.033 * this.reps));
+            };
+            Baechle.prototype.weight = function (rm) {
+                return (1000 * rm) / (33 * this.reps + 1000);
+            };
+            return Baechle;
+        }(RMEstimator));
+        strength.Baechle = Baechle;
+        var Brzycki = (function (_super) {
+            __extends(Brzycki, _super);
+            function Brzycki() {
+                _super.apply(this, arguments);
+            }
+            Brzycki.prototype.predict = function (weight) {
+                return weight / (1.0278 - (0.0278 * this.reps));
+            };
+            Brzycki.prototype.weight = function (rm) {
+                return (1.0278 - (0.0278 * this.reps));
+            };
+            Brzycki.prototype.twoSet = function (weight, rep2, weight2) {
+                return ((weight - weight2) / (rep2 - this.reps)) * (this.reps - 1) + weight;
+            };
+            return Brzycki;
+        }(RMEstimator));
+        strength.Brzycki = Brzycki;
+        var Epley = (function (_super) {
+            __extends(Epley, _super);
+            function Epley() {
+                _super.apply(this, arguments);
+            }
+            Epley.prototype.predict = function (weight) {
+                return (weight * this.reps * 0.033) + weight;
+            };
+            return Epley;
+        }(RMEstimator));
+        strength.Epley = Epley;
+        var Landers = (function (_super) {
+            __extends(Landers, _super);
+            function Landers() {
+                _super.apply(this, arguments);
+            }
+            Landers.prototype.predict = function (weight) {
+                return weight / (1.013 - (0.0267123 * this.reps));
+            };
+            Landers.prototype.weight = function (rm) {
+                return rm * (1.013 - (0.0267123 * this.reps));
+            };
+            Landers.prototype.percent = function () {
+                var value = 101.3 - (2.67123 * this.reps);
+                return value / 100;
+            };
+            return Landers;
+        }(RMEstimator));
+        strength.Landers = Landers;
+        var Lombardi = (function (_super) {
+            __extends(Lombardi, _super);
+            function Lombardi() {
+                _super.apply(this, arguments);
+            }
+            Lombardi.prototype.predict = function (weight) {
+                return weight * Math.pow(this.reps, 0.10);
+            };
+            Lombardi.prototype.weight = function (rm) {
+                return rm / Math.pow(this.reps, 0.10);
+            };
+            return Lombardi;
+        }(RMEstimator));
+        strength.Lombardi = Lombardi;
+        var Mayhew = (function (_super) {
+            __extends(Mayhew, _super);
+            function Mayhew() {
+                _super.apply(this, arguments);
+            }
+            Mayhew.prototype.football = function () {
+                return 226.7 + 7.1 * (this.reps);
+            };
+            Mayhew.prototype.predict = function (weight) {
+                return (100 * weight) / (52.2 + 41.9 * Math.exp(-0.055 * this.reps));
+            };
+            Mayhew.prototype.percent = function () {
+                var value = 52.2 + 41.9 * Math.exp(-0.055 * this.reps);
+                return value / 100;
+            };
+            Mayhew.prototype.weight = function (rm) {
+                return (rm * (52.2 + 41.9 * Math.exp(-0.055 * this.reps))) / 100;
+            };
+            return Mayhew;
+        }(RMEstimator));
+        strength.Mayhew = Mayhew;
+        var McGlothin = (function (_super) {
+            __extends(McGlothin, _super);
+            function McGlothin() {
+                _super.apply(this, arguments);
+            }
+            McGlothin.prototype.predict = function (weight) {
+                return (100 * weight) / (101.3 - 2.67123 * this.reps);
+            };
+            McGlothin.prototype.weight = function (rm) {
+                return (rm * (101.3 - 2.67123 * this.reps)) / 100;
+            };
+            return McGlothin;
+        }(RMEstimator));
+        strength.McGlothin = McGlothin;
+        var OConnor = (function (_super) {
+            __extends(OConnor, _super);
+            function OConnor() {
+                _super.apply(this, arguments);
+            }
+            OConnor.prototype.predict = function (weight) {
+                return weight * (1 + 0.025 * this.reps);
+            };
+            OConnor.prototype.percent = function (weight) {
+                return (0.025 * (weight * this.reps) + weight);
+            };
+            OConnor.prototype.weight = function (rm) {
+                return (40. * rm) / (this.reps + 40);
+            };
+            return OConnor;
+        }(RMEstimator));
+        strength.OConnor = OConnor;
+        var ReynoldsCP = (function (_super) {
+            __extends(ReynoldsCP, _super);
+            function ReynoldsCP() {
+                _super.apply(this, arguments);
+            }
+            ReynoldsCP.prototype.predict = function (weight) {
+                return (1.1307 * weight) + 0.6998;
+            };
+            return ReynoldsCP;
+        }(RMEstimator));
+        strength.ReynoldsCP = ReynoldsCP;
+        var ReynoldsLP = (function (_super) {
+            __extends(ReynoldsLP, _super);
+            function ReynoldsLP() {
+                _super.apply(this, arguments);
+            }
+            ReynoldsLP.prototype.predict = function (weight) {
+                return (1.09703 * weight) + 14.2546;
+            };
+            return ReynoldsLP;
+        }(RMEstimator));
+        strength.ReynoldsLP = ReynoldsLP;
+        var Wathan = (function (_super) {
+            __extends(Wathan, _super);
+            function Wathan() {
+                _super.apply(this, arguments);
+            }
+            Wathan.prototype.predict = function (weight) {
+                return (100 * weight) / (48.8 + (53.8 * Math.exp(-0.075 * this.reps)));
+            };
+            Wathan.prototype.weight = function (rm) {
+                return (rm * (48.8 + (53.8 * Math.exp(-0.075 * this.reps)))) / 100;
+            };
+            return Wathan;
+        }(RMEstimator));
+        strength.Wathan = Wathan;
         var RM = (function () {
-            function RM(gender, dob, height, weight) {
-                this.brzycki = function (reps, weight) {
-                    return weight / (1.0278 - (0.0278 * reps));
-                };
-                this.epley = function (reps, weight) {
-                    return (weight * reps * 0.033) + weight;
-                };
-                this.lander = function (reps, weight) {
-                    return weight / (1.013 - (0.0267123 * reps));
-                };
-                this.lombardi = function (reps, weight) {
-                    return weight * Math.pow(reps, 0.10);
-                };
-                this.mayhew = function (reps, weight) {
-                    return (100 * weight) / ((52.2 + 41.9) * Math.pow(Math.E, -0.055 * reps));
-                };
-                this.mayhewFootball = function (reps) {
-                    return 226.7 + 7.1 * (reps);
-                };
-                this.oconnor = function (reps, weight) {
-                    return weight * (1 + 0.025 * reps);
-                };
-                this.wathen = function (reps, weight) {
-                    return (100 * weight) / (48.8 + (53.8 * Math.pow(Math.E, -0.075 * reps)));
-                };
-                this.fatigueRepMap = function (reps, weight) {
-                    return weight / (1.0278 - (reps * 0.0278));
-                };
-                this.twoSetMax = function (rep1, weight1, rep2, weight2) {
-                    return ((weight1 - weight2) / (rep2 - rep1)) * (rep1 - 1) + weight1;
-                };
-                this.relativeStrength = function (rm) {
-                    return rm / this.weight;
-                };
-                this.ymcaUpperBodyRepMax = function (reps) {
-                    if (this.gender === this.Gender.Female) {
-                        return (0.31 * reps) + 19.2;
-                    }
-                    return (1.55 * reps) + 37.9;
-                };
-                this.femaleMiddleAgeRepMax = function (reps, weight) {
-                    var age = this.dob.delta("years");
-                    return (1.06 * weight) + (0.58 * reps) - (0.20 * age) - 3.41;
-                };
-                this.femaleOlderRepMax = function (reps, weight) {
-                    var age = this.dob.delta("years");
-                    return (0.92 * weight) + (0.79 * reps) - (0.20 * age) - 3.73;
-                };
-                this.femaleHipRepMax = function (reps, weight) {
-                    return 100 * weight / (48.8 + Math.pow(53.8, (-0.075 * reps)));
-                };
+            function RM(gender, dob) {
                 this.gender = gender;
                 this.dob = dob;
-                this.height = height;
-                this.weight = weight;
             }
+            RM.prototype.ymcaUpperBody = function (reps) {
+                if (this.gender === Fit.Gender.Female) {
+                    return (0.31 * reps) + 19.2;
+                }
+                return (1.55 * reps) + 37.9;
+            };
+            RM.prototype.femaleMiddleAge = function (reps, weight) {
+                var age = this.dob.delta("years");
+                return (1.06 * weight) + (0.58 * reps) - (0.20 * age) - 3.41;
+            };
+            RM.prototype.femaleOlder = function (reps, weight) {
+                var age = this.dob.delta("years");
+                return (0.92 * weight) + (0.79 * reps) - (0.20 * age) - 3.73;
+            };
+            RM.prototype.relative = function (weight, rm) {
+                return rm / weight;
+            };
             return RM;
         }());
         strength.RM = RM;
     })(strength = Fit.strength || (Fit.strength = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var strength;
-    (function (strength) {
-        var Strength = (function () {
-            function Strength(gender, dob, height, weight) {
-                this.gender = gender;
-                this.dob = dob;
-                this.height = height;
-                this.weight = weight;
-                this.lifting = new strength.Lifting(gender, dob, height, weight);
-                this.power = new strength.Power(gender, dob, height, weight);
-                this.rm = new strength.RM(gender, dob, height, weight);
-            }
-            return Strength;
-        }());
-        strength.Strength = Strength;
-        ;
-    })(strength = Fit.strength || (Fit.strength = {}));
-})(Fit || (Fit = {}));
-var Fit;
-(function (Fit) {
-    var Person = (function () {
-        function Person(gender, dob, height, weight) {
-            this.gender = gender;
-            this.dob = dob;
-            this.height = height;
-            this.weight = weight;
-            this.balance = new Fit.balance.Balance(gender, dob, height, weight);
-            this.cardio = new Fit.cardio.Cardiovascular(gender, dob, height, weight);
-            this.composition = new Fit.composition.Composition(gender, dob, height, weight);
-            this.strength = new Fit.strength.Strength(gender, dob, height, weight);
-        }
-        return Person;
-    }());
-    Fit.Person = Person;
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
@@ -2078,8 +2367,8 @@ var Fit;
         (function (aerobic) {
             var PerformanceModel = (function () {
                 function PerformanceModel(t1, d1) {
-                    this.predictTime = function (d2) { return 0; };
-                    this.predictDistance = function (t2) { return 0; };
+                    this.time = function (d2) { return 0; };
+                    this.distance = function (t2) { return 0; };
                     this.t1 = t1;
                     this.d1 = d1;
                 }
@@ -2089,13 +2378,13 @@ var Fit;
                 __extends(Riegel, _super);
                 function Riegel() {
                     _super.apply(this, arguments);
-                    this.predictTime = function (d2) {
+                    this.time = function (d2) {
                         if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
                             return 0;
                         }
                         return this.t1 * Math.pow((d2 / this.d1), 1.06);
                     };
-                    this.predictDistance = function (t2) {
+                    this.distance = function (t2) {
                         if (this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
                             return 0;
                         }
@@ -2109,7 +2398,7 @@ var Fit;
                 __extends(Cameron, _super);
                 function Cameron() {
                     _super.apply(this, arguments);
-                    this.predictTime = function (d2) {
+                    this.time = function (d2) {
                         if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
                             return 0;
                         }
@@ -2174,22 +2463,22 @@ var Fit;
                     return kph / 60;
                 }
                 pace.hrPace = hrPace;
-                function elPace(vO2Max) {
+                function easy(vO2Max) {
                     return hrPace(0.7, vO2Max);
                 }
-                pace.elPace = elPace;
-                function mPace(vO2Max) {
+                pace.easy = easy;
+                function marathon(vO2Max) {
                     return hrPace(0.825, vO2Max);
                 }
-                pace.mPace = mPace;
-                function tPace(vO2Max) {
+                pace.marathon = marathon;
+                function threshold(vO2Max) {
                     return hrPace(0.85, vO2Max);
                 }
-                pace.tPace = tPace;
-                function iPace(vO2Max) {
+                pace.threshold = threshold;
+                function interval(vO2Max) {
                     return hrPace(1, vO2Max);
                 }
-                pace.iPace = iPace;
+                pace.interval = interval;
             })(pace = running.pace || (running.pace = {}));
         })(running = sport.running || (sport.running = {}));
     })(sport = Fit.sport || (Fit.sport = {}));
@@ -2246,3 +2535,4 @@ var Fit;
         })(running = sport.running || (sport.running = {}));
     })(sport = Fit.sport || (Fit.sport = {}));
 })(Fit || (Fit = {}));
+//# sourceMappingURL=fitness.js.map
