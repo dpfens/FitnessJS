@@ -85,7 +85,7 @@ namespace Fit {
     }
 }
 
-class Jump {
+export class Jump {
   public weight: number;
   public height: number;
 
@@ -129,7 +129,7 @@ class Jump {
     }
   }
 
-class RMEstimator {
+export class RMEstimator {
   public reps: number;
 
     constructor(reps: number) {

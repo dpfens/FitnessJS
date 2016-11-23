@@ -4,7 +4,7 @@ namespace Fit {
 
     export namespace aerobic {
 
-      abstract class PerformanceModel {
+      export abstract class PerformanceModel {
         private t1;
         private d1;
 

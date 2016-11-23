@@ -6,7 +6,7 @@ namespace Fit {
 
     export namespace cardiac {
 
-      interface Estimator {
+      export interface Estimator {
           predict(dob: Date);
 
           age(hr: number);

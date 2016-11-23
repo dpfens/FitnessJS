@@ -7,7 +7,7 @@ namespace Fit {
 	  @class
 	  @classdesc creates a container class for MET values
 	  */
-		class MET {
+		export class MET {
 			public value: number;
 			public code: string;
 			public description: string;

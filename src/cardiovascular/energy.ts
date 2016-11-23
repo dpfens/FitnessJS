@@ -4,7 +4,7 @@ namespace Fit {
 
   export namespace energy {
 
-    class BMREstimator {
+    export class BMREstimator {
       public gender: Gender;
 
       constructor(gender: Gender) {
@@ -90,7 +90,7 @@ export function cunningham(lbm: number): number {
     return 500 + (22 * lbm);
 }
 
-class TEEEstimator {
+export class TEEEstimator {
   public gender: Gender;
   public pal: PAL;
 
