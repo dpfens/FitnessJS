@@ -13,9 +13,9 @@ namespace Fit {
           this.d1 = d1;
         }
 
-        predictTime = function(d2: number): number { return 0}
+        time = function(d2: number): number { return 0}
 
-        predictDistance = function(t2: number): number { return 0}
+        distance = function(t2: number): number { return 0}
 
       }
 
@@ -31,7 +31,7 @@ namespace Fit {
           d1 & d2 must be in the same unit
           @returns {Number} t2 = estimated time to travel d2 in same unit as t1
         */
-        predictTime = function(d2: number): number {
+        time = function(d2: number): number {
           if(this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
             return 0;
           }
@@ -48,7 +48,7 @@ namespace Fit {
           d1 & d2 must be in the same unit
           @returns {Number} d2 = estimated distance travelled in t2 in same unit as d1
         */
-        predictDistance = function(t2: number): number {
+        distance = function(t2: number): number {
           if(this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
             return 0;
           }
@@ -68,7 +68,7 @@ namespace Fit {
           @param {Number} d2 = distance in miles
           @returns {Number} t2 = estimated time to travel d2 in seconds
         */
-        predictTime = function(d2: number): number {
+        time = function(d2: number): number {
           if(this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
             return 0;
           }
