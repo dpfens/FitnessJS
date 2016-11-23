@@ -43,7 +43,7 @@ namespace Fit {
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function elPace(vO2Max: number): number {
+        export function easy(vO2Max: number): number {
           return hrPace(0.7, vO2Max);
         }
 
@@ -54,7 +54,7 @@ namespace Fit {
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function mPace(vO2Max: number): number {
+        export function marathon(vO2Max: number): number {
           return hrPace(0.825, vO2Max);
         }
 
@@ -64,17 +64,17 @@ namespace Fit {
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function tPace(vO2Max: number): number {
+        export function threshold(vO2Max: number): number {
           return hrPace(0.85, vO2Max);
         }
 
         /*
-          Threshold (T) pace
+          Interval (I) pace
           @description 97-100% of HRmax,used for recovery runs, warm-up, cool-down and long runs.
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function iPace(vO2Max: number): number {
+        export function interval(vO2Max: number): number {
           return hrPace(1, vO2Max);
         }
       }
