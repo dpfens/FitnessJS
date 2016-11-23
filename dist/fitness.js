@@ -251,6 +251,7 @@ var Fit;
             }
             return MET;
         }());
+        mets_1.MET = MET;
         var mets = [
             new MET(14.0, "01003", "bicycling, mountain, uphill, vigorous"),
             new MET(16.0, "01004", "bicycling, mountain, competitive, racing"),
@@ -1316,6 +1317,7 @@ var Fit;
             };
             return BMREstimator;
         }());
+        energy.BMREstimator = BMREstimator;
         var HB = (function (_super) {
             __extends(HB, _super);
             function HB() {
@@ -1404,6 +1406,7 @@ var Fit;
             };
             return TEEEstimator;
         }());
+        energy.TEEEstimator = TEEEstimator;
         var ChildTEE = (function (_super) {
             __extends(ChildTEE, _super);
             function ChildTEE() {
@@ -2147,6 +2150,7 @@ var Fit;
             };
             return Jump;
         }());
+        strength.Jump = Jump;
         var RMEstimator = (function () {
             function RMEstimator(reps) {
                 this.reps = reps;
@@ -2156,6 +2160,7 @@ var Fit;
             };
             return RMEstimator;
         }());
+        strength.RMEstimator = RMEstimator;
         var Abadie = (function (_super) {
             __extends(Abadie, _super);
             function Abadie() {
@@ -2374,6 +2379,7 @@ var Fit;
                 }
                 return PerformanceModel;
             }());
+            aerobic.PerformanceModel = PerformanceModel;
             var Riegel = (function (_super) {
                 __extends(Riegel, _super);
                 function Riegel() {
