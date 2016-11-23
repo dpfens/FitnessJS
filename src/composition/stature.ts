@@ -62,6 +62,18 @@ namespace Fit {
   			return 2.10 * femurLength + 72.22;
   		}
 
+      strideLength(): number {
+        let heightCm: number =  this.height * 100;
+        let strideLength;
+        if (this.gender === Gender.Female) {
+            let strideLength: number = 0.413 * heightCm;
+        } else {
+            let strideLength: number = 0.415 * heightCm;
+        }
+
+        return strideLength / 100
+      }
+
 
     }
 
