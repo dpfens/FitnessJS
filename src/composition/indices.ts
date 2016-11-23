@@ -23,6 +23,12 @@ namespace Fit {
 
       }
 
+      bai(hipCircumference: number) {
+        let numerator: number = 100 * hipCircumference;
+        let denominator: number = this.height * Math.sqrt(this.height)
+        return (numerator/denominator) - 18;
+      }
+
   		/*
   		BMI
   		@param {Number} body mass in kg
@@ -34,14 +40,34 @@ namespace Fit {
   			return this.weight / (meters * meters);
   		}
 
-  		/* Ponderal (Rohrer) Index
+      bmi_prime(upper_limit: number=25.9) {
+        return this.bmi()/upper_limit;
+      }
+
+      bsi(waist_circumference: number): number {
+        return waist_circumference / Math.pow(this.bmi(), 2/3) * Math.pow(this.height, 0.5)
+      }
+
+  		/* Corpulence (Ponderal/Rohrer) Index
   		@param {Number}body mass in kg
   		@param {Number} height in meters
       @returns {Number} Ponderal Index
   		*/
-  		ponderal = function():number {
+  		corpulence = function():number {
   			return this.weight/Math.pow(this.height,3);
   		}
+
+      sbsi = function(bsa: number, vertical_trunk_circumference: number, waist_circumference: number): number {
+        return (Math.pow(this.height, 7/4)* Math.pow(waist_circumference, 5/6) )/(bsa * vertical_trunk_circumference);
+      }
+
+      WHR = function(waistCircumference:number , hipCircumference: number): number {
+        return waistCircumference/hipCircumference;
+      }
+
+      WHtR = function(waistCircumference): number {
+        return waistCircumference/this.height;
+      }
 
     }
 
