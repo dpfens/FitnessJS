@@ -9,4 +9,11 @@ namespace Fit {
     Black,
     Hispanic
   }
+
+  export enum PAL {
+    Sedentary,
+    Low,
+    Active,
+    VeryActive
+  }
 }
