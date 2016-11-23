@@ -17,15 +17,6 @@ namespace Fit {
 				this.description = description;
 			}
 
-			correctedValue = function(person: Person): number {
-				let weightGrams = person.weight * 1000;
-				let hbRMR = person.cardio.rmr.revisedHB();
-				let kcalMinute = hbRMR / (1440);
-				let litersMinute = kcalMinute / 5;
-				let hbRMRmLKgMin = litersMinute / weightGrams;
-				return this.value * (3.5 / hbRMRmLKgMin );
-			}
-
 		}
 		/* @const */
 		const mets = [
@@ -886,17 +877,6 @@ namespace Fit {
 		}
 
 		/*
-		 @description estimate kcals expended during exercise
-		 @param {Number} mets MET value of exercise
-		 @param {Number} body mass prior to exercise in kg
-		 @param {Number} hours spent performing exercise
-		 @returns {Number} kcals expended in exercise
-		*/
-		export function estimateKcal( mets: number, kg: number, hours: number): number {
-			return mets * kg * hours;
-		}
-
-		/*
 		 @description estimate weight of individual in exercise
 		 @param {Number} kcals expended in exercise
 		 @param {Number} mets MET value of exercise
@@ -917,6 +897,24 @@ namespace Fit {
 		export function estimateHours(kcal: number, mets: number, kg: number): number {
 			return kcal/(mets * kg);
 		}
+
+		export function toKCal(mets: number, weight: number):number {
+            return (mets * 3.5 * weight)/200;
+	    }
+
+		export function fromVO2(vO2: number): number {
+	    return vO2 / 3.5;
+		}
+
+		export function karvonen(mets: number, intensity: number): number {
+	    return intensity * (mets -1) + 1;
+		}
+
+    export function target(vO2Max: number, intensity: number): number {
+        let mets: number = fromVO2(vO2Max)
+        let targetMets: number = karvonen(mets, intensity)
+        return targetMets;
+	  }
 
 	}
 
