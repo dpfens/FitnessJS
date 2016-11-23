@@ -3,7 +3,8 @@
         "target": "es3",
         "outFile": "../dist/fitness.js",
         "noImplicitAny": false,
-        "removeComments": true
+        "removeComments": true,
+        "sourceMap": true
     },
     "files" : [
         "main.ts"
