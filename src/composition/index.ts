@@ -9,21 +9,17 @@ namespace Fit {
   	@class
   	@classdesc creates an Indices class for body compositon index calculations
   	*/
-    export class Indices {
-      private gender: Gender;
-      private dob: Date;
+    export class Index {
       private height: number;
       private weight: number;
 
-      constructor(gender: Gender, dob: Date, height: number, weight: number) {
-        this.gender = gender;
-        this.dob = dob;
+      constructor(height: number, weight: number) {
         this.height = height;
         this.weight = weight;
 
       }
 
-      bai(hipCircumference: number) {
+      bai(hipCircumference: number): number {
         let numerator: number = 100 * hipCircumference;
         let denominator: number = this.height * Math.sqrt(this.height)
         return (numerator/denominator) - 18;
@@ -35,12 +31,12 @@ namespace Fit {
   		@param {Number} height in meters
       @returns {Number} BMI
   		*/
-  		bmi = function():number {
+  		bmi():number {
   			let meters = this.height / 100;
   			return this.weight / (meters * meters);
   		}
 
-      bmi_prime(upper_limit: number=25.9) {
+      bmi_prime(upper_limit: number=25.9): number {
         return this.bmi()/upper_limit;
       }
 
@@ -53,19 +49,19 @@ namespace Fit {
   		@param {Number} height in meters
       @returns {Number} Ponderal Index
   		*/
-  		corpulence = function():number {
+  		corpulence():number {
   			return this.weight/Math.pow(this.height,3);
   		}
 
-      sbsi = function(bsa: number, vertical_trunk_circumference: number, waist_circumference: number): number {
+      sbsi(bsa: number, vertical_trunk_circumference: number, waist_circumference: number): number {
         return (Math.pow(this.height, 7/4)* Math.pow(waist_circumference, 5/6) )/(bsa * vertical_trunk_circumference);
       }
 
-      WHR = function(waistCircumference:number , hipCircumference: number): number {
+      WHR(waistCircumference:number , hipCircumference: number): number {
         return waistCircumference/hipCircumference;
       }
 
-      WHtR = function(waistCircumference): number {
+      WHtR(waistCircumference): number {
         return waistCircumference/this.height;
       }
 
