@@ -34,7 +34,7 @@ namespace Fit {
         export function hrPace(percentHR: number, vO2Max: number): number {
           let kph = hrSpeed(percentHR, vO2Max);
           // convert kph to min/km
-          return kph/60;
+          return 60/kph;
         }
 
         /*
@@ -43,8 +43,8 @@ namespace Fit {
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function easy(vO2Max: number): number {
-          return hrPace(0.7, vO2Max);
+        export function easy(vO2Max: number): number[] {
+          return [hrPace(0.6, vO2Max), hrPace(0.79, vO2Max)];
         }
 
 
@@ -54,8 +54,8 @@ namespace Fit {
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function marathon(vO2Max: number): number {
-          return hrPace(0.825, vO2Max);
+        export function marathon(vO2Max: number): number[] {
+          return [hrPace(0.8, vO2Max), hrPace(0.85, vO2Max)];
         }
 
         /*
@@ -64,8 +64,8 @@ namespace Fit {
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function threshold(vO2Max: number): number {
-          return hrPace(0.85, vO2Max);
+        export function threshold(vO2Max: number): number[] {
+          return [hrPace(0.82, vO2Max), hrPace(0.88, vO2Max)];
         }
 
         /*
@@ -74,8 +74,8 @@ namespace Fit {
           @param {Number} vO2Max in mL/(kg•min)
           @returns {Number} pace in min/mile
         */
-        export function interval(vO2Max: number): number {
-          return hrPace(1, vO2Max);
+        export function interval(vO2Max: number): number[] {
+          return [hrPace(0.97, vO2Max), hrPace(1, vO2Max)];
         }
       }
 
