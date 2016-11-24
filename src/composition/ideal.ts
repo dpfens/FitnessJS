@@ -14,12 +14,6 @@ namespace Fit {
       public height: number;
       public weight: number;
 
-      public density: Density;
-      public indices: Indices;
-      public mass: Mass;
-      public stature: Stature;
-      public surfaceArea: SurfaceArea;
-
       constructor(gender: Gender, dob: Date, height: number, weight: number) {
         this.gender = gender;
         this.dob = dob;
