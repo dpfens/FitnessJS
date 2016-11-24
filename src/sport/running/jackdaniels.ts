@@ -34,6 +34,47 @@ namespace Fit {
             return 0.8 + Math.pow(0.1894393, -0.012778*time)+ Math.exp(-0.1932605*time);
           }
 
+          /*
+            Easy / Long (E/L) pace
+            @description 60-79% of HRmax,used for recovery runs, warm-up, cool-down and long runs.
+            @param {Number} vO2Max in mL/(kg•min)
+            @returns {Number} pace in min/mile
+          */
+          export function easy(vO2Max: number): number[] {
+            return [pace.hrPace(0.6, vO2Max), pace.hrPace(0.79, vO2Max)];
+          }
+
+
+          /*
+            Marathon (M) pace
+            @description 80-85% of HRmax,used for recovery runs, warm-up, cool-down and long runs.
+            @param {Number} vO2Max in mL/(kg•min)
+            @returns {Number} pace in min/mile
+          */
+          export function marathon(vO2Max: number): number[] {
+            return [pace.hrPace(0.8, vO2Max), pace.hrPace(0.85, vO2Max)];
+          }
+
+          /*
+            Threshold (T) pace
+            @description 82-88% of HRmax,used for recovery runs, warm-up, cool-down and long runs.
+            @param {Number} vO2Max in mL/(kg•min)
+            @returns {Number} pace in min/mile
+          */
+          export function threshold(vO2Max: number): number[] {
+            return [pace.hrPace(0.82, vO2Max), pace.hrPace(0.88, vO2Max)];
+          }
+
+          /*
+            Interval (I) pace
+            @description 97-100% of HRmax,used for recovery runs, warm-up, cool-down and long runs.
+            @param {Number} vO2Max in mL/(kg•min)
+            @returns {Number} pace in min/mile
+          */
+          export function interval(vO2Max: number): number[] {
+            return [pace.hrPace(0.97, vO2Max), pace.hrPace(1, vO2Max)];
+          }
+
       }
 
     }
