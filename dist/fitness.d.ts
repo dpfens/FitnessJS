@@ -247,14 +247,6 @@ declare namespace Fit {
             skinfoldDbCollegiateAthleteBlack: (sum: any) => number;
             skinfoldDbCollegiateAthleteWhite: (sum3SKF: number) => number;
             bodyVol: (uww: number, rv: number, gv: number) => number;
-            brozekBf: (bd: number) => number;
-            ortizBf: (bd: number) => number;
-            SchuttleBf: (bd: number) => number;
-            siriBf: (bd: number) => number;
-            wagnerBf: (bd: number) => number;
-            childBmiToBf: () => number;
-            adultBmiToBf: () => number;
-            WaistBF: (waist: number) => number;
         }
     }
 }
@@ -265,20 +257,33 @@ declare namespace Fit {
 }
 declare namespace Fit {
     namespace composition {
-        class Indices {
-            private gender;
-            private dob;
+        class Fat {
+            constructor();
+            brozek(bd: number): number;
+            ortiz(bd: number): number;
+            schutte(bd: number): number;
+            siri(bd: number): number;
+            wagner(bd: number): number;
+            static childBmi: (gender: Gender, dob: Date, weight: number, height: number) => number;
+            static adultBmi: (gender: Gender, dob: Date, weight: number, height: number) => number;
+            static waist: (gender: Gender, weight: number, waistCircumference: number) => number;
+        }
+    }
+}
+declare namespace Fit {
+    namespace composition {
+        class Index {
             private height;
             private weight;
-            constructor(gender: Gender, dob: Date, height: number, weight: number);
+            constructor(height: number, weight: number);
             bai(hipCircumference: number): number;
-            bmi: () => number;
+            bmi(): number;
             bmi_prime(upper_limit?: number): number;
             bsi(waist_circumference: number): number;
-            corpulence: () => number;
-            sbsi: (bsa: number, vertical_trunk_circumference: number, waist_circumference: number) => number;
-            WHR: (waistCircumference: number, hipCircumference: number) => number;
-            WHtR: (waistCircumference: any) => number;
+            corpulence(): number;
+            sbsi(bsa: number, vertical_trunk_circumference: number, waist_circumference: number): number;
+            WHR(waistCircumference: number, hipCircumference: number): number;
+            WHtR(waistCircumference: any): number;
         }
     }
 }
@@ -341,11 +346,6 @@ declare namespace Fit {
             dob: Date;
             height: number;
             weight: number;
-            density: Density;
-            indices: Indices;
-            mass: Mass;
-            stature: Stature;
-            surfaceArea: SurfaceArea;
             constructor(gender: Gender, dob: Date, height: number, weight: number);
             hamwi: () => number;
             devine: () => number;
@@ -489,10 +489,6 @@ declare namespace Fit {
             namespace pace {
                 function hrSpeed(percentHR: number, vO2Max: number): number;
                 function hrPace(percentHR: number, vO2Max: number): number;
-                function easy(vO2Max: number): number;
-                function marathon(vO2Max: number): number;
-                function threshold(vO2Max: number): number;
-                function interval(vO2Max: number): number;
             }
         }
     }
@@ -512,6 +508,10 @@ declare namespace Fit {
                 function velocity(vO2: number): number;
                 function vO2(velocity: number): number;
                 function vO2Percentage(time: number): number;
+                function easy(vO2Max: number): number[];
+                function marathon(vO2Max: number): number[];
+                function threshold(vO2Max: number): number[];
+                function interval(vO2Max: number): number[];
             }
         }
     }

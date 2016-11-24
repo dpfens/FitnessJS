@@ -1727,44 +1727,6 @@ var Fit;
                     var waterDensity = 1;
                     return ((this.weight - uww) / waterDensity) - (rv - gv);
                 };
-                this.brozekBf = function (bd) {
-                    return (4.570 / bd) - 4.142;
-                };
-                this.ortizBf = function (bd) {
-                    return (4.832 / bd) - 4.369;
-                };
-                this.SchuttleBf = function (bd) {
-                    return (4.374 / bd) - 3.928;
-                };
-                this.siriBf = function (bd) {
-                    return (4.95 / bd) - 4.5;
-                };
-                this.wagnerBf = function (bd) {
-                    return (4.86 / bd) - 4.39;
-                };
-                this.childBmiToBf = function () {
-                    var age = this.dob.delta("years");
-                    var bmi = (this.weight / Math.pow(this.height / 100, 2));
-                    if (this.gender === Fit.Gender.Female) {
-                        return ((1.51 * bmi) - (0.70 * age) + 1.4) / 100;
-                    }
-                    return ((1.51 * bmi) - (0.70 * age) - (3.6) + 1.4) / 100;
-                };
-                this.adultBmiToBf = function () {
-                    var age = this.dob.delta("years");
-                    var bmi = (this.weight / Math.pow(this.height / 100, 2));
-                    if (this.gender === Fit.Gender.Female) {
-                        return ((1.20 * bmi) - (0.23 * age) - 5.4) / 100;
-                    }
-                    return ((1.20 * bmi) - (0.23 * age) - (10.8) - 5.4) / 100;
-                };
-                this.WaistBF = function (waist) {
-                    var weightLb = this.weight * 2.2;
-                    if (this.gender === Fit.Gender.Female) {
-                        return 100 * (-76.76 + 4.15 * waist - 0.082 * weightLb) / weightLb;
-                    }
-                    return 100 * (-98.42 + 4.15 * waist - 0.082 * weightLb) / weightLb;
-                };
                 this.gender = gender;
                 this.dob = dob;
                 this.height = height;
@@ -1789,44 +1751,93 @@ var Fit;
 (function (Fit) {
     var composition;
     (function (composition) {
-        var Indices = (function () {
-            function Indices(gender, dob, height, weight) {
-                this.bmi = function () {
-                    var meters = this.height / 100;
-                    return this.weight / (meters * meters);
-                };
-                this.corpulence = function () {
-                    return this.weight / Math.pow(this.height, 3);
-                };
-                this.sbsi = function (bsa, vertical_trunk_circumference, waist_circumference) {
-                    return (Math.pow(this.height, 7 / 4) * Math.pow(waist_circumference, 5 / 6)) / (bsa * vertical_trunk_circumference);
-                };
-                this.WHR = function (waistCircumference, hipCircumference) {
-                    return waistCircumference / hipCircumference;
-                };
-                this.WHtR = function (waistCircumference) {
-                    return waistCircumference / this.height;
-                };
-                this.gender = gender;
-                this.dob = dob;
+        var Fat = (function () {
+            function Fat() {
+            }
+            Fat.prototype.brozek = function (bd) {
+                return (4.570 / bd) - 4.142;
+            };
+            Fat.prototype.ortiz = function (bd) {
+                return (4.832 / bd) - 4.369;
+            };
+            Fat.prototype.schutte = function (bd) {
+                return (4.374 / bd) - 3.928;
+            };
+            Fat.prototype.siri = function (bd) {
+                return (4.95 / bd) - 4.5;
+            };
+            Fat.prototype.wagner = function (bd) {
+                return (4.86 / bd) - 4.39;
+            };
+            Fat.childBmi = function (gender, dob, weight, height) {
+                var age = dob.delta("years");
+                var bmi = (weight / Math.pow(height / 100, 2));
+                if (this.gender === Fit.Gender.Female) {
+                    return ((1.51 * bmi) - (0.70 * age) + 1.4) / 100;
+                }
+                return ((1.51 * bmi) - (0.70 * age) - (3.6) + 1.4) / 100;
+            };
+            Fat.adultBmi = function (gender, dob, weight, height) {
+                var age = this.dob.delta("years");
+                var bmi = (this.weight / Math.pow(this.height / 100, 2));
+                if (this.gender === Fit.Gender.Female) {
+                    return ((1.20 * bmi) - (0.23 * age) - 5.4) / 100;
+                }
+                return ((1.20 * bmi) - (0.23 * age) - (10.8) - 5.4) / 100;
+            };
+            Fat.waist = function (gender, weight, waistCircumference) {
+                var weightLb = weight * 2.2;
+                var waistCircumferenceInches = waistCircumference * 39.3701;
+                if (gender === Fit.Gender.Female) {
+                    return 100 * (-76.76 + 4.15 * waistCircumferenceInches - 0.082 * weightLb) / weightLb;
+                }
+                return 100 * (-98.42 + 4.15 * waistCircumferenceInches - 0.082 * weightLb) / weightLb;
+            };
+            return Fat;
+        }());
+        composition.Fat = Fat;
+    })(composition = Fit.composition || (Fit.composition = {}));
+})(Fit || (Fit = {}));
+var Fit;
+(function (Fit) {
+    var composition;
+    (function (composition) {
+        var Index = (function () {
+            function Index(height, weight) {
                 this.height = height;
                 this.weight = weight;
             }
-            Indices.prototype.bai = function (hipCircumference) {
+            Index.prototype.bai = function (hipCircumference) {
                 var numerator = 100 * hipCircumference;
                 var denominator = this.height * Math.sqrt(this.height);
                 return (numerator / denominator) - 18;
             };
-            Indices.prototype.bmi_prime = function (upper_limit) {
+            Index.prototype.bmi = function () {
+                var meters = this.height / 100;
+                return this.weight / (meters * meters);
+            };
+            Index.prototype.bmi_prime = function (upper_limit) {
                 if (upper_limit === void 0) { upper_limit = 25.9; }
                 return this.bmi() / upper_limit;
             };
-            Indices.prototype.bsi = function (waist_circumference) {
+            Index.prototype.bsi = function (waist_circumference) {
                 return waist_circumference / Math.pow(this.bmi(), 2 / 3) * Math.pow(this.height, 0.5);
             };
-            return Indices;
+            Index.prototype.corpulence = function () {
+                return this.weight / Math.pow(this.height, 3);
+            };
+            Index.prototype.sbsi = function (bsa, vertical_trunk_circumference, waist_circumference) {
+                return (Math.pow(this.height, 7 / 4) * Math.pow(waist_circumference, 5 / 6)) / (bsa * vertical_trunk_circumference);
+            };
+            Index.prototype.WHR = function (waistCircumference, hipCircumference) {
+                return waistCircumference / hipCircumference;
+            };
+            Index.prototype.WHtR = function (waistCircumference) {
+                return waistCircumference / this.height;
+            };
+            return Index;
         }());
-        composition.Indices = Indices;
+        composition.Index = Index;
     })(composition = Fit.composition || (Fit.composition = {}));
 })(Fit || (Fit = {}));
 var Fit;
@@ -2466,25 +2477,9 @@ var Fit;
                 pace.hrSpeed = hrSpeed;
                 function hrPace(percentHR, vO2Max) {
                     var kph = hrSpeed(percentHR, vO2Max);
-                    return kph / 60;
+                    return 60 / kph;
                 }
                 pace.hrPace = hrPace;
-                function easy(vO2Max) {
-                    return hrPace(0.7, vO2Max);
-                }
-                pace.easy = easy;
-                function marathon(vO2Max) {
-                    return hrPace(0.825, vO2Max);
-                }
-                pace.marathon = marathon;
-                function threshold(vO2Max) {
-                    return hrPace(0.85, vO2Max);
-                }
-                pace.threshold = threshold;
-                function interval(vO2Max) {
-                    return hrPace(1, vO2Max);
-                }
-                pace.interval = interval;
             })(pace = running.pace || (running.pace = {}));
         })(running = sport.running || (sport.running = {}));
     })(sport = Fit.sport || (Fit.sport = {}));
@@ -2537,6 +2532,22 @@ var Fit;
                     return 0.8 + Math.pow(0.1894393, -0.012778 * time) + Math.exp(-0.1932605 * time);
                 }
                 jackDaniels.vO2Percentage = vO2Percentage;
+                function easy(vO2Max) {
+                    return [running.pace.hrPace(0.6, vO2Max), running.pace.hrPace(0.79, vO2Max)];
+                }
+                jackDaniels.easy = easy;
+                function marathon(vO2Max) {
+                    return [running.pace.hrPace(0.8, vO2Max), running.pace.hrPace(0.85, vO2Max)];
+                }
+                jackDaniels.marathon = marathon;
+                function threshold(vO2Max) {
+                    return [running.pace.hrPace(0.82, vO2Max), running.pace.hrPace(0.88, vO2Max)];
+                }
+                jackDaniels.threshold = threshold;
+                function interval(vO2Max) {
+                    return [running.pace.hrPace(0.97, vO2Max), running.pace.hrPace(1, vO2Max)];
+                }
+                jackDaniels.interval = interval;
             })(jackDaniels = running.jackDaniels || (running.jackDaniels = {}));
         })(running = sport.running || (sport.running = {}));
     })(sport = Fit.sport || (Fit.sport = {}));
