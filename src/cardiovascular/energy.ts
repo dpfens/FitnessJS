@@ -158,26 +158,33 @@ namespace Fit {
         }
     }
 
-export function kma(lbm: number): number {
-    return 370 + (21.6 * lbm);
-}
+    export class Terrain {
+      public weight: number;
+      public speed: number;
+      public load: number;
 
-export function cunningham(lbm: number): number {
-    return 500 + (22 * lbm);
-}
+      constructor(weight: number, speed: number, load: number) {
+          this.weight = weight;
+          this.speed = speed;
+          this.load = load;
+      }
 
-export class TEEEstimator {
-  public gender: Gender;
-  public pal: PAL;
+      pandolf(terrain: number, slope: number): number {
+          let total_weight: number = this.weight + this.load;
+          return (1.5*this.weight) + 2.0*(total_weight)*Math.pow(this.load/this.weight,2)+terrain*total_weight*(1.5*Math.pow(this.speed,2)+0.25*this.speed*slope)
+      }
 
-    constructor(gender: Gender, pal: PAL) {
-        this.gender = gender;
-        this.pal = pal;
-    }
+      santee(terrain: number, slope: number): number {
+          let total_weight: number = this.weight + this.load;
+          let energy: number = this.speed * slope;
 
-    predict(dob: Date, weight: number, height: number): number {
-        throw new Error("The prediction method is not implemented");
-    }
+          let part1: number = 1.5*this.weight+2*Math.pow(this.load/this.weight,2);
+          let part2: number = terrain*total_weight*(1.5*Math.pow(this.speed,2)+0.35*energy);
+          let part3_1: number = (energy*total_weight) / 3.5;
+          let part3_2: number = (energy* Math.pow(slope+6,2) ) / this.weight;
+          let part3_3: number = 25-Math.pow(this.speed,2);
+          return part1 + part2-terrain*(part3_1-part3_2+part3_3);
+      }
 
     }
 
