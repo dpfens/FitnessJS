@@ -175,6 +175,14 @@ declare namespace Fit {
         class AdultTEE extends TEEEstimator {
             predict(dob: Date, weight: number, height: number): number;
         }
+        class Terrain {
+            weight: number;
+            speed: number;
+            load: number;
+            constructor(weight: number, speed: number, load: number);
+            pandolf(terrain: number, slope: number): number;
+            santee(terrain: number, slope: number): number;
+        }
     }
 }
 declare namespace Fit {

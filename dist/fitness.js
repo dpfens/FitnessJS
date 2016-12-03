@@ -1307,7 +1307,7 @@ var Fit;
 var Fit;
 (function (Fit) {
     var energy;
-    (function (energy) {
+    (function (energy_1) {
         var BMREstimator = (function () {
             function BMREstimator(gender) {
                 this.gender = gender;
@@ -1317,7 +1317,7 @@ var Fit;
             };
             return BMREstimator;
         }());
-        energy.BMREstimator = BMREstimator;
+        energy_1.BMREstimator = BMREstimator;
         var HB = (function (_super) {
             __extends(HB, _super);
             function HB() {
@@ -1332,7 +1332,7 @@ var Fit;
             };
             return HB;
         }(BMREstimator));
-        energy.HB = HB;
+        energy_1.HB = HB;
         var RevisedHB = (function (_super) {
             __extends(RevisedHB, _super);
             function RevisedHB() {
@@ -1347,7 +1347,7 @@ var Fit;
             };
             return RevisedHB;
         }(BMREstimator));
-        energy.RevisedHB = RevisedHB;
+        energy_1.RevisedHB = RevisedHB;
         var MSJ = (function (_super) {
             __extends(MSJ, _super);
             function MSJ() {
@@ -1362,7 +1362,7 @@ var Fit;
             };
             return MSJ;
         }(BMREstimator));
-        energy.MSJ = MSJ;
+        energy_1.MSJ = MSJ;
         var RMR = (function () {
             function RMR(gender, dob, weight, height) {
                 this.gender = gender;
@@ -1384,15 +1384,15 @@ var Fit;
             };
             return RMR;
         }());
-        energy.RMR = RMR;
+        energy_1.RMR = RMR;
         function kma(lbm) {
             return 370 + (21.6 * lbm);
         }
-        energy.kma = kma;
+        energy_1.kma = kma;
         function cunningham(lbm) {
             return 500 + (22 * lbm);
         }
-        energy.cunningham = cunningham;
+        energy_1.cunningham = cunningham;
         var TEEEstimator = (function () {
             function TEEEstimator(gender, pal) {
                 this.gender = gender;
@@ -1406,7 +1406,7 @@ var Fit;
             };
             return TEEEstimator;
         }());
-        energy.TEEEstimator = TEEEstimator;
+        energy_1.TEEEstimator = TEEEstimator;
         var ChildTEE = (function (_super) {
             __extends(ChildTEE, _super);
             function ChildTEE() {
@@ -1442,7 +1442,7 @@ var Fit;
             };
             return ChildTEE;
         }(TEEEstimator));
-        energy.ChildTEE = ChildTEE;
+        energy_1.ChildTEE = ChildTEE;
         var AdultTEE = (function (_super) {
             __extends(AdultTEE, _super);
             function AdultTEE() {
@@ -1478,7 +1478,31 @@ var Fit;
             };
             return AdultTEE;
         }(TEEEstimator));
-        energy.AdultTEE = AdultTEE;
+        energy_1.AdultTEE = AdultTEE;
+        var Terrain = (function () {
+            function Terrain(weight, speed, load) {
+                this.weight = weight;
+                this.speed = speed;
+                this.load = load;
+            }
+            Terrain.prototype.pandolf = function (terrain, slope) {
+                var total_weight = this.weight + this.load;
+                return (1.5 * this.weight) + 2.0 * (total_weight) * Math.pow(this.load / this.weight, 2) + terrain * total_weight * (1.5 * Math.pow(this.speed, 2) + 0.25 * this.speed * slope);
+            };
+            Terrain.prototype.santee = function (terrain, slope) {
+                var total_weight = this.weight + this.load;
+                var energy = this.speed * slope;
+                var speed_squared = Math.pow(this.speed, 2);
+                var part1 = 1.5 * this.weight + 2 * Math.pow(this.load / this.weight, 2);
+                var part2 = terrain * total_weight * (1.5 * speed_squared + 0.35 * energy);
+                var part3_1 = (energy * total_weight) / 3.5;
+                var part3_2 = (total_weight * Math.pow(slope + 6, 2)) / this.weight;
+                var part3_3 = 25 - speed_squared;
+                return part1 + part2 - terrain * (part3_1 - part3_2 + part3_3);
+            };
+            return Terrain;
+        }());
+        energy_1.Terrain = Terrain;
     })(energy = Fit.energy || (Fit.energy = {}));
 })(Fit || (Fit = {}));
 var Fit;

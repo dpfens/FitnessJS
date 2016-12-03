@@ -177,12 +177,13 @@ namespace Fit {
       santee(terrain: number, slope: number): number {
           let total_weight: number = this.weight + this.load;
           let energy: number = this.speed * slope;
+          let speed_squared: number = Math.pow(this.speed,2)
 
           let part1: number = 1.5*this.weight+2*Math.pow(this.load/this.weight,2);
-          let part2: number = terrain*total_weight*(1.5*Math.pow(this.speed,2)+0.35*energy);
+          let part2: number = terrain*total_weight*(1.5*speed_squared+0.35*energy);
           let part3_1: number = (energy*total_weight) / 3.5;
-          let part3_2: number = (energy* Math.pow(slope+6,2) ) / this.weight;
-          let part3_3: number = 25-Math.pow(this.speed,2);
+          let part3_2: number = (total_weight* Math.pow(slope+6,2) ) / this.weight;
+          let part3_3: number = 25-speed_squared;
           return part1 + part2-terrain*(part3_1-part3_2+part3_3);
       }
 
