@@ -49,7 +49,7 @@ namespace Fit {
       }
     }
 
-export class Gulati implements Estimator {
+    export class Gulati implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -61,7 +61,7 @@ export class Gulati implements Estimator {
      }
    }
 
-export class LM implements Estimator {
+    export class LM implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -73,7 +73,7 @@ export class LM implements Estimator {
      }
    }
 
-export class Miller implements Estimator {
+    export class Miller implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -85,7 +85,7 @@ export class Miller implements Estimator {
      }
    }
 
-export class Nes implements Estimator {
+    export class Nes implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -95,9 +95,9 @@ export class Nes implements Estimator {
      age(hr: number): number {
         return (hr-211)/-0.64;
      }
-}
+    }
 
-export class OaklandL implements Estimator {
+    export class OaklandL implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -109,7 +109,7 @@ export class OaklandL implements Estimator {
      }
    }
 
-export class OaklandNL1 implements Estimator {
+    export class OaklandNL1 implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -121,7 +121,7 @@ export class OaklandNL1 implements Estimator {
      }
    }
 
-export class OaklandNL2 implements Estimator {
+    export class OaklandNL2 implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -133,7 +133,7 @@ export class OaklandNL2 implements Estimator {
     }
   }
 
-export class RL implements Estimator {
+    export class RL implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
@@ -145,7 +145,7 @@ export class RL implements Estimator {
      }
    }
 
-export class TMS implements Estimator {
+    export class TMS implements Estimator {
 
      predict(dob: Date): number {
        let age = dob.delta("years");
