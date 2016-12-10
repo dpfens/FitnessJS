@@ -5,17 +5,17 @@ namespace Fit {
     export namespace aerobic {
 
       export abstract class PerformanceModel {
-        private t1;
-        private d1;
+        protected t1;
+        protected d1;
 
-        constructor(t1: number, d1: number) {
-          this.t1 = t1;
+        constructor(d1: number, t1: number) {
           this.d1 = d1;
+          this.t1 = t1;
         }
 
-        time = function(d2: number): number { return 0}
+        time(d2: number): number { return 0}
 
-        distance = function(t2: number): number { return 0}
+        distance(t2: number): number { return 0}
 
       }
 
@@ -31,7 +31,7 @@ namespace Fit {
           d1 & d2 must be in the same unit
           @returns {Number} t2 = estimated time to travel d2 in same unit as t1
         */
-        time = function(d2: number): number {
+        time(d2: number): number {
           if(this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
             return 0;
           }
@@ -48,7 +48,7 @@ namespace Fit {
           d1 & d2 must be in the same unit
           @returns {Number} d2 = estimated distance travelled in t2 in same unit as d1
         */
-        distance = function(t2: number): number {
+        distance(t2: number): number {
           if(this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
             return 0;
           }
@@ -68,13 +68,50 @@ namespace Fit {
           @param {Number} d2 = distance in miles
           @returns {Number} t2 = estimated time to travel d2 in seconds
         */
-        time = function(d2: number): number {
+        time(d2: number): number {
           if(this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
             return 0;
           }
           let a = 13.49681 - 0.048865*this.d1 + 2.438936/Math.pow(this.d1,0.7905);
           let b = 13.49681 - 0.048865*d2 + 2.438936/Math.pow(d2,0.7905);
           return (this.t1/this.d1) * (a/b) * d2;
+        }
+      }
+
+
+      export class VV {
+        protected t1;
+        protected d1;
+
+        constructor(d1: number, t1: number) {
+          this.d1 = d1;
+          this.t1 = t1;
+        }
+
+        adj_timer(d1: number, t1: number): number {
+          return d1/(d1/t1);
+        }
+
+        riegel_velocity(distance: number): number {
+          let adj_timer = this.adj_timer(this.d1, this.t1);
+          return distance/(adj_timer* Math.pow(distance/this.d1,1.06) );
+        }
+
+        time(mileage, d2=42195.0): number {
+            let riegel_velocity = this.riegel_velocity(d2);
+            let velocity = 0.16018617+(0.83076202*riegel_velocity)+(0.6423826*(mileage/10) );
+            let minutes = (d2/60)/velocity;
+            let seconds = minutes * 60;
+            return seconds;
+        }
+
+        time2(mileage: number, d2: number, t2: number, distance=42195.0): number {
+          let adj_timer_r1: number = this.adj_timer(this.d1, this.t1);
+          let adj_timer_r2: number = this.adj_timer(d2, t2);
+          let k_r2_r1: number = Math.log(adj_timer_r2/adj_timer_r1)/Math.log(d2/this.d1);
+          let k_marathon: number = 1.4510756+(-0.23797948*k_r2_r1)+(-0.01410023*(mileage/10) );
+          let seconds: number = (adj_timer_r2*Math.pow(distance/d2, k_marathon) );
+          return seconds;
         }
       }
 
