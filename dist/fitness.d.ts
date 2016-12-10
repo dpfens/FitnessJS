@@ -465,18 +465,27 @@ declare namespace Fit {
     namespace model {
         namespace aerobic {
             abstract class PerformanceModel {
-                private t1;
-                private d1;
-                constructor(t1: number, d1: number);
-                time: (d2: number) => number;
-                distance: (t2: number) => number;
+                protected t1: any;
+                protected d1: any;
+                constructor(d1: number, t1: number);
+                time(d2: number): number;
+                distance(t2: number): number;
             }
             class Riegel extends PerformanceModel {
-                time: (d2: number) => number;
-                distance: (t2: number) => number;
+                time(d2: number): number;
+                distance(t2: number): number;
             }
             class Cameron extends PerformanceModel {
-                time: (d2: number) => number;
+                time(d2: number): number;
+            }
+            class VV {
+                protected t1: any;
+                protected d1: any;
+                constructor(d1: number, t1: number);
+                adj_timer(d1: number, t1: number): number;
+                riegel_velocity(distance: number): number;
+                time(mileage: any, d2?: number): number;
+                time2(mileage: number, d2: number, t2: number, distance?: number): number;
             }
         }
     }

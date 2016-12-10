@@ -2406,12 +2406,12 @@ var Fit;
         var aerobic;
         (function (aerobic) {
             var PerformanceModel = (function () {
-                function PerformanceModel(t1, d1) {
-                    this.time = function (d2) { return 0; };
-                    this.distance = function (t2) { return 0; };
-                    this.t1 = t1;
+                function PerformanceModel(d1, t1) {
                     this.d1 = d1;
+                    this.t1 = t1;
                 }
+                PerformanceModel.prototype.time = function (d2) { return 0; };
+                PerformanceModel.prototype.distance = function (t2) { return 0; };
                 return PerformanceModel;
             }());
             aerobic.PerformanceModel = PerformanceModel;
@@ -2419,19 +2419,19 @@ var Fit;
                 __extends(Riegel, _super);
                 function Riegel() {
                     _super.apply(this, arguments);
-                    this.time = function (d2) {
-                        if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
-                            return 0;
-                        }
-                        return this.t1 * Math.pow((d2 / this.d1), 1.06);
-                    };
-                    this.distance = function (t2) {
-                        if (this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
-                            return 0;
-                        }
-                        return this.d1 * Math.pow(t2, 50 / 53) / Math.pow(this.t1, 50 / 53);
-                    };
                 }
+                Riegel.prototype.time = function (d2) {
+                    if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
+                        return 0;
+                    }
+                    return this.t1 * Math.pow((d2 / this.d1), 1.06);
+                };
+                Riegel.prototype.distance = function (t2) {
+                    if (this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
+                        return 0;
+                    }
+                    return this.d1 * Math.pow(t2, 50 / 53) / Math.pow(this.t1, 50 / 53);
+                };
                 return Riegel;
             }(PerformanceModel));
             aerobic.Riegel = Riegel;
@@ -2439,18 +2439,50 @@ var Fit;
                 __extends(Cameron, _super);
                 function Cameron() {
                     _super.apply(this, arguments);
-                    this.time = function (d2) {
-                        if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
-                            return 0;
-                        }
-                        var a = 13.49681 - 0.048865 * this.d1 + 2.438936 / Math.pow(this.d1, 0.7905);
-                        var b = 13.49681 - 0.048865 * d2 + 2.438936 / Math.pow(d2, 0.7905);
-                        return (this.t1 / this.d1) * (a / b) * d2;
-                    };
                 }
+                Cameron.prototype.time = function (d2) {
+                    if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
+                        return 0;
+                    }
+                    var a = 13.49681 - 0.048865 * this.d1 + 2.438936 / Math.pow(this.d1, 0.7905);
+                    var b = 13.49681 - 0.048865 * d2 + 2.438936 / Math.pow(d2, 0.7905);
+                    return (this.t1 / this.d1) * (a / b) * d2;
+                };
                 return Cameron;
             }(PerformanceModel));
             aerobic.Cameron = Cameron;
+            var VV = (function () {
+                function VV(d1, t1) {
+                    this.d1 = d1;
+                    this.t1 = t1;
+                }
+                VV.prototype.adj_timer = function (d1, t1) {
+                    return d1 / (d1 / t1);
+                };
+                VV.prototype.riegel_velocity = function (distance) {
+                    var adj_timer = this.adj_timer(this.d1, this.t1);
+                    return distance / (adj_timer * Math.pow(distance / this.d1, 1.06));
+                };
+                VV.prototype.time = function (mileage, d2) {
+                    if (d2 === void 0) { d2 = 42195.0; }
+                    var riegel_velocity = this.riegel_velocity(d2);
+                    var velocity = 0.16018617 + (0.83076202 * riegel_velocity) + (0.6423826 * (mileage / 10));
+                    var minutes = (d2 / 60) / velocity;
+                    var seconds = minutes * 60;
+                    return seconds;
+                };
+                VV.prototype.time2 = function (mileage, d2, t2, distance) {
+                    if (distance === void 0) { distance = 42195.0; }
+                    var adj_timer_r1 = this.adj_timer(this.d1, this.t1);
+                    var adj_timer_r2 = this.adj_timer(d2, t2);
+                    var k_r2_r1 = Math.log(adj_timer_r2 / adj_timer_r1) / Math.log(d2 / this.d1);
+                    var k_marathon = 1.4510756 + (-0.23797948 * k_r2_r1) + (-0.01410023 * (mileage / 10));
+                    var seconds = (adj_timer_r2 * Math.pow(distance / d2, k_marathon));
+                    return seconds;
+                };
+                return VV;
+            }());
+            aerobic.VV = VV;
         })(aerobic = model.aerobic || (model.aerobic = {}));
     })(model = Fit.model || (Fit.model = {}));
 })(Fit || (Fit = {}));
