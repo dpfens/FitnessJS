@@ -32,7 +32,7 @@ Date.prototype.delta = function (unit, date) {
         minutes: 1000 * 60,
         seconds: 1000,
         milliseconds: 1
-    }, difference = this.getTime() - date.getTime();
+    }, difference = Math.abs(this.getTime() - date.getTime());
     return difference / units[unit];
 };
 var Fit;
