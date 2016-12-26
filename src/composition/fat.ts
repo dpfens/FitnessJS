@@ -66,7 +66,7 @@ namespace Fit {
 			*/
 			static childBmi = function(gender: Gender, dob: Date, weight: number, height: number): number {
 				let age = dob.delta("years");
-			  let bmi = (weight/Math.pow(height/100, 2));
+			  let bmi = (weight/Math.pow(height, 2));
 			  if(this.gender === Gender.Female) {
 			    return ((1.51*bmi) - (0.70*age) + 1.4) / 100;
 			  }
@@ -81,9 +81,10 @@ namespace Fit {
 			@returns {Number} body fat percentage as a decimal
 			*/
 			static adultBmi = function(gender: Gender, dob: Date, weight: number, height: number): number {
-				let age = this.dob.delta("years");
-			  let bmi = (this.weight/Math.pow(this.height/100, 2));
-			  if(this.gender === Gender.Female) {
+				let age = dob.delta("years");
+				let meters = height;
+			  let bmi = (weight/Math.pow(meters, 2));
+			  if(gender === Gender.Female) {
 			    return ((1.20*bmi) - (0.23*age) - 5.4) / 100;
 			  }
 			  return ((1.20*bmi) - (0.23*age) - (10.8) - 5.4) / 100;

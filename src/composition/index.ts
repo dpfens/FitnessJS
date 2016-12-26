@@ -32,7 +32,7 @@ namespace Fit {
       @returns {Number} BMI
   		*/
   		bmi():number {
-  			let meters = this.height / 100;
+  			let meters = this.height;
   			return this.weight / (meters * meters);
   		}
 

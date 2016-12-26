@@ -1660,7 +1660,7 @@ var Fit;
             };
             VO2.prototype.curetonChild = function (time) {
                 var age = this.dob.delta("years");
-                var bmi = (this.weight / Math.pow(this.height / 100, 2));
+                var bmi = (this.weight / Math.pow(this.height, 2));
                 return 108.94 - (8.41 * time) + 0.34 * 108.94 - (8.41 * time) + 0.34 * Math.pow(time, 2) + 0.21 * age - (0.84 * bmi);
             };
             VO2.prototype.balke = function (time) {
@@ -1795,16 +1795,17 @@ var Fit;
             };
             Fat.childBmi = function (gender, dob, weight, height) {
                 var age = dob.delta("years");
-                var bmi = (weight / Math.pow(height / 100, 2));
+                var bmi = (weight / Math.pow(height, 2));
                 if (this.gender === Fit.Gender.Female) {
                     return ((1.51 * bmi) - (0.70 * age) + 1.4) / 100;
                 }
                 return ((1.51 * bmi) - (0.70 * age) - (3.6) + 1.4) / 100;
             };
             Fat.adultBmi = function (gender, dob, weight, height) {
-                var age = this.dob.delta("years");
-                var bmi = (this.weight / Math.pow(this.height / 100, 2));
-                if (this.gender === Fit.Gender.Female) {
+                var age = dob.delta("years");
+                var meters = height;
+                var bmi = (weight / Math.pow(meters, 2));
+                if (gender === Fit.Gender.Female) {
                     return ((1.20 * bmi) - (0.23 * age) - 5.4) / 100;
                 }
                 return ((1.20 * bmi) - (0.23 * age) - (10.8) - 5.4) / 100;
@@ -1837,7 +1838,7 @@ var Fit;
                 return (numerator / denominator) - 18;
             };
             Index.prototype.bmi = function () {
-                var meters = this.height / 100;
+                var meters = this.height;
                 return this.weight / (meters * meters);
             };
             Index.prototype.bmi_prime = function (upper_limit) {

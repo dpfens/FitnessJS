@@ -192,7 +192,7 @@ export class VO2 {
 
     curetonChild(time: number): number {
         let age = this.dob.delta("years");
-        let bmi: number = (this.weight/Math.pow(this.height/100, 2));
+        let bmi: number = (this.weight/Math.pow(this.height, 2));
         return 108.94 - (8.41 * time) + 0.34 * 108.94 - (8.41 * time) + 0.34 * Math.pow(time,2) + 0.21*age - (0.84*bmi);
     }
 
