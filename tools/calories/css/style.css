@@ -4,4 +4,5 @@
 
 .cover {
   background: url('/FitnessJS/assets/vegetables.jpg') no-repeat center center;
+  background-size: cover;
 }

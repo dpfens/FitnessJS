@@ -4,4 +4,5 @@
 
 .cover {
   background: url('/FitnessJS/assets/track.jpg') no-repeat center center;
+  background-size: cover;
 }
