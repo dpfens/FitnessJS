@@ -1,0 +1,7 @@
+.card-list {
+  min-height: 0;
+}
+
+.cover {
+  background: url('/FitnessJS/assets/track.jpg') center / cover;
+}

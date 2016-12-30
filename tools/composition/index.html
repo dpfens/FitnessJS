@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<head>
+    <!-- Google Tag Manager -->
+    <!--script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName()[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NCXJXW');</script-->
+    <!-- End Google Tag Manager -->
+    <title>FitnessJS - Body Composition Estimator</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" property="health,wellness,fitness,physical fitness,physical activity,body composition,body fat,fat,muscle,surface area">
+    <meta name="description" property="A tool for estimating and comparing body composition by body fat percentage, surface area, BMI and corpulence across genders and age groups.">
+
+    <!-- Open Graph Tags -->
+    <meta id="meta-title" property="og:title" content="Body Composition Estimator">
+    <meta id="meta-description" property="og:description" content="Estimate and compare body composition of elite athletes, friends and family.">
+    <meta property="og:type" content="product">
+    <meta id="meta-image" property="og:image" content="https://dpfens.github.io/FitnessJS/assets/counter.jpg">
+    <meta property="og:url" content="https://dpfens.github.io/FitnessJS/tools/composition">
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--  Non-Essential, But Recommended -->
+    <meta property="og:site_name" content="FitnessJS">
+    <meta name="twitter:creator" content="@DougFenstermach" />
+    <meta name="twitter:image:alt" content="Keeping unhealthy foods out of view can cause healthier food choices">
+
+    <!--  Non-Essential, But Required for Analytics -->
+    <meta property="fb:app_id" content="1762255830763736" />
+    <meta name="twitter:site" content="@DougFenstermach">
+
+    <link rel="canonical" href="https://dpfens.github.io/FitnessJS/tools/composition" />
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#29ABE2" />
+
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#29ABE2" />
+
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../../css/prism.css">
+    <link rel="stylesheet" href="../../css/material.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <!--noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript-->
+    <!-- End Google Tag Manager (noscript) -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1762255830763736',
+                xfbml: true,
+                version: 'v2.8'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header mdl-layout__header--transparent">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title"><a href="/FitnessJS"><img width="200px" src="/FitnessJS/assets/small-logo.svg" /></a></span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation -->
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
+                    <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title"><a href="/FitnessJS"><img width="100%" src="/FitnessJS/assets/small-logo.svg" /></a></span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
+                <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+
+            <div class="mdl-grid cover">
+
+              <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect mdl-cell mdl-cell--12-col mdl-cell--4-col-desktop mdl-shadow--4dp">
+                  <div class="mdl-tabs__tab-bar">
+                      <a href="#persons-panel" class="mdl-tabs__tab">Persons</a>
+                      <a href="#new-person-panel" class="mdl-tabs__tab is-active">New</a>
+                  </div>
+
+                  <div class="mdl-tabs__panel" id="persons-panel">
+                    <ul v-if="persons.length" class="mdl-list">
+
+                      <li v-for="person in persons" :class="{ 'mdl-list__item': editing !== person, 'mdl-list__item--two-line': editing !== person }">
+                        <span v-show="editing!==person" class="mdl-list__item-primary-content">
+                          <span>{{ person.name }}</span>
+                          <span class="mdl-list__item-sub-title">{{ person.gender }}</span>
+                        </span>
+                        <span class="mdl-list__item-secondary-content">
+                          <span v-show="editing!==person" class="mdl-list__item-secondary-info">{{ person.age }} yrs</span>
+                          <a v-show="editing!==person" class="mdl-list__item-secondary-action" v-on:click="editPerson(person)"><i class="material-icons">edit</i></a>
+                          <a v-show="editing===person" class="mdl-list__item-secondary-action" v-on:click="removePerson(person)"><i class="material-icons">remove</i></a>
+                          <a v-show="editing===person" class="mdl-list__item-secondary-action" v-on:click="savePerson(person)"><i class="material-icons">check</i></a>
+                        </span>
+
+
+                        <div v-show="editing===person" class="mdl-cell mdl-cell--12-col">
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                        <input class="mdl-textfield__input" v-model="person.name" v-on:keyup.enter="savePerson(person)" type="text" id="name">
+                        <label class="mdl-textfield__label" for="name">Name</label>
+                      </div>
+
+                      <div class="mdl-cell mdl-cell--12-col">
+
+                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="male">
+                          <input v-model="person.gender" type="radio" id="male" class="mdl-radio__button" name="gender" value="Male">
+                          <span class="mdl-radio__label">Male</span>
+                        </label>
+
+                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="female">
+                          <input v-model="person.gender" type="radio" id="female" class="mdl-radio__button" name="gender" value="Female">
+                          <span class="mdl-radio__label">Female</span>
+                        </label>
+
+                      </div>
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-phone mdl-cell--6-col-tablet mdl-cell--10-col-desktop">
+                        <input class="mdl-textfield__input" v-model="person.age" v-on:keyup.enter="savePerson(person)" type="tel" id="age">
+                        <label class="mdl-textfield__label" for="age">Age</label>
+                      </div>
+
+                      years
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--6-col-desktop">
+                        <input class="mdl-textfield__input" v-model="person.mass.value" v-on:keyup.enter="savePerson(person)" type="tel" id="weight">
+                        <label class="mdl-textfield__label" for="weight">Weight</label>
+                      </div>
+
+                      <button id="weight-units" class="mdl-button mdl-js-button mdl-button--raised">
+                        {{ person.mass.units.name }}
+                      </button>
+
+                      <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="weight-units">
+                          <li class="mdl-menu__item" v-on:click="setUnit(person, 'mass', unit)" v-for="unit in units.mass.options">{{ unit.name }}</li>
+                      </ul>
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--6-col-desktop">
+                        <input class="mdl-textfield__input" v-model="person.height.value" v-on:keyup.enter="savePerson(person)" type="tel" id="height">
+                        <label class="mdl-textfield__label" for="height">Height</label>
+                      </div>
+
+                      <button id="height-units"  class="mdl-button mdl-js-button mdl-button--raised">
+                        {{ person.height.units.name }}
+                      </button>
+
+                      <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="height-units" >
+                          <li class="mdl-menu__item" v-on:click="setUnit(person, 'height', unit)" v-for="unit in units.height.options">{{ unit.name }}</li>
+                      </ul>
+
+                    </div>
+
+                      </li>
+
+
+                    </ul>
+                    <div v-else>
+                      <p class="text-center">No one...yet</p>
+                    </div>
+
+                  </div>
+
+                  <div class="mdl-tabs__panel is-active" id="new-person-panel">
+                    <div class="mdl-cell mdl-cell--12-col">
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                        <input class="mdl-textfield__input" v-model="newPerson.name" v-on:keyup.enter="addPerson(newPerson, true)" type="text" id="name">
+                        <label class="mdl-textfield__label" for="name">Name</label>
+                      </div>
+
+                      <div class="mdl-cell mdl-cell--12-col">
+
+                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="male">
+                          <input v-model="newPerson.gender.name" type="radio" id="male" class="mdl-radio__button" name="gender" value="Male">
+                          <span class="mdl-radio__label">Male</span>
+                        </label>
+
+                        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="female">
+                          <input v-model="newPerson.gender.name" type="radio" id="female" class="mdl-radio__button" name="gender" value="Female">
+                          <span class="mdl-radio__label">Female</span>
+                        </label>
+
+                      </div>
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-phone mdl-cell--6-col-tablet mdl-cell--10-col-desktop">
+                        <input class="mdl-textfield__input" v-model="newPerson.age" v-on:keyup.enter="addPerson(newPerson, true)" type="tel" id="age">
+                        <label class="mdl-textfield__label" for="age">Age</label>
+                      </div>
+
+                      years
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--6-col-desktop">
+                        <input class="mdl-textfield__input" v-model="newPerson.mass.value" v-on:keyup.enter="addPerson(newPerson, true)" type="tel" id="weight">
+                        <label class="mdl-textfield__label" for="weight">Weight</label>
+                      </div>
+
+                      <button id="weight-units" class="mdl-button mdl-js-button mdl-button--raised">
+                        {{ units.mass.current.name }}
+                      </button>
+
+                      <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="weight-units">
+                          <li class="mdl-menu__item" v-on:click="setUnit(newPerson, 'mass', unit, true)" v-for="unit in units.mass.options">{{ unit.name }}</li>
+                      </ul>
+
+                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--6-col-desktop">
+                        <input class="mdl-textfield__input" v-model="newPerson.height.value" v-on:keyup.enter="addPerson(newPerson, true)" type="tel" id="height">
+                        <label class="mdl-textfield__label" for="height">Height</label>
+                      </div>
+
+                      <button id="height-units"  class="mdl-button mdl-js-button mdl-button--raised">
+                        {{ units.height.current.name }}
+                      </button>
+
+                      <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="height-units" >
+                          <li class="mdl-menu__item" v-on:click="setUnit(newPerson, 'height', unit, true)" v-for="unit in units.height.options">{{ unit.name }}</li>
+                      </ul>
+
+                    </div>
+                  </div>
+
+            </div>
+
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect mdl-cell mdl-cell--12-col mdl-cell--8-col-desktop mdl-shadow--4dp">
+              <div class="mdl-tabs__tab-bar">
+                <a href="#general-panel" class="mdl-tabs__tab is-active">General</a>
+                <a href="#bf-panel" class="mdl-tabs__tab">%BF</a>
+                <a href="#surfacearea-panel" class="mdl-tabs__tab">Surface Area</a>
+              </div>
+
+              <div class="mdl-card__menu">
+                    <button id="share-menu" class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">share</i>
+                    </button>
+                </div>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="share-menu">
+                    <a class="mdl-menu__item" v-bind:href="share.facebook">Facebook</a>
+                    <a class="mdl-menu__item" v-bind:href="share.twitter">Twitter</a>
+                </ul>
+
+              <div class="mdl-tabs__panel is-active" id="general-panel">
+
+                <div class="mdl-grid">
+
+                  <div class="mdl-layout-spacer"></div>
+
+                <table v-show="persons.length" class="mdl-data-table mdl-js-data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>BMI</th>
+                            <th>Corpulence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="person in persons">
+                            <td>{{ person.name }}</td>
+                            <td>{{ bmi(person) }}</td>
+                            <td>{{ corpulence(person) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mdl-layout-spacer"></div>
+
+              </div>
+
+              </div>
+
+              <div class="mdl-tabs__panel" id="bf-panel">
+
+                <div class="mdl-grid">
+
+                  <div class="mdl-layout-spacer"></div>
+
+                  <table v-show="persons.length" class="mdl-data-table mdl-js-data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Body Fat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="person in persons">
+                            <td>{{ person.name }}</td>
+                            <td>{{ bodyFat(person) }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mdl-layout-spacer"></div>
+
+                </div>
+
+              </div>
+
+              <div class="mdl-tabs__panel" id="surfacearea-panel">
+
+                <div class="mdl-grid">
+
+                  <div class="mdl-layout-spacer"></div>
+
+                  <table v-show="persons.length" class="mdl-data-table mdl-js-data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Surface Area (m<sup>2</sup>)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="person in persons">
+                            <td>{{ person.name }}</td>
+                            <td>{{ surfaceArea(person) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mdl-layout-spacer"></div>
+
+              </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                <div class="mdl-tabs__tab-bar">
+                    <a href="#next-steps-panel" class="mdl-tabs__tab is-active">Related</a>
+                    <a href="#howitworks-panel" class="mdl-tabs__tab">How It Works</a>
+                    <a href="#feedback-panel" class="mdl-tabs__tab">Feedback</a>
+                </div>
+
+                <div class="mdl-tabs__panel is-active" id="next-steps-panel">
+
+                    <div class="mdl-grid">
+
+                        <!-- Page recommendation card -->
+                        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
+                            <div class="mdl-card__title card-cover calories-cover">
+                                <h2 class="mdl-card__title-text">Calories</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                Estimate the calories needed to change your body composition through changing your diet.
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                <a v-bind:href="recommendedURLs[0]" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Get Started
+    </a>
+                            </div>
+                        </div>
+
+                        <!-- Page recommendation card -->
+                        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
+                            <div class="mdl-card__title card-cover cardio-performance-cover">
+                                <h2 class="mdl-card__title-text">Cardio Performance</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                Estimate performances for your next workout or estimate performances of competitors in your next race.
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                <a v-bind:href="recommendedURLs[1]" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Get Started
+    </a>
+                            </div>
+                        </div>
+
+                        <!-- Page recommendation card -->
+                        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
+                            <div class="mdl-card__title card-cover rep-max-cover">
+                                <h2 class="mdl-card__title-text">Maximum Strength</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                Estimate the maximum strength of your competitors, your training partners, or yourself from 1 repetition to 10 repetitions.
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                <a v-bind:href="recommendedURLs[2]" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Get Started
+    </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="mdl-tabs__panel" id="howitworks-panel">
+
+                    <div class="mdl-grid">
+
+                        <div class="mdl-cell mdl-cell--12-col">
+
+                          <p>All formula for composition are taken from the <a href="https://github.com/dpfens/FitnessJS/tree/v2.0/src/composition">composition</a> namespace of the FitnessJS Library. Body Mass Index (BMI) and Corpulence Index (CI) are calculated using their respective calculations in the Index class. Body fat percentage (%BF) is calculated using the ChildBMI and AdultBMI functions. The ChildBMI function is used for people under 18 years old, and AdultBMI is used for people 18 years old and above. Body surface area is estimated using the SurfaceArea class, specifically the Boyd formula for body surface area in meters^2. For information, see the <a href="https://github.com/dpfens/FitnessJS/wiki">wiki</a>.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="mdl-tabs__panel" id="feedback-panel">
+                </div>
+            </div>
+
+            <footer class="mdl-mini-footer">
+                <div class="mdl-mini-footer__left-section">
+                    <div class="mdl-logo">FitnessJS</div>
+                    <ul class="mdl-mini-footer__link-list">
+                        <li><a href="/FitnessJS/privacy-terms.html">Privacy & Terms</a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+
+            <div id="app-snackbar" class="mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+<script type="text/javascript" defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+<script type="text/javascript" src="../../js/tools/preferences.js"></script>
+<script type="text/javascript" src="../../js/libs/vue.js"></script>
+<script type="text/javascript" src="../../js/libs/vue-router.js"></script>
+<script type="text/javascript" src="../../js/libs/prism.js"></script>
+<script type="text/javascript" src="../../js/libs/fitness.js"></script>
+<script type="text/javascript" src="../../js/libs/Chart.min.js"></script>
+<script type="text/javascript" src="../../js/libs/lovefield.min.js"></script>
+<script type="text/javascript" src="js/converter.js"></script>
+
+<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+
+</html>

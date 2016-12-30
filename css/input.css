@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+
+/**** Variables ****/
+
+:root {
+}
+
+* {
+    transition: color 300ms,  background-color 300ms;
+}
+
+.text-center {
+	text-align: center;
+}
