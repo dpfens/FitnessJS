@@ -3,5 +3,5 @@
 }
 
 .cover {
-  background: url('/FitnessJS/assets/vegetables.jpg') center / cover;
+  background: url('/FitnessJS/assets/vegetables.jpg') no-repeat center center;
 }

@@ -4,6 +4,10 @@
   height: 40vh;
 }
 
+.translucent-white {
+  background: rgba(255,255,255,0.9);
+}
+
 .hide {
     display: none;
 }
@@ -25,20 +29,29 @@
   color: white;
 }
 
+.mets-cover {
+  background: url('/FitnessJS/assets/vegetables.jpg') no-repeat center center;
+  background-size: cover;
+}
+
 .calories-cover {
-  background: url('/FitnessJS/assets/soup.jpg') center / cover;
+  background: url('/FitnessJS/assets/soup.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .composition-cover {
-  background: url('/FitnessJS/assets/shoes.jpg') center / cover;
+  background: url('/FitnessJS/assets/shoes.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .cardio-performance-cover {
-  background: url('/FitnessJS/assets/track.jpg') center / cover;
+  background: url('/FitnessJS/assets/track.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .rep-max-cover {
-  background: url('/FitnessJS/assets/track-rubber.jpg') center / cover;
+  background: url('/FitnessJS/assets/track-rubber.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .mdl-layout-title > a {
