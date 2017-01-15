@@ -452,6 +452,10 @@
                     facebook: shareURL.facebook(),
                     twitter: shareURL.twitter()
                 },
+                rating: {
+                  sent: false,
+                  value: 1
+                },
                 recommendedURLs: [
                   '/FitnessJS/tools/cardio-performance',
                   '/FitnessJS/tools/composition',
@@ -709,6 +713,13 @@
                     name: names
                 }
             });
+          },
+          sendFeedback: function() {
+            // If GTM, send event
+            if(typeof dataLayer !== 'undefined') {
+              dataLayer.push({'event':'feedback', 'name': document.title, rating: this.rating.value });
+            }
+            this.rating.sent = true;
           }
         }
     });

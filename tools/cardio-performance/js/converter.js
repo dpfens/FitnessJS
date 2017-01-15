@@ -359,6 +359,10 @@
                     facebook: shareURL.facebook(),
                     twitter: shareURL.twitter()
                 },
+                rating: {
+                  sent: false,
+                  value: 1
+                },
                 recommendedURLs: [
                   '/FitnessJS/tools/calories',
                   '/FitnessJS/tools/composition',
@@ -371,7 +375,7 @@
             performances: {
                 handler: function() {
                     this.drawChart();
-                    
+
                     // update next step tool links
                     this.recommendedURLs[0] = updateHash('/FitnessJS/tools/calories');
                     this.recommendedURLs[1] = updateHash('/FitnessJS/tools/composition');
@@ -576,6 +580,13 @@
                         label: labels
                     }
                 });
+            },
+            sendFeedback: function() {
+              // If GTM, send event
+              if(typeof dataLayer !== 'undefined') {
+                dataLayer.push({'event':'feedback', 'name': document.title, rating: this.rating.value });
+              }
+              this.rating.sent = true;
             }
         }
     });

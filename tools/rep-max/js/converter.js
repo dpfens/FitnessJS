@@ -1,5 +1,4 @@
 (function() {
-
     var shareURL = {
         facebook: function(parameters, shareURL) {
             var parameters = parameters || {},
@@ -370,6 +369,10 @@
                     facebook: shareURL.facebook(),
                     twitter: shareURL.twitter()
                 },
+                rating: {
+                  sent: false,
+                  value: 1
+                },
                 recommendedURLs: [
                   '/FitnessJS/tools/calories',
                   '/FitnessJS/tools/composition',
@@ -422,7 +425,6 @@
                     addedPerformance,
                     handler,
                     snackbarOptions;
-                    console.log(reps);
                 if (this.newPerformance.mass.value <= 0  || reps <= 0) {
                     return;
                 }
@@ -553,6 +555,13 @@
                         label: labels
                     }
                 });
+            },
+            sendFeedback: function() {
+              // If GTM, send event
+              if(typeof dataLayer !== 'undefined') {
+                dataLayer.push({'event':'feedback', 'name': document.title, rating: this.rating.value });
+              }
+              this.rating.sent = true;
             }
         }
     });
@@ -569,5 +578,4 @@
     }
     app.title = title;
     app.performances = performances;
-
-})();
+ })();

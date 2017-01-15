@@ -330,6 +330,10 @@
                     facebook: shareURL.facebook(),
                     twitter: shareURL.twitter()
                 },
+                rating: {
+                  sent: false,
+                  value: 1
+                },
                 recommendedURLs: [
                   '/FitnessJS/tools/calories',
                   '/FitnessJS/tools/cardio-performance',
@@ -527,6 +531,13 @@
                     name: names
                 }
             });
+          },
+          sendFeedback: function() {
+            // If GTM, send event
+            if(typeof dataLayer !== 'undefined') {
+              dataLayer.push({'event':'feedback', 'name': document.title, rating: this.rating.value });
+            }
+            this.rating.sent = true;
           }
         }
     });
