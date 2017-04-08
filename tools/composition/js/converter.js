@@ -395,6 +395,17 @@
             };
             this.showSnackbar(addedPerson.name+' Added.', handler, snackbarOptions);
 
+            if(typeof dataLayer !== 'undefined') {
+              dataLayer.push(
+                {
+                  'event':'gaEvent',
+                  'eventCategory': 'person',
+                  'eventAction': 'add',
+                  'eventLabel': addedPerson.age + 'years-'
+                    + addedPerson.weight.value + addedPerson.weight.units.value + '-'
+                    + addedPerson.height.value + addedPerson.weight.units.value
+                });
+            }
 
           },
           removePerson: function(person) {
@@ -416,6 +427,18 @@
                 actionText: 'Undo'
             };
             this.showSnackbar(person.name+' Deleted.', handler, snackbarOptions);
+
+            if(typeof dataLayer !== 'undefined') {
+              dataLayer.push(
+                {
+                  'event':'gaEvent',
+                  'eventCategory': 'person',
+                  'eventAction': 'remove',
+                  'eventLabel': person.age + 'years-'
+                    + person.weight.value + person.weight.units.value + '-'
+                    + person.height.value + person.weight.units.value
+                });
+            }
           },
           editPerson: function(person) {
               this.editing = person;
