@@ -450,6 +450,16 @@
                 };
                 this.showSnackbar(addedPerformance.label+' Added.', handler, snackbarOptions);
 
+                if(typeof dataLayer !== 'undefined') {
+                  dataLayer.push(
+                    {
+                      'event':'gaEvent',
+                      'eventCategory': 'performance',
+                      'eventAction': 'add',
+                      'eventLabel': addedPerformance.reps + 'x' + addedPerformance.mass.value + addedPerformance.mass.units.value
+                    });
+                }
+
             },
             removePerformance: function(performance) {
                 var self = this,
@@ -471,6 +481,16 @@
                     actionText: 'Undo'
                 };
                 this.showSnackbar(performance.label+' Deleted.', handler, snackbarOptions);
+
+                if(typeof dataLayer !== 'undefined') {
+                  dataLayer.push(
+                    {
+                      'event':'gaEvent',
+                      'eventCategory': 'performance',
+                      'eventAction': 'remove',
+                      'eventLabel': performance.reps + 'x' + performance.mass.value + performance.mass.units.value
+                    });
+                }
             },
             setMassUnit: function(performance, unit, current) {
                 var oldmassUnits = performance.mass.units.value,

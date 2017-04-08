@@ -445,6 +445,16 @@
                 };
                 this.showSnackbar(addedPerformance.label+' Added.', handler, snackbarOptions);
 
+                if(typeof dataLayer !== 'undefined') {
+                  dataLayer.push(
+                    {
+                      'event':'gaEvent',
+                      'eventCategory': 'performance',
+                      'eventAction': 'add',
+                      'eventLabel': addedPerformance.distance.value + addedPerformance.distance.units.value + '-' + addedPerformance.time.value
+                    });
+                }
+
             },
             removePerformance: function(performance) {
                 var self = this,
@@ -466,6 +476,16 @@
                     actionText: 'Undo'
                 };
                 this.showSnackbar(performance.label+' Deleted.', handler, snackbarOptions);
+
+                if(typeof dataLayer !== 'undefined') {
+                  dataLayer.push(
+                    {
+                      'event':'gaEvent',
+                      'eventCategory': 'performance',
+                      'eventAction': 'remove',
+                      'eventLabel': performance.distance.value + performance.distance.units.value + '-' + performance.time.value
+                    });
+                }
             },
             setTimeUnit: function(performance, unit) {
                 var oldTimeUnits = performance.time.units,
