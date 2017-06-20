@@ -6,12 +6,6 @@
         <priority>1.00</priority>
     </url>
     <url>
-        <loc>https://dpfens.github.io/FitnessJS/tools/</loc>
-        <lastmod>2016-12-31T23:06:55+00:00</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.10</priority>
-    </url>
-    <url>
         <loc>https://dpfens.github.io/FitnessJS/tools/cardio-performance</loc>
         <lastmod>2016-12-31T23:06:55+00:00</lastmod>
         <changefreq>monthly</changefreq>
