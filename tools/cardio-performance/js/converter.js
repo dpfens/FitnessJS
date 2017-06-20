@@ -1,6 +1,8 @@
 (function() {
 
-    var shareURL = {
+    var snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar')),
+
+    shareURL = {
         facebook: function(parameters) {
             var parameters = parameters || {},
             parameters = this.parameters(parameters),
@@ -333,8 +335,18 @@
         });
 
     }
+    var blankPerformance = {
+        distance: {
+            value: '',
+            units: units.distance.options[0]
+        },
+        time: {
+            formatted: '',
+            value: ''
+        },
+    },
 
-    var router = new VueRouter({});
+    router = new VueRouter({});
 
     var app = new Vue({
         el: '#app',
@@ -344,17 +356,8 @@
                 title: null,
                 performances: performances,
                 units: units,
-                newPerformance: {
-                    distance: {
-                        value: '',
-                        units: units.distance.options[0]
-                    },
-                    time: {
-                        formatted: '',
-                        value: ''
-                    },
-                },
-                editingPerformance: null,
+                newPerformance: blankPerformance,
+                editingPerformance: blankPerformance,
                 share: {
                     facebook: shareURL.facebook(),
                     twitter: shareURL.twitter()
@@ -401,13 +404,13 @@
         },
         methods: {
             savePerformance: function(performance) {
-                this.editingPerformance = null;
+                this.editingPerformance = blankPerformance;
                 performance.time.value = timeConverter.fromString(performance.time.formatted);
                 this.updateURL();
             },
             editPerformance: function(performance) {
                 this.editingPerformance = performance;
-                componentHandler.upgradeDom();
+                editDialog.show();
             },
             addPerformance: function(event) {
                 var self = this,
@@ -564,17 +567,16 @@
                 drawPerformanceChart(this.performances, distances)
             },
             showSnackbar: function(message, handler, options) {
-                var options =  options || {},
+                var options = options || {},
                     actionText = options.actionText || 'Undo',
                     timeout = options.timeout || 3000,
-                    snackbarContainer = document.querySelector('#app-snackbar'),
                     snackbarData = {
                         message: message,
                         timeout: timeout,
                         actionHandler: handler,
                         actionText: actionText
-                };
-                snackbarContainer.MaterialSnackbar.showSnackbar(snackbarData);
+                    };
+                snackbar.show(snackbarData);
 
             },
             updateURL: function() {
@@ -624,4 +626,5 @@
     app.title = title;
     app.performances = performances;
 
+    editDialog = new mdc.dialog.MDCDialog(document.querySelector('#edit-performance-dialog'));
 })();

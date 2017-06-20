@@ -1,5 +1,6 @@
-
-    var shareURL = {
+(function(w) {
+    var snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar')),
+    shareURL = {
         facebook: function(parameters) {
             var parameters = parameters || {},
             parameters = this.parameters(parameters),
@@ -250,10 +251,6 @@
             {
                 name:"Pounds",
                 value: "lb"
-            },
-            {
-                name:"Stones",
-                value: "st"
             }],
             current: storage.preferences.get('mass')
         },
@@ -303,7 +300,21 @@
     Chart.defaults.global.tooltips.backgroundColor = 'rgba(255,255,255, 0.8)';
     Chart.defaults.global.tooltips.bodyFontColor = '#000000';
 
-    var router = new VueRouter({});
+    var router = new VueRouter({}),
+
+    blankPerson = {
+        name: '',
+        gender: 'Male',
+        age: '',
+        mass: {
+            value: '',
+            units: units.mass.current
+        },
+        height: {
+            value: '',
+            units: units.height.current
+        },
+    };
 
     var app = new Vue({
         el: '#app',
@@ -325,7 +336,7 @@
                       units: units.height.current
                     },
                 },
-                editing: null,
+                updatingPerson: blankPerson,
                 share: {
                     facebook: shareURL.facebook(),
                     twitter: shareURL.twitter()
@@ -352,11 +363,6 @@
               },
               deep: true
             },
-            '$route': function(to, from) {
-
-                this.share.facebook = shareURL.facebook(this);
-                this.share.twitter = shareURL.twitter(this);
-            }
         },
         methods: {
           addPerson: function(person, reset) {
@@ -369,6 +375,8 @@
             }
             addedPerson = person;
             this.persons.push(person);
+            this.updateURL();
+
             if(reset) {
               this.newPerson = {
                   name: '',
@@ -384,8 +392,6 @@
                   }
                 };
             }
-
-            this.updateURL();
 
             handler = function(event) {
                 self.removePerformance(addedPerson);
@@ -420,7 +426,6 @@
             handler = function(event) {
                 person.edit = false;
                 self.persons.splice(personIndex, 0, person);
-                componentHandler.upgradeDom();
                 self.updateURL();
             },
             snackbarOptions = {
@@ -440,12 +445,20 @@
                 });
             }
           },
-          editPerson: function(person) {
-              this.editing = person;
-              componentHandler.upgradeDom();
+          updatePerson: function(person) {
+              this.updatingPerson = person;
+              editDialog.show();
           },
           savePerson: function(person) {
-              this.editing = null;
+              var ids = this.persons.map(function(v) {
+                      return v.id;
+                  }),
+                  index = ids.indexOf(person.id);
+              if (index !== -1) {
+                  this.persons.splice(index, 1, person);
+                  this.updatingPerson = blankPerson;
+                  this.updateURL();
+              }
           },
           setUnit: function(person, type, unit, current) {
             var current = current || false,
@@ -518,6 +531,19 @@
             value = model.boyd();
             return round(value, 2);
           },
+          showSnackbar: function(message, handler, options) {
+                var options =  options || {},
+                    actionText = options.actionText || 'Undo',
+                    timeout = options.timeout || 3000,
+                    snackbarData = {
+                        message: message,
+                        timeout: timeout,
+                        actionHandler: handler,
+                        actionText: actionText
+                };
+                snackbar.show(snackbarData);
+
+            },
           updateURL: function() {
             var title = this.title,
                     ages = this.persons.map(function(v) {
@@ -574,6 +600,10 @@
     }
     for(var i =0; i<persons.length; i++) {
         persons[i].id = "person-"+i;
+        app.addPerson(persons[i]);
     }
     app.title = title;
-    app.persons = persons;
+
+    editDialog = new mdc.dialog.MDCDialog(document.querySelector('#edit-person-dialog'));
+    w.app = app;
+})(window);

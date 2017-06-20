@@ -1,5 +1,7 @@
 (function() {
-    var shareURL = {
+    var snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar')),
+
+    shareURL = {
         facebook: function(parameters, shareURL) {
             var parameters = parameters || {},
             parameters = this.parameters(parameters),
@@ -347,7 +349,15 @@
 
     }
 
-    var router = new VueRouter({});
+    var blankPerformance = {
+        mass: {
+            value: '',
+            units: units.mass.options[0]
+        },
+        reps: '',
+    },
+
+    router = new VueRouter({});
 
     var app = new Vue({
         el: '#app',
@@ -357,14 +367,8 @@
                 title: null,
                 performances: performances,
                 units: units,
-                newPerformance: {
-                    mass: {
-                        value: '',
-                        units: units.mass.options[0]
-                    },
-                    reps: '',
-                },
-                editingPerformance: null,
+                newPerformance: blankPerformance,
+                editingPerformance: blankPerformance,
                 share: {
                     facebook: shareURL.facebook(),
                     twitter: shareURL.twitter()
@@ -411,12 +415,12 @@
         },
         methods: {
             savePerformance: function(performance) {
-                this.editingPerformance = null;
+                this.editingPerformance = blankPerformance;
                 this.updateURL();
             },
             editPerformance: function(performance) {
                 this.editingPerformance = performance;
-                componentHandler.upgradeDom();
+                editDialog.show();
             },
             addPerformance: function(event) {
                 var self = this,
@@ -542,14 +546,13 @@
                 var options =  options || {},
                     actionText = options.actionText || 'Undo',
                     timeout = options.timeout || 3000,
-                    snackbarContainer = document.querySelector('#app-snackbar'),
                     snackbarData = {
                         message: message,
                         timeout: timeout,
                         actionHandler: handler,
                         actionText: actionText
                 };
-                snackbarContainer.MaterialSnackbar.showSnackbar(snackbarData);
+                snackbar.MaterialSnackbar.showSnackbar(snackbarData);
 
             },
             updateURL: function() {
@@ -598,4 +601,6 @@
     }
     app.title = title;
     app.performances = performances;
+
+    editDialog = new mdc.dialog.MDCDialog(document.querySelector('#edit-performance-dialog'));
  })();

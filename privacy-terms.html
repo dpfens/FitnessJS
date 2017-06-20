@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <!--script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -46,50 +46,70 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/material.min.css">
+    <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.min.css">
 </head>
 
-<body>
+<body class="material-body mdc-typography">
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
+    <!--noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div class="mdl-layout mdl-js-layout">
-        <header class="mdl-layout__header mdl-layout__header--transparent">
-            <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title"><a href="/FitnessJS"><img width="200px" src="/FitnessJS/assets/small-logo.svg" alt="FitnessJS" /></a></span>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-                <!-- Navigation -->
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
-                    <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
-                </nav>
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title"><a href="/FitnessJS"><img width="100%" src="/FitnessJS/assets/small-logo.svg" alt="FitnessJS" /></a></span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
-                <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
-            </nav>
+    <div class="mdc-toolbar mdc-toolbar--fixed">
+        <div class="mdc-toolbar__row">
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                <a href="#" class="global-menu-button material-icons">menu</a>
+                <span class="mdc-toolbar__title catalog-title">FitnessJS</span>
+            </section>
         </div>
-        <main class="mdl-layout__content">
+    </div>
 
-            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                <div class="mdl-tabs__tab-bar">
-                    <a href="#privacy-policy-panel" class="mdl-tabs__tab is-active">Privacy Policy</a>
-                    <a href="#terms-of-use-panel" class="mdl-tabs__tab">Terms of Use</a>
+    <aside class="mdc-temporary-drawer">
+        <nav class="mdc-temporary-drawer__drawer">
+            <header class="mdc-temporary-drawer__header">
+                <div class="mdc-temporary-drawer__header-content mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
+                    FitnessJS
+                </div>
+            </header>
+            <nav class="mdc-temporary-drawer__content mdc-list-group">
+                <div class="mdc-list">
+                    <a class="mdc-list-item mdc-temporary-drawer--selected" href="/FitnessJS">
+                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">home</i>Home
+                    </a>
+                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
+                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">book</i>Wiki
+                    </a>
+                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
+                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">code</i>Github
+                    </a>
                 </div>
 
-                <div class="mdl-tabs__panel is-active" id="privacy-policy-panel">
+                <hr class="mdc-list-divider">
 
-                    <div class="mdl-grid">
+                <div class="mdc-list">
+                    <a class="mdc-list-item" href="/FitnessJS/tools/calories">
+                        Calories
+                    </a>
+                    <a class="mdc-list-item" href="/FitnessJS/tools/composition">
+                        Composition
+                    </a>
+                    <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
+                        Cardio Performance
+                    </a>
+                    <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
+                        Strength
+                    </a>
+                </div>
+            </nav>
+        </nav>
+    </aside>
 
-                        <div class="mdl-cell mdl-cell--12-col">
+    <main class="mdc-toolbar-fixed-adjust">
+            <div class="mdc-layout-grid">
+
+                <div name="#privacy-policy" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+
                             <h2>Privacy Policy</h2>
-                            <p>Last Updated: 12/31/2016</p>
+                            <p>Last Updated: 05/20/2017</p>
                             <p>This Web site may disclose personal information when required by law in the good-faith belief that such action is necessary in order to conform to the edicts of the law or comply with a legal process involving the Web site.
 
                                 <p>When you visit our sites you may provide us with two types of information: (1) non-personal information that is collected on an aggregate basis from all users, and (2) personal information you voluntarily choose to disclose through entering information into one of our tools</p>
@@ -123,18 +143,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                 <p>This site contains links to other sites. This site is not responsible for the privacy practices or the content of such Web sites.</p>
 
                                 <p>The FitnessJS owner retains the right to amend or otherwise update this Privacy Statement at any time. By using my site, you consent to the collection and use of the information as we have described. If we change our policies and practices, we will post the changes in our Privacy Statement so that you are always aware of them. With this knowledge, you can make an informed decision about whether you wish to provide personal information to us.</p>
-
-                        </div>
-                    </div>
                 </div>
-
-                <div class="mdl-tabs__panel" id="terms-of-use-panel">
-
-                    <div class="mdl-grid">
-
-                        <div class="mdl-cell mdl-cell--12-col">
+                <div name="#terms-of-use" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
                             <h2>Terms of Use</h2>
-                            <p>Last Updated: 12/31/2016</p>
+                            <p>Last Updated: 05/20/2017</p>
 
                             <p>ANY PARTICIPATION IN THIS SITE WILL CONSTITUTE ACCEPTANCE OF THIS AGREEMENT. IF YOU DO NOT AGREE TO ABIDE BY THE ABOVE, PLEASE DO NOT USE THIS SITE.</p>
 
@@ -152,26 +164,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                             <h3>Changes</h3>
                             <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time.</p>
-                        </div>
-                    </div>
                 </div>
-
             </div>
-
-            <footer class="mdl-mini-footer">
-                <div class="mdl-mini-footer__left-section">
-                    <div class="mdl-logo">FitnessJS</div>
-                    <ul class="mdl-mini-footer__link-list">
-                        <li><a href="/FitnessJS/privacy-terms.html">Privacy & Terms</a></li>
-                    </ul>
-                </div>
-            </footer>
-        </main>
-    </div>
+        </div>
+    </main>
 
 </body>
 <link rel="stylesheet" href="css/prism.css">
 <link rel="stylesheet" href="css/style.css">
-<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+<script type="text/javascript" src="node_modules/material-components-web/dist/material-components-web.js"></script>
+<script type="text/javascript" src="js/layout.js"></script>
 
 </html>

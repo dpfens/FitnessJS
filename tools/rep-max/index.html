@@ -46,276 +46,209 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="../../css/material.min.css">
+    <link rel="stylesheet" href="../../node_modules/material-components-web/dist/material-components-web.min.css">
 </head>
 
-<body>
+<body class="material-body mdc-typography">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header mdl-layout__header--transparent">
-            <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title"><a href="/FitnessJS"><img width="200px" src="/FitnessJS/assets/small-logo.svg" alt="FitnessJS" /></a></span>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-                <!-- Navigation -->
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
-                    <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
-                </nav>
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title"><a href="/FitnessJS"><img width="100%" src="/FitnessJS/assets/small-logo.svg" alt="FitnessJS" /></a></span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
-                <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
-            </nav>
+    <div class="mdc-toolbar mdc-toolbar--fixed">
+        <div class="mdc-toolbar__row">
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                <a href="#" class="global-menu-button material-icons">menu</a>
+                <span class="mdc-toolbar__title catalog-title">FitnessJS</span>
+            </section>
         </div>
-        <main class="mdl-layout__content">
+    </div>
 
-            <h2 v-if="title" class="text-center">{{ title }}</h2>
+    <aside class="mdc-temporary-drawer">
+        <nav class="mdc-temporary-drawer__drawer">
+            <header class="mdc-temporary-drawer__header">
+                <div class="mdc-temporary-drawer__header-content mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
+                    FitnessJS
+                </div>
+            </header>
+            <nav class="mdc-temporary-drawer__content mdc-list-group">
+                <div class="mdc-list">
+                    <a class="mdc-list-item" href="/FitnessJS">
+                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">home</i>Home
+                    </a>
+                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
+                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">book</i>Wiki
+                    </a>
+                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
+                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">code</i>Github
+                    </a>
+                </div>
 
-            <div class="mdl-grid cover">
+                <hr class="mdc-list-divider">
 
-                <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect mdl-cell mdl-cell--12-col mdl-cell--4-col-desktop mdl-shadow--4dp translucent-white">
-                    <div class="mdl-tabs__tab-bar">
-                        <a href="#performances-panel" class="mdl-tabs__tab">Performances</a>
-                        <a href="#new-performance-panel" class="mdl-tabs__tab is-active">New</a>
-                    </div>
+                <div class="mdc-list">
+                    <a class="mdc-list-item mdc-temporary-drawer--selected" href="/FitnessJS/tools/calories">
+                        Calories
+                    </a>
+                    <a class="mdc-list-item" href="/FitnessJS/tools/composition">
+                        Composition
+                    </a>
+                    <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
+                        Cardio Performance
+                    </a>
+                    <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
+                        Strength
+                    </a>
+                </div>
+            </nav>
+        </nav>
+    </aside>
 
-                    <div class="mdl-tabs__panel" id="performances-panel">
-                        <ul v-if="performances.length" class="mdl-list mdl-cell mdl-cell--12-col">
-                            <li v-for="(performance, index) in performances" :class="{ 'mdl-list__item': editingPerformance !== performance, 'mdl-list__item--two-line': editingPerformance !== performance  }">
-                                <span :class="{ 'hide':editingPerformance === performance, 'mdl-list__item-primary-content': performance }">
-                          <span>{{ performance.label }}</span>
-                                <span class="mdl-list__item-sub-title">{{ performance.reps }} x {{ performance.mass.value }}{{performance.mass.units.value}}</span>
-                                </span>
-                                <a v-on:click="editPerformance(performance)" :class="{ 'hide':editingPerformance === performance, 'mdl-list__item-secondary-action': performance }"><i class="material-icons">mode_edit</i></a>
-                                <div :class="{ hide: editingPerformance !== performance, 'mdl-cell': performances, 'mdl-cell--12-col': performances }">
-                                    <button v-on:click="savePerformance(performance)" class="mdl-button mdl-js-button mdl-button--icon f-right">
-                                        <i class="material-icons">check</i>
-                                    </button>
-                                    <button v-on:click="removePerformance(performance)" class="mdl-button mdl-js-button mdl-button--icon f-right">
-                                        <i class="material-icons">delete</i>
-                                    </button>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" v-on:keyup.enter="savePerformance(performance)" v-model="performance.label" type="tel">
-                                        <label class="mdl-textfield__label" for="label">Label</label>
-                                        <span class="mdl-textfield__error">Enter a valid label</span>
-                                    </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" v-on:keyup.enter="savePerformance(performance)" v-model="performance.reps" type="tel" pattern="\d+">
-                                        <label class="mdl-textfield__label" for="t1">Reps</label>
-                                        <span class="mdl-textfield__error">Enter a valid number</span>
-                                    </div>
+    <main id="app" class="mdc-toolbar-fixed-adjust">
+        <div class="mdc-layout-grid">
 
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" v-on:keyup.enter="savePerformance(performance)" v-model="performance.mass.value" type="tel" pattern="\d+(\.\d+)?">
-                                        <label class="mdl-textfield__label" for="d1">Weight</label>
-                                        <span class="mdl-textfield__error">Enter a valid weight</span>
-                                    </div>
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
 
-                                    <button v-bind:id="performance.id" v-text="performance.mass.units.name" class="mdl-button mdl-js-button mdl-button--raised">
-                                        {{performance.mass.units.name}}
-                                    </button>
-                                    <input type="hidden" v-model="performance.mass.units" id="distanceUnits" />
+                <ul v-if="performances.length" class="mdc-list mdc-list--two-line">
 
-                                    <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect" :for="performance.id">
-                                        <li class="mdl-menu__item" v-on:click="setMassUnit(performance, unit)" v-for="unit in units.mass.options">{{ unit.name }}</li>
-                                    </ul>
+                    <li v-for="performance in performances" class="mdc-list-item">
+                        <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
+                        <span class="mdc-list-item__text">
+                                {{ performance.reps }} x {{ performance.mass.value }} {{ performance.mass.units.name }}
+                                <span class="mdc-list-item__text__secondary">{{ performance.mass.value }} {{ performance.mass.units.name }}</span>
+                        </span>
+                        <span class="mdc-list-item__end-detail">
+                                <button type="button" class="edit-button mdc-fab mdc-fab--mini mdc-fab--plain material-icons" aria-label="Edit person" title="Edit" v-on:click="editPerformance(performance)">edit</button>
+                            </span>
+                    </li>
 
-                                </div>
-                            </li>
+                </ul>
+                <div v-else>
+                    <p class="text-center">No one...yet</p>
+                </div>
 
+            </div>
+
+            <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                <div class="mdc-menu-anchor align-right">
+                    <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
+                        <span class="mdc-fab__icon">share</span>
+                    </button>
+
+                    <div id="share-menu" class="mdc-simple-menu" tabindex="-1">
+                        <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                            <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
+                                    Facebook
+                                </a>
+                            <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
+                                    Twitter
+                                </a>
                         </ul>
-
-                        <div v-else class="mdl-cell mdl-cell--12-col">
-                            <p class="text-center">No performances...yet.</p>
-                        </div>
                     </div>
-                    <div class="mdl-tabs__panel is-active" id="new-performance-panel">
-                        <div class="mdl-cell mdl-cell--12-col mdl-grid">
-
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col mdl-cell--2-col-phone mdl-cell--2-col-tablet">
-                            <input class="mdl-textfield__input" v-on:keyup.enter="addPerformance" v-model="newPerformance.reps" type="tel">
-                            <label class="mdl-textfield__label" for="t1">Reps</label>
-                            <span class="mdl-textfield__error">Enter a valid number</span>
-                        </div>
-
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col mdl-cell--2-col-phone mdl-cell--2-col-tablet">
-                            <input class="mdl-textfield__input" v-model="newPerformance.mass.value" v-on:keyup.enter="addPerformance" type="tel" pattern="\d+(\.\d+)?">
-                            <label class="mdl-textfield__label" for="d1">Weight</label>
-                            <span class="mdl-textfield__error">Enter a valid number</span>
-                        </div>
-
-                        <button id="distance-new" class="mdl-button mdl-js-button mdl-button--raised">
-                            {{units.mass.current.name}}
-                        </button>
-                        <input type="hidden" v-model="newPerformance.mass.units" id="distanceUnits" />
-
-                        <button v-on:click="addPerformance" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                            <i class="material-icons">add</i>
-                        </button>
-
-                        <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="distance-new">
-                            <li class="mdl-menu__item" v-on:click="setMassUnit(newPerformance, unit, true)" v-for="unit in units.mass.options">{{ unit.name }}</li>
-                        </ul>
-
-                    </div>
-
-                        </div>
                 </div>
-
-                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-desktop mdl-card mdl-shadow--4dp translucent-white">
-                    <div class="mdl-cell mdl-cell--12-col">
-
-                    <h6>Performance Model</h6>
-
-                    <div class="mdl-card__menu">
-                        <button id="share-menu" class="mdl-button mdl-js-button mdl-button--icon">
-                            <i class="material-icons">share</i>
-                        </button>
-                    </div>
-
-                    <canvas id="chart"></canvas>
-
-                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="share-menu">
-                        <a class="mdl-menu__item" v-bind:href="share.facebook">Facebook</a>
-                        <a class="mdl-menu__item" v-bind:href="share.twitter">Twitter</a>
-                    </ul>
-
-                    </div>
-
-                </div>
+                <canvas id="chart"></canvas>
 
             </div>
 
-            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                <div class="mdl-tabs__tab-bar">
-                    <a href="#next-steps-panel" class="mdl-tabs__tab is-active">Related</a>
-                    <a href="#howitworks-panel" class="mdl-tabs__tab">How It Works</a>
-                    <a href="#feedback-panel" class="mdl-tabs__tab">Feedback</a>
-                </div>
+        </div>
 
-                <div class="mdl-tabs__panel is-active" id="next-steps-panel">
+        <button id="primary-action-button" class="mdc-fab material-icons" aria-label="Edit">
+            <span class="mdc-fab__icon">add</span>
+        </button>
 
-                    <div class="mdl-grid">
+        <aside id="edit-performance-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="edit-person-label" aria-describedby="edit-person-description">
+            <div class="mdc-dialog__surface">
+                <header class="mdc-dialog__header">
+                    <h2 id="edit-person-label" class="mdc-dialog__header__title">
+                        Edit Performance
+                    </h2>
+                </header>
+                <section id="edit-person-description" class="mdc-dialog__body">
+                    <div class="mdc-layout-grid">
 
-                        <!-- Page recommendation card -->
-                        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title card-cover calories-cover">
-                                <h2 class="mdl-card__title-text">Calories</h2>
+                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
+
+                            <div class="mdc-textfield">
+                                <input type="tel" class="mdc-textfield__input" v-model="editingPerformance.reps" name="reps">
+                                <label class="mdc-textfield__label" for="name">Reps</label>
                             </div>
-                            <div class="mdl-card__supporting-text">
-                                Estimate calories needed for weightlifting plans based on level of activity for gaining or cutting down weight.
+
+                            <div class="mdc-textfield">
+                                <input type="tel" class="mdc-textfield__input" v-model="editingPerformance.mass.value" name="mass">
+                                <label class="mdc-textfield__label" for="age">Weight</label>
                             </div>
-                            <div class="mdl-card__actions mdl-card--border">
-                                <a href="/FitnessJS/tools/calories" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-      Get Started
-    </a>
-                            </div>
+
+                            <select class="mdc-select" v-model="editingPerformance.mass.units">
+                                <option v-bind:value="unit" v-for="unit in units.mass.options">{{ unit.name }}</option>
+                            </select>
                         </div>
-
-                        <!-- Page recommendation card -->
-                        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title card-cover composition-cover">
-                                <h2 class="mdl-card__title-text">Composition</h2>
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                Estimate body composition based on gender, age, height and weight to compare with other lifters.
-                            </div>
-                            <div class="mdl-card__actions mdl-card--border">
-                                <a href="/FitnessJS/tools/composition" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-      Get Started
-    </a>
-                            </div>
-                        </div>
-
-                        <!-- Page recommendation card -->
-                        <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title card-cover cardio-performance-cover">
-                                <h2 class="mdl-card__title-text">Cardio Performance</h2>
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                Estimate performances for your next workout or estimate performances of competitors in your next race
-                            </div>
-                            <div class="mdl-card__actions mdl-card--border">
-                                <a href="/FitnessJS/tools/cardio-performance" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-      Get Started
-    </a>
-                            </div>
-                        </div>
-
                     </div>
+                </section>
 
-                </div>
-                <div class="mdl-tabs__panel" id="howitworks-panel">
+                <footer class="mdc-dialog__footer">
+                    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
+                    <button type="button" v-on:click="savePerformance(editingPerformance)" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Save</button>
+                </footer>
+            </div>
+            <div class="mdc-dialog__backdrop"></div>
+        </aside>
 
-                    <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col">
+        <aside id="new-performance-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="new-person-label" aria-describedby="create-new-person-description">
+            <div class="mdc-dialog__surface">
+                <header class="mdc-dialog__header">
+                    <h2 id="new-person-label" class="mdc-dialog__header__title">
+                        Create a new performance
+                    </h2>
+                </header>
+                <section id="create-new-person-description" class="mdc-dialog__body">
+                    <div class="mdc-layout-grid">
 
-                          <p>The most common metric for muscular strength is the one repetition maximum (1-RM).  1-RM offers a metric to ensure that exercisers focused on strength reach resistance overload.  This metric is common place among competitive athletes and is becoming more common among exercisers.   Avoid muscular, bone, or ligament damage during 1-RM tests by taking safety precautions.</p>
+                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
 
-                          <p>Only perform a 1-RM test if you are an experienced exerciser. Incorrect form can result in muscular or ligament injuries, especially with inexperienced exercisers.  Sub-maximal tests are a viable alternative for inexperienced exercisers.  Sub-maximal tests are safer, quicker, and are useful for inexperienced exercisers.  1-RM formulas can convert sub-maximal test results to approximate 1-RM.  1-RM formulas may underestimate actual 1-RM, but offer a good starting point for 1-RM.</p>
+                            <div class="mdc-textfield">
+                                <input type="text" class="mdc-textfield__input" v-model="newPerformance.reps" v-on:keyup.enter="addPerformance(newPerformance, true)" name="time">
+                                <label class="mdc-textfield__label" for="reps">Reps</label>
+                            </div>
 
+                            <div class="mdc-textfield">
+                                <input type="tel" class="mdc-textfield__input" v-model="newPerformance.mass.value" v-on:keyup.enter="addPerformance(newPerformance, true)" name="mass">
+                                <label class="mdc-textfield__label" for="age">Weight</label>
+                            </div>
+
+                            <select class="mdc-select" v-model="newPerformance.mass.units">
+                                <option v-bind:value="unit" v-for="unit in units.mass.options">{{ unit.name }}</option>
+                            </select>
                         </div>
-
                     </div>
+                </section>
 
+                <footer class="mdc-dialog__footer">
+                    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
+                    <button type="button" v-on:click="addPerformance" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Create</button>
+                </footer>
                 </div>
-                <div class="mdl-tabs__panel" id="feedback-panel">
+            <div class="mdc-dialog__backdrop"></div>
+        </aside>
 
-                  <div class="mdl-grid">
-                      <div class="mdl-cell mdl-cell--12-col">
-                        <p>How satisfied are you with this tool?</p>
-                      </div>
+    </main>
 
-                      <div class="mdl-cell mdl-cell--10-col mdl-cell--3-col-phone mdl-cell--7-col-tablet">
-                        <i v-for="i in Number(rating.value)" class="material-icons">star</i>
-                        <input v-show="!rating.sent" class="mdl-slider mdl-js-slider" type="range" min="1" max="5" value="2.5" v-model="rating.value" tabindex="0">
-
-                        <p v-if="rating.sent" >Thank you for your feedback</p>
-                      </div>
-                      <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-phone mdl-cell--1-col-tablet">
-                        <button v-show="!rating.sent" v-on:click="sendFeedback" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent">
-                          <i class="material-icons">send</i>
-                        </button>
-                      </div>
-                </div>
-            </div>
-
-            <footer class="mdl-mini-footer">
-                <div class="mdl-mini-footer__left-section">
-                    <div class="mdl-logo">FitnessJS</div>
-                    <ul class="mdl-mini-footer__link-list">
-                        <li><a href="/FitnessJS/privacy-terms.html">Privacy & Terms</a>
-                        </li>
-                    </ul>
-                </div>
-            </footer>
-
-            <div id="app-snackbar" class="mdl-js-snackbar mdl-snackbar">
-                <div class="mdl-snackbar__text"></div>
-                <button class="mdl-snackbar__action" type="button"></button>
-            </div>
-
-        </main>
+    <div class="mdc-snackbar" aria-live="assertive" aria-atomic="true" aria-hidden="true">
+        <div class="mdc-snackbar__text"></div>
+        <div class="mdc-snackbar__action-wrapper">
+            <button type="button" class="mdc-button mdc-snackbar__action-button"></button>
+        </div>
     </div>
 
 </body>
 <link rel="stylesheet" href="../../css/style.css">
 <link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+<script type="text/javascript" src="../../node_modules/material-components-web/dist/material-components-web.js"></script>
 <script type="text/javascript" src="../../js/tools/preferences.js"></script>
 <script type="text/javascript" src="../../js/libs/vue.min.js"></script>
 <script type="text/javascript" src="../../js/libs/vue-router.js"></script>
 <script type="text/javascript" src="../../js/libs/fitness.min.js"></script>
 <script type="text/javascript" src="../../js/libs/Chart.min.js"></script>
 <script type="text/javascript" src="js/converter.js"></script>
+<script type="text/javascript" src="js/layout.js"></script>
 
 <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
 

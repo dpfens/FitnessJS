@@ -2,11 +2,22 @@
 <html lang="en">
 <head>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NCXJXW');</script>
+    <!--script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NCXJXW');
+    </script>
     <!-- End Google Tag Manager -->
     <title>FitnessJS - An Exercise Science library</title>
 
@@ -47,188 +58,134 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/material.min.css">
+    <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.min.css">
 </head>
 
-<body>
+<body class="material-body mdc-typography">
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript>
+        <!--iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div class="mdl-layout mdl-js-layout">
-        <header class="mdl-layout__header mdl-layout__header--transparent">
-            <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title"><a href="/FitnessJS"><img width="200px" src="/FitnessJS/assets/small-logo.svg" alt="FitnessJS" /></a></span>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-                <!-- Navigation -->
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
-                    <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
-                </nav>
+
+        <div class="mdc-toolbar mdc-toolbar--fixed">
+            <div class="mdc-toolbar__row">
+                <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+                    <a href="#" class="global-menu-button material-icons">menu</a>
+                    <span class="mdc-toolbar__title catalog-title">FitnessJS</span>
+                </section>
             </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title"><a href="/FitnessJS"><img width="100%" src="/FitnessJS/assets/small-logo.svg" alt="FitnessJS" /></a></span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
-                <a class="mdl-navigation__link" href="/FitnessJS/tools">Tools</a>
-            </nav>
         </div>
-        <main class="mdl-layout__content">
 
-            <div class="hero mdl-grid">
+        <aside class="mdc-temporary-drawer">
+            <nav class="mdc-temporary-drawer__drawer">
+                <header class="mdc-temporary-drawer__header">
+                    <div class="mdc-temporary-drawer__header-content mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
+                        FitnessJS
+                    </div>
+                </header>
+                <nav class="mdc-temporary-drawer__content mdc-list-group">
+                    <div class="mdc-list">
+                        <a class="mdc-list-item mdc-temporary-drawer--selected" href="/FitnessJS">
+                            <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">home</i>Home
+                        </a>
+                        <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
+                            <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">book</i>Wiki
+                        </a>
+                        <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
+                            <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">code</i>Github
+                        </a>
+                    </div>
 
-              <div class="mdl-cell mdl-cell--12-col mdl-grid">
-                <div class="mdl-layout-spacer"></div>
-                <div class="mdl-cell mdl-cell--4-col mdl-cell--6-col-desktop">
-                  <img width="100%" src="/FitnessJS/assets/logo.svg" alt="FitnessJS" />
-                  <p>FitnessJS is a library of exercise physiology equations covering topics such as METs, body composition, VO2Max measurement and 1-RM estimation.</p>
+                    <hr class="mdc-list-divider">
+
+                    <div class="mdc-list">
+                        <a class="mdc-list-item" href="/FitnessJS/tools/calories">
+                            Calories
+                        </a>
+                        <a class="mdc-list-item" href="/FitnessJS/tools/composition">
+                            Composition
+                        </a>
+                        <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
+                            Cardio Performance
+                        </a>
+                        <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
+                            Strength
+                        </a>
+                    </div>
+                </nav>
+            </nav>
+        </aside>
+
+        <main class="mdc-toolbar-fixed-adjust">
+            <div class="mdc-layout-grid">
+
+                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                    <section class="mdc-card__media">
+                        <h1 class="mdc-card__title mdc-card__title--large">Cardio</h1>
+                        <h2 class="mdc-card__subtitle"></h2>
+                    </section>
+                    <section class="mdc-card__supporting-text">
+                        Estimate Cardiac, respiratory, VO<sub>2max</sub> measures
+                    </section>
+                    <section class="mdc-card__actions">
+                        <a href="/FitnessJS/tools/cardio-performance" class="mdc-button mdc-button--raised mdc-button--primary mdc-card__action">Performance Tool</a>
+                        <a href="https://github.com/dpfens/FitnessJS/wiki/Cardio" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
+                    </section>
                 </div>
 
-                <div class="mdl-layout-spacer"></div>
-              </div>
+                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                    <section class="mdc-card__media">
+                        <h1 class="mdc-card__title mdc-card__title--large">Composition</h1>
+                        <h2 class="mdc-card__subtitle"></h2>
+                    </section>
+                    <section class="mdc-card__supporting-text">
+                        Estimate surface area, fat-free/lean body mass, and indexes for assessing body composition
+                    </section>
+                    <section class="mdc-card__actions">
+                        <a href="/FitnessJS/tools/composition" class="mdc-button mdc-button--raised mdc-button--primary mdc-card__action">Composition Tool</a>
+                        <a href="https://github.com/dpfens/FitnessJS/wiki/Composition" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
+                    </section>
+                </div>
 
+                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                    <section class="mdc-card__media">
+                        <h1 class="mdc-card__title mdc-card__title--large">METs</h1>
+                        <h2 class="mdc-card__subtitle"></h2>
+                    </section>
+                    <section class="mdc-card__supporting-text">
+
+                        Metabolic equivalents (METs) for estimating energy expenditure of over 800 specific activities
+                    </section>
+                    <section class="mdc-card__actions">
+                        <a href="https://github.com/dpfens/FitnessJS/wiki/Mets" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
+                    </section>
+                </div>
+
+                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                    <section class="mdc-card__media">
+                        <h1 class="mdc-card__title mdc-card__title--large">Strength</h1>
+                        <h2 class="mdc-card__subtitle"></h2>
+                    </section>
+                    <section class="mdc-card__supporting-text">
+                        Estimate 1 repetition max (1-RM), relative strength or compare weightlifters across genders and weight classes
+                    </section>
+                    <section class="mdc-card__actions">
+                        <a href="/FitnessJS/tools/rep-max" class="mdc-button mdc-button--raised mdc-button--primary mdc-card__action">1-RM Tool</a>
+                        <a href="https://github.com/dpfens/FitnessJS/wiki/Strength" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
+                    </section>
+                </div>
             </div>
-
-
-            <div class="mdl-grid">
-                <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-                    <div class="mdl-card__title card-cover cardio-performance-cover">
-                        <h2 class="mdl-card__title-text">Cardio</h2>
-                    </div>
-                    <div class="mdl-card__supporting-text">
-                        Metabolic equivalents (METs) for estimating energy expenditure of over 800 specific activities. Also includes conversion formulas for VO<sub>2max</sub> and kilocalories (kcals).
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/Cardio" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-      Get Started
-    </a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-                    <div class="mdl-card__title card-cover composition-cover">
-                        <h2 class="mdl-card__title-text">Composition</h2>
-                    </div>
-                    <div class="mdl-card__supporting-text">
-                        Formulas for estimating surface area, fat-free/lean body mass, and indexes for assessing body composition such as BAI, BMI, BSI, corpulence, etc.
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/Composition" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-Get Started
-</a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-                    <div class="mdl-card__title card-cover mets-cover">
-                        <h2 class="mdl-card__title-text">METs</h2>
-                    </div>
-                    <div class="mdl-card__supporting-text">
-                        Metabolic equivalents (METs) for estimating energy expenditure of over 800 specific activities. Also includes conversion formulas for VO2 max and kilocalories (kcals).
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/METs" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-Get Started
-</a>
-                    </div>
-                </div>
-
-                <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-                    <div class="mdl-card__title card-cover rep-max-cover">
-                        <h2 class="mdl-card__title-text">Strength</h2>
-                    </div>
-                    <div class="mdl-card__supporting-text">
-                        Estimate 1 repetition max (1-RM), relative strength or compare weightlifters across genders and weight classes.
-                    </div>
-                    <div class="mdl-card__actions mdl-card--border">
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/Strength" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-Get Started
-</a>
-                    </div>
-                </div>
-
-            </div>
-
-
-			<h2 class="text-center">Benefits</h2>
-			<div class="mdl-grid">
-				<p class="mdl-cell--12-col"></p>
-			</div>
-
-            <ul class="mdl-grid">
-
-                <li class="mdl-list__item mdl-list__item--three-line mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
-                    <span class="mdl-list__item-primary-content">
-<span>Authoritative sources</span>
-                    <span class="mdl-list__item-text-body">
-	All equations included are from reputable sources (cited in documentation)
-</span>
-                    </span>
-                </li>
-
-                <li class="mdl-list__item mdl-list__item--three-line mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
-                    <span class="mdl-list__item-primary-content">
-<span>No dependencies</span>
-                    <span class="mdl-list__item-text-body">
-	No external libraries are required to perform calculations
-</span>
-                    </span>
-                </li>
-
-                <li class="mdl-list__item mdl-list__item--three-line mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
-                    <span class="mdl-list__item-primary-content">
-<span>Extendable</span>
-                    <span class="mdl-list__item-text-body">
-	All classes and methods can be overridden or extended
-</span>
-                    </span>
-                </li>
-
-            </ul>
-
-            <h2 class="text-center">Get Started</h2>
-			<div class="mdl-grid">
-				<p class="mdl-cell--12-col"></p>
-			</div>
-			<div class="mdl-cell mdl-cell--12-col">
-			    <div></div>
-			<p>To get started, download the library and include the library in your markup:</p>
-			    <pre><code class="language-html">&lt;script src=<kbd>"/path/to/FitnessJS.min.js"</kbd>&gt;&lt;/script&gt;</code></pre>
-			</div>
-
-			<div class="text-center mdl-grid mdl-cell mdl-cell--12-col">
-			    <div class="mdl-layout-spacer"></div>
-
-			    <a href="https://github.com/dpfens/FitnessJS/archive/master.zip" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-			        Download
-			    </a>
-
-			    <a href="https://github.com/dpfens/FitnessJS/wiki" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored ">
-			        Wiki
-			    </a>
-
-			    <div class="mdl-layout-spacer"></div>
-			</div>
-
-			<footer class="mdl-mini-footer">
-				<div class="mdl-mini-footer__left-section">
-				<div class="mdl-logo">FitnessJS</div>
-				<ul class="mdl-mini-footer__link-list">
-					<li><a href="/FitnessJS/privacy-terms.html">Privacy & Terms</a></li>
-				</ul>
-				</div>
-			</footer>
         </main>
-    </div>
 
 </body>
 <link rel="stylesheet" href="css/prism.css">
 <link rel="stylesheet" href="css/style.css">
-<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-<script src="js/libs/prism.js"></script>
-<script src="js/libs/fitness.min.js"></script>
+<script src="node_modules/material-components-web/dist/material-components-web.js"></script>
+<script>
+    mdc.autoInit()
+</script>
+<script type="text/javascript" src="js/layout.js"></script>
+<script type="text/javascript" src="js/libs/prism.js"></script>
 
 </html>

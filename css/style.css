@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .hero {
   /* background: url() center / cover; */
   min-height: 200px;
@@ -22,6 +27,29 @@
 
 .overflow-x-auto {
     overflow-x: auto;
+}
+
+/* primary call to action styles */
+
+#primary-action-button {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+@media(min-width: 1024px) {
+    #primary-action-button {
+        bottom: 3rem;
+        right: 5rem;
+    }
+}
+
+/* Tab styles */
+.tab-panels .panel {
+    display: none;
+}
+.tab-panels .panel.active {
+    display: block;
 }
 
 .card-cover {
