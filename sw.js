@@ -1924,7 +1924,7 @@ workboxSW.precache([
   },
   {
     "url": "sw.js",
-    "revision": "e8971855caa90a03bdbf786eb8ca7877"
+    "revision": "cb0edf3b2f9ad44101c511a3f22e90f3"
   },
   {
     "url": "tools/calories/css/style.css",
