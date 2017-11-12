@@ -49,7 +49,6 @@ workboxSW.router.registerRoute('/FitnessJS/*.html', args => {
   return contentHandler.handle(args);
 });
 
-const workboxSW = new self.WorkboxSW();
 workboxSW.precache([
   {
     "url": "assets/balance.svg",
@@ -109,7 +108,7 @@ workboxSW.precache([
   },
   {
     "url": "build/sw.js",
-    "revision": "baa990a6344d47c09109f2a35578d8fc"
+    "revision": "de9420e2b1b551314b8909c01d31cdce"
   },
   {
     "url": "build/workbox-sw.prod.v2.1.1.js",
@@ -1925,7 +1924,7 @@ workboxSW.precache([
   },
   {
     "url": "sw.js",
-    "revision": "59c9e73a5a93f8b5eac1072eb5c5fc03"
+    "revision": "e8971855caa90a03bdbf786eb8ca7877"
   },
   {
     "url": "tools/calories/css/style.css",
