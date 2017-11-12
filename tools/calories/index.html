@@ -107,84 +107,87 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <main id="app" class="mdc-toolbar-fixed-adjust">
 
         <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
 
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
 
-                <ul v-if="persons.length" class="mdc-list mdc-list--two-line">
+                    <ul v-if="persons.length" class="mdc-list mdc-list--two-line">
 
-                    <li v-for="person in persons" class="mdc-list-item">
-                        <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
-                        <span class="mdc-list-item__text">
+                        <li v-for="person in persons" class="mdc-list-item">
+                            <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
+                            <span class="mdc-list-item__text">
                                 {{ person.name }}
                                 <span class="mdc-list-item__text__secondary">{{ person.age }} years</span>
-                        </span>
-                        <span class="mdc-list-item__end-detail">
+                            </span>
+                            <span class="mdc-list-item__end-detail">
                                 <button type="button" class="edit-button mdc-fab mdc-fab--mini mdc-fab--plain material-icons" aria-label="Edit person" title="Edit" v-on:click="updatePerson(person)">edit</button>
                             </span>
-                    </li>
+                        </li>
 
-                </ul>
-                <div v-else>
-                    <p class="text-center">No one...yet</p>
+                    </ul>
+                    <div v-else>
+                        <p class="text-center">No one...yet</p>
+                    </div>
+
                 </div>
 
-            </div>
-
-            <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                <div id="visualization-tabs" class="mdc-tab-bar">
-                    <a href="#table-panel" role="tab" aria-controls="table-panel" class="mdc-tab">Table</a>
-                    <a href="#chart-panel" role="tab" aria-controls="chart-panel" class="mdc-tab mdc-tab--active">Chart</a>
-                    <span class="mdc-tab-bar__indicator"></span>
-                </div>
-                <div class="mdc-menu-anchor align-right">
-                    <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
+                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                    <div id="visualization-tabs" class="mdc-tab-bar">
+                        <a href="#table-panel" role="tab" aria-controls="table-panel" class="mdc-tab">Table</a>
+                        <a href="#chart-panel" role="tab" aria-controls="chart-panel" class="mdc-tab mdc-tab--active">Chart</a>
+                        <span class="mdc-tab-bar__indicator"></span>
+                    </div>
+                    <div class="mdc-menu-anchor align-right">
+                        <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
                         <span class="mdc-fab__icon">share</span>
                     </button>
 
-                    <div id="share-menu" class="mdc-simple-menu" tabindex="-1">
-                        <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
-                            <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
+                        <div id="share-menu" class="mdc-simple-menu" tabindex="-1">
+                            <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                                <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
                                     Facebook
                                 </a>
-                            <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
+                                <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
                                     Twitter
                                 </a>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tab-panels">
-                    <div class="panel overflow-x-auto mdc-layout-grid" role="tabpanel" aria-hidden="true" id="table-panel">
-
-                        <table v-show="persons.length" class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th id="bmr-label">BMR</th>
-                                    <th id="rmr-label">RMR</th>
-                                    <th id="tee-sedentary-label">Sedentary</th>
-                                    <th id="tee-low-label">Low</th>
-                                    <th id="tee-active-label">Active</th>
-                                    <th id="tee-veryactive-label">Very Active</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="person in persons">
-                                    <td>{{ person.name }}</td>
-                                    <td>{{ mSJ(person) }}</td>
-                                    <td>{{ rmr(person) }}</td>
-                                    <td>{{ tee(person, 0 ) }}</td>
-                                    <td>{{ tee(person, 1 ) }}</td>
-                                    <td>{{ tee(person, 2 ) }}</td>
-                                    <td>{{ tee(person, 3 ) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="panel active" role="tabpanel" aria-hidden="false" id="chart-panel">
-                        <canvas id="chart"></canvas>
+                    <div class="tab-panels">
+                        <div class="panel overflow-x-auto mdc-layout-grid" role="tabpanel" aria-hidden="true" id="table-panel">
+
+                            <table v-show="persons.length" class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th id="bmr-label">BMR</th>
+                                        <th id="rmr-label">RMR</th>
+                                        <th id="tee-sedentary-label">Sedentary</th>
+                                        <th id="tee-low-label">Low</th>
+                                        <th id="tee-active-label">Active</th>
+                                        <th id="tee-veryactive-label">Very Active</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="person in persons">
+                                        <td>{{ person.name }}</td>
+                                        <td>{{ mSJ(person) }}</td>
+                                        <td>{{ rmr(person) }}</td>
+                                        <td>{{ tee(person, 0 ) }}</td>
+                                        <td>{{ tee(person, 1 ) }}</td>
+                                        <td>{{ tee(person, 2 ) }}</td>
+                                        <td>{{ tee(person, 3 ) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="panel active" role="tabpanel" aria-hidden="false" id="chart-panel">
+                            <canvas id="chart"></canvas>
+                        </div>
+
                     </div>
 
                 </div>
@@ -345,7 +348,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
                     <button type="button" v-on:click="addPerson(newPerson, true)" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Create</button>
                 </footer>
-                </div>
+            </div>
             <div class="mdc-dialog__backdrop"></div>
         </aside>
 

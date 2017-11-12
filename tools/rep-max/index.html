@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NCXJXW');</script>
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NCXJXW');
+    </script>
     <!-- End Google Tag Manager -->
     <title>FitnessJS - Rep Max Calculator</title>
 
@@ -105,48 +117,50 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <main id="app" class="mdc-toolbar-fixed-adjust">
         <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
 
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
 
-                <ul v-if="performances.length" class="mdc-list mdc-list--two-line">
+                    <ul v-if="performances.length" class="mdc-list mdc-list--two-line">
 
-                    <li v-for="performance in performances" class="mdc-list-item">
-                        <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
-                        <span class="mdc-list-item__text">
+                        <li v-for="performance in performances" class="mdc-list-item">
+                            <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
+                            <span class="mdc-list-item__text">
                                 {{ performance.reps }} x {{ performance.mass.value }} {{ performance.mass.units.name }}
                                 <span class="mdc-list-item__text__secondary">{{ performance.mass.value }} {{ performance.mass.units.name }}</span>
-                        </span>
-                        <span class="mdc-list-item__end-detail">
+                            </span>
+                            <span class="mdc-list-item__end-detail">
                                 <button type="button" class="edit-button mdc-fab mdc-fab--mini mdc-fab--plain material-icons" aria-label="Edit person" title="Edit" v-on:click="editPerformance(performance)">edit</button>
                             </span>
-                    </li>
+                        </li>
 
-                </ul>
-                <div v-else>
-                    <p class="text-center">No one...yet</p>
+                    </ul>
+                    <div v-else>
+                        <p class="text-center">No one...yet</p>
+                    </div>
+
                 </div>
 
-            </div>
-
-            <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                <div class="mdc-menu-anchor align-right">
-                    <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
+                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                    <div class="mdc-menu-anchor align-right">
+                        <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
                         <span class="mdc-fab__icon">share</span>
                     </button>
 
-                    <div id="share-menu" class="mdc-simple-menu" tabindex="-1">
-                        <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
-                            <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
+                        <div id="share-menu" class="mdc-simple-menu" tabindex="-1">
+                            <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                                <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
                                     Facebook
                                 </a>
-                            <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
+                                <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
                                     Twitter
                                 </a>
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <canvas id="chart"></canvas>
+                    <canvas id="chart"></canvas>
 
+                </div>
             </div>
 
         </div>
@@ -225,7 +239,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
                     <button type="button" v-on:click="addPerformance" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Create</button>
                 </footer>
-                </div>
+            </div>
             <div class="mdc-dialog__backdrop"></div>
         </aside>
 

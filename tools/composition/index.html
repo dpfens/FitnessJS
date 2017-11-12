@@ -3,11 +3,22 @@
 
 <head>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NCXJXW');</script>
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NCXJXW');
+    </script>
     <!-- End Google Tag Manager -->
     <title>FitnessJS - Body Composition Calculator</title>
 
@@ -106,272 +117,275 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <main id="app" class="mdc-toolbar-fixed-adjust">
 
         <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
 
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
 
-                <ul v-if="persons.length" class="mdc-list mdc-list--two-line">
+                    <ul v-if="persons.length" class="mdc-list mdc-list--two-line">
 
-                    <li v-for="person in persons" class="mdc-list-item">
-                        <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
-                        <span class="mdc-list-item__text">
+                        <li v-for="person in persons" class="mdc-list-item">
+                            <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
+                            <span class="mdc-list-item__text">
                             {{ person.name }}
                             <span class="mdc-list-item__text__secondary">{{ person.age }} years</span>
-                        </span>
-                        <span class="mdc-list-item__end-detail">
+                            </span>
+                            <span class="mdc-list-item__end-detail">
                                 <button type="button" class="edit-button mdc-fab mdc-fab--mini mdc-fab--plain material-icons" aria-label="Edit person" title="Edit" v-on:click="updatePerson(person)">edit</button>
                             </span>
-                    </li>
+                        </li>
 
-                </ul>
-                <div v-else>
-                    <p class="text-center">No one...yet</p>
+                    </ul>
+                    <div v-else>
+                        <p class="text-center">No one...yet</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                <div id="visualization-tabs" class="mdc-tab-bar">
-                    <a href="#general-panel" role="tab" aria-controls="general-panel" class="mdc-tab mdc-tab--active">General</a>
-                    <a href="#bf-panel" role="tab" aria-controls="bf-panel" class="mdc-tab">%BF</a>
-                    <a href="#surfacearea-panel" role="tab" aria-controls="surfacearea-panel" class="mdc-tab">Surface Area</a>
-                    <span class="mdc-tab-bar__indicator"></span>
-                </div>
-                <div class="mdc-menu-anchor align-right">
-                    <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
+                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
+                    <div id="visualization-tabs" class="mdc-tab-bar">
+                        <a href="#general-panel" role="tab" aria-controls="general-panel" class="mdc-tab mdc-tab--active">General</a>
+                        <a href="#bf-panel" role="tab" aria-controls="bf-panel" class="mdc-tab">%BF</a>
+                        <a href="#surfacearea-panel" role="tab" aria-controls="surfacearea-panel" class="mdc-tab">Surface Area</a>
+                        <span class="mdc-tab-bar__indicator"></span>
+                    </div>
+                    <div class="mdc-menu-anchor align-right">
+                        <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
                         <span class="mdc-fab__icon">share</span>
                     </button>
 
-                    <div id="share-menu" class="mdc-simple-menu" tabindex="-1">
-                        <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
-                            <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
+                        <div id="share-menu" class="mdc-simple-menu" tabindex="-1">
+                            <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                                <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
                                     Facebook
                                 </a>
-                            <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
+                                <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
                                     Twitter
                                 </a>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tab-panels">
-                    <div class="panel active mdc-layout-grid" role="tabpanel" aria-hidden="false" id="general-panel">
-
-                        <table v-show="persons.length" class="mdc-data-table mdc-js-data-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>BMI</th>
-                                    <th>Corpulence</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="person in persons">
-                                    <td>{{ person.name }}</td>
-                                    <td>{{ bmi(person) }}</td>
-                                    <td>{{ corpulence(person) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                            </ul>
+                        </div>
                     </div>
 
-                <div class="panel mdc-layout-grid" role="tabpanel" aria-hidden="true" id="bf-panel">
+                    <div class="tab-panels">
+                        <div class="panel active mdc-layout-grid" role="tabpanel" aria-hidden="false" id="general-panel">
 
-                    <table v-show="persons.length" class="mdc-data-table mdc-js-data-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Body Fat</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="person in persons">
-                                <td>{{ person.name }}</td>
-                                <td>{{ bodyFat(person) }}%</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <table v-show="persons.length" class="mdc-data-table mdc-js-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>BMI</th>
+                                        <th>Corpulence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="person in persons">
+                                        <td>{{ person.name }}</td>
+                                        <td>{{ bmi(person) }}</td>
+                                        <td>{{ corpulence(person) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                </div>
+                        </div>
 
-                <div class="panel mdc-layout-grid" role="tabpanel" aria-hidden="true" id="surfacearea-panel">
+                        <div class="panel mdc-layout-grid" role="tabpanel" aria-hidden="true" id="bf-panel">
 
-                    <table v-show="persons.length" class="mdc-data-table mdc-js-data-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Surface Area (m<sup>2</sup>)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="person in persons">
-                                <td>{{ person.name }}</td>
-                                <td>{{ surfaceArea(person) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <table v-show="persons.length" class="mdc-data-table mdc-js-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Body Fat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="person in persons">
+                                        <td>{{ person.name }}</td>
+                                        <td>{{ bodyFat(person) }}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="panel mdc-layout-grid" role="tabpanel" aria-hidden="true" id="surfacearea-panel">
+
+                            <table v-show="persons.length" class="mdc-data-table mdc-js-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Surface Area (m<sup>2</sup>)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="person in persons">
+                                        <td>{{ person.name }}</td>
+                                        <td>{{ surfaceArea(person) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
-
-        <button id="primary-action-button" class="mdc-fab material-icons" aria-label="Edit">
+            <button id="primary-action-button" class="mdc-fab material-icons" aria-label="Edit">
             <span class="mdc-fab__icon">add</span>
         </button>
 
-        <aside id="edit-person-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="edit-person-label" aria-describedby="edit-person-description">
-            <div class="mdc-dialog__surface">
-                <header class="mdc-dialog__header">
-                    <h2 id="edit-person-label" class="mdc-dialog__header__title">
-                        Edit {{ updatingPerson.name }}
-                    </h2>
-                </header>
-                <section id="edit-person-description" class="mdc-dialog__body">
-                    <div class="mdc-layout-grid">
+            <aside id="edit-person-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="edit-person-label" aria-describedby="edit-person-description">
+                <div class="mdc-dialog__surface">
+                    <header class="mdc-dialog__header">
+                        <h2 id="edit-person-label" class="mdc-dialog__header__title">
+                            Edit {{ updatingPerson.name }}
+                        </h2>
+                    </header>
+                    <section id="edit-person-description" class="mdc-dialog__body">
+                        <div class="mdc-layout-grid">
 
-                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
+                            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
 
-                            <div class="mdc-textfield">
-                                <input type="text" class="mdc-textfield__input" v-model="updatingPerson.name" name="name">
-                                <label class="mdc-textfield__label" for="name">Name</label>
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="text" class="mdc-textfield__input" v-model="updatingPerson.name" name="name">
+                                    <label class="mdc-textfield__label" for="name">Name</label>
+                                </div>
 
-                            <div class="mdc-textfield">
-                                <input type="tel" class="mdc-textfield__input" v-model="updatingPerson.age" name="age">
-                                <label class="mdc-textfield__label" for="age">Age</label>
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="tel" class="mdc-textfield__input" v-model="updatingPerson.age" name="age">
+                                    <label class="mdc-textfield__label" for="age">Age</label>
+                                </div>
 
-                            <div class="mdc-layout-grid">
-                                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                                <div class="mdc-layout-grid">
+                                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
 
-                                    <div class="mdc-radio">
-                                        <input class="mdc-radio__native-control" type="radio" v-model="updatingPerson.gender" value="Male" id="male" name="gender" checked>
-                                        <div class="mdc-radio__background">
-                                            <div class="mdc-radio__outer-circle"></div>
-                                            <div class="mdc-radio__inner-circle"></div>
+                                        <div class="mdc-radio">
+                                            <input class="mdc-radio__native-control" type="radio" v-model="updatingPerson.gender" value="Male" id="male" name="gender" checked>
+                                            <div class="mdc-radio__background">
+                                                <div class="mdc-radio__outer-circle"></div>
+                                                <div class="mdc-radio__inner-circle"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <label id="male-label" for="male">Male</label>
+                                        <label id="male-label" for="male">Male</label>
 
-                                    <div class="mdc-radio">
-                                        <input class="mdc-radio__native-control" type="radio" v-model="updatingPerson.gender" value="Female" id="female" name="gender">
-                                        <div class="mdc-radio__background">
-                                            <div class="mdc-radio__outer-circle"></div>
-                                            <div class="mdc-radio__inner-circle"></div>
+                                        <div class="mdc-radio">
+                                            <input class="mdc-radio__native-control" type="radio" v-model="updatingPerson.gender" value="Female" id="female" name="gender">
+                                            <div class="mdc-radio__background">
+                                                <div class="mdc-radio__outer-circle"></div>
+                                                <div class="mdc-radio__inner-circle"></div>
+                                            </div>
                                         </div>
+                                        <label id="female-label" for="female">Female</label>
+
                                     </div>
-                                    <label id="female-label" for="female">Female</label>
 
                                 </div>
 
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="tel" class="mdc-textfield__input" v-model="updatingPerson.mass.value" name="mass">
+                                    <label class="mdc-textfield__label" for="mass">Weight</label>
+                                </div>
 
-                            <div class="mdc-textfield">
-                                <input type="tel" class="mdc-textfield__input" v-model="updatingPerson.mass.value" name="mass">
-                                <label class="mdc-textfield__label" for="mass">Weight</label>
-                            </div>
-
-                            <select class="mdc-select" v-model="updatingPerson.mass.units">
+                                <select class="mdc-select" v-model="updatingPerson.mass.units">
                                 <option v-bind:value="unit" v-for="unit in units.mass.options">{{ unit.name }}</option>
                             </select>
 
-                            <div class="mdc-textfield">
-                                <input type="tel" class="mdc-textfield__input" v-model="updatingPerson.height.value" name="height">
-                                <label class="mdc-textfield__label" for="height">Height</label>
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="tel" class="mdc-textfield__input" v-model="updatingPerson.height.value" name="height">
+                                    <label class="mdc-textfield__label" for="height">Height</label>
+                                </div>
 
-                            <select class="mdc-select" v-model="updatingPerson.height.units">
+                                <select class="mdc-select" v-model="updatingPerson.height.units">
                                 <option v-bind:value="unit" v-for="unit in units.height.options">{{ unit.name }}</option>
                             </select>
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <footer class="mdc-dialog__footer">
-                    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
-                    <button type="button" v-on:click="savePerson(updatingPerson)" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Save</button>
-                </footer>
-            </div>
-            <div class="mdc-dialog__backdrop"></div>
-        </aside>
+                    <footer class="mdc-dialog__footer">
+                        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
+                        <button type="button" v-on:click="savePerson(updatingPerson)" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Save</button>
+                    </footer>
+                </div>
+                <div class="mdc-dialog__backdrop"></div>
+            </aside>
 
-        <aside id="new-person-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="new-person-label" aria-describedby="create-new-person-description">
-            <div class="mdc-dialog__surface">
-                <header class="mdc-dialog__header">
-                    <h2 id="new-person-label" class="mdc-dialog__header__title">
+            <aside id="new-person-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="new-person-label" aria-describedby="create-new-person-description">
+                <div class="mdc-dialog__surface">
+                    <header class="mdc-dialog__header">
+                        <h2 id="new-person-label" class="mdc-dialog__header__title">
                             Create a new person
                         </h2>
-                </header>
-                <section id="create-new-person-description" class="mdc-dialog__body">
-                    <div class="mdc-layout-grid">
+                    </header>
+                    <section id="create-new-person-description" class="mdc-dialog__body">
+                        <div class="mdc-layout-grid">
 
-                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
+                            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
 
-                            <div class="mdc-textfield">
-                                <input type="text" class="mdc-textfield__input" v-model="newPerson.name" v-on:keyup.enter="addPerson(newPerson, true)" name="name">
-                                <label class="mdc-textfield__label" for="name">Name</label>
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="text" class="mdc-textfield__input" v-model="newPerson.name" v-on:keyup.enter="addPerson(newPerson, true)" name="name">
+                                    <label class="mdc-textfield__label" for="name">Name</label>
+                                </div>
 
-                            <div class="mdc-textfield">
-                                <input type="tel" class="mdc-textfield__input" v-model="newPerson.age" v-on:keyup.enter="addPerson(newPerson, true)" name="age">
-                                <label class="mdc-textfield__label" for="age">Age</label>
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="tel" class="mdc-textfield__input" v-model="newPerson.age" v-on:keyup.enter="addPerson(newPerson, true)" name="age">
+                                    <label class="mdc-textfield__label" for="age">Age</label>
+                                </div>
 
-                            <div class="mdc-layout-grid">
-                                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                                <div class="mdc-layout-grid">
+                                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
 
-                                    <div class="mdc-radio">
-                                        <input class="mdc-radio__native-control" type="radio" v-model="newPerson.gender" value="Male" id="male" name="gender" checked>
-                                        <div class="mdc-radio__background">
-                                            <div class="mdc-radio__outer-circle"></div>
-                                            <div class="mdc-radio__inner-circle"></div>
+                                        <div class="mdc-radio">
+                                            <input class="mdc-radio__native-control" type="radio" v-model="newPerson.gender" value="Male" id="male" name="gender" checked>
+                                            <div class="mdc-radio__background">
+                                                <div class="mdc-radio__outer-circle"></div>
+                                                <div class="mdc-radio__inner-circle"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <label id="male-label" for="radio-1">Male</label>
+                                        <label id="male-label" for="radio-1">Male</label>
 
-                                    <div class="mdc-radio">
-                                        <input class="mdc-radio__native-control" type="radio" v-model="newPerson.gender" value="Female" id="female" name="gender" checked>
-                                        <div class="mdc-radio__background">
-                                            <div class="mdc-radio__outer-circle"></div>
-                                            <div class="mdc-radio__inner-circle"></div>
+                                        <div class="mdc-radio">
+                                            <input class="mdc-radio__native-control" type="radio" v-model="newPerson.gender" value="Female" id="female" name="gender" checked>
+                                            <div class="mdc-radio__background">
+                                                <div class="mdc-radio__outer-circle"></div>
+                                                <div class="mdc-radio__inner-circle"></div>
+                                            </div>
                                         </div>
+                                        <label id="male-label" for="radio-1">Female</label>
+
                                     </div>
-                                    <label id="male-label" for="radio-1">Female</label>
 
                                 </div>
 
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="tel" class="mdc-textfield__input" v-model="newPerson.mass.value" name="mass">
+                                    <label class="mdc-textfield__label" for="mass">Weight</label>
+                                </div>
 
-                            <div class="mdc-textfield">
-                                <input type="tel" class="mdc-textfield__input" v-model="newPerson.mass.value" name="mass">
-                                <label class="mdc-textfield__label" for="mass">Weight</label>
-                            </div>
-
-                            <select class="mdc-select" v-model="newPerson.mass.units">
+                                <select class="mdc-select" v-model="newPerson.mass.units">
                                 <option v-bind:value="unit" v-for="unit in units.mass.options">{{ unit.name }}</option>
                             </select>
 
-                            <div class="mdc-textfield">
-                                <input type="tel" class="mdc-textfield__input" v-model="newPerson.height.value" v-on:keyup.enter="addPerson(newPerson, true)" name="height">
-                                <label class="mdc-textfield__label" for="height">Height</label>
-                            </div>
+                                <div class="mdc-textfield">
+                                    <input type="tel" class="mdc-textfield__input" v-model="newPerson.height.value" v-on:keyup.enter="addPerson(newPerson, true)" name="height">
+                                    <label class="mdc-textfield__label" for="height">Height</label>
+                                </div>
 
-                            <select class="mdc-select" v-model="newPerson.height.units">
+                                <select class="mdc-select" v-model="newPerson.height.units">
                                 <option v-bind:value="unit" v-for="unit in units.height.options">{{ unit.name }}</option>
                             </select>
 
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <footer class="mdc-dialog__footer">
-                    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
-                    <button type="button" v-on:click="addPerson(newPerson, true)" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Create</button>
-                </footer>
-            </div>
-            <div class="mdc-dialog__backdrop"></div>
-        </aside>
+                    <footer class="mdc-dialog__footer">
+                        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
+                        <button type="button" v-on:click="addPerson(newPerson, true)" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Create</button>
+                    </footer>
+                </div>
+                <div class="mdc-dialog__backdrop"></div>
+            </aside>
 
     </main>
 
