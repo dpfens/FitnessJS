@@ -17,6 +17,7 @@ importScripts('build/workbox-sw.prod.v2.1.1.js');
  * manifest which accounts for changes to local files and update the revision
  * accordingly.
  */
+const workboxSW = new WorkboxSW();
 
 workboxSW.router.registerRoute('/FitnessJS/(build/css|js|node_modules|tools)/(.*)',
   workboxSW.strategies.networkFirst({
