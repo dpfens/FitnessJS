@@ -25,7 +25,7 @@ workboxSW.router.registerRoute('/FitnessJS/(css|js|node_modules|tools)/(.*)',
       maxEntries: 50
     },
     cacheableResponse: {statuses: [0, 200]}
-  });
+  })
 );
 
 workboxSW.router.registerRoute(/\.(?:png|gif|jpg|svg)$/,

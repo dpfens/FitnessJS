@@ -25,7 +25,7 @@ workboxSW.router.registerRoute('/FitnessJS/(css|js|node_modules|tools)/(.*)',
       maxEntries: 50
     },
     cacheableResponse: {statuses: [0, 200]}
-  });
+  })
 );
 
 workboxSW.router.registerRoute(/\.(?:png|gif|jpg|svg)$/,
@@ -108,7 +108,7 @@ workboxSW.precache([
   },
   {
     "url": "build/sw.js",
-    "revision": "042a0a8dbc864ff8de64c14721cb0056"
+    "revision": "46b885b8b73d267bb9caee33dc2e2a69"
   },
   {
     "url": "build/workbox-sw.prod.v2.1.1.js",
@@ -1924,7 +1924,7 @@ workboxSW.precache([
   },
   {
     "url": "sw.js",
-    "revision": "55b3b1aec78920d5cdcf91bec46da0a5"
+    "revision": "e8af2772dc5e6297b850531f59d7de01"
   },
   {
     "url": "tools/calories/css/style.css",
