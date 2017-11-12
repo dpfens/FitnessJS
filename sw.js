@@ -1,4 +1,4 @@
-importScripts('workbox-sw.prod.v2.1.1.js');
+importScripts('build/workbox-sw.prod.v2.1.1.js');
 
 /**
  * DO NOT EDIT THE FILE MANIFEST ENTRY
@@ -18,7 +18,7 @@ importScripts('workbox-sw.prod.v2.1.1.js');
  * accordingly.
  */
 
-workboxSW.router.registerRoute('/FitnessJS/(css|js|node_modules|tools)/(.*)',
+workboxSW.router.registerRoute('/FitnessJS/(build/css|js|node_modules|tools)/(.*)',
   workboxSW.strategies.networkFirst({
     cacheName: 'application',
     cacheExpiration: {
@@ -108,7 +108,7 @@ workboxSW.precache([
   },
   {
     "url": "build/sw.js",
-    "revision": "46b885b8b73d267bb9caee33dc2e2a69"
+    "revision": "f448eaf8bc20b613e117eec6ec47bcb5"
   },
   {
     "url": "build/workbox-sw.prod.v2.1.1.js",
@@ -1924,7 +1924,7 @@ workboxSW.precache([
   },
   {
     "url": "sw.js",
-    "revision": "e8af2772dc5e6297b850531f59d7de01"
+    "revision": "b127e03567a74d6ab54afac2c395ec31"
   },
   {
     "url": "tools/calories/css/style.css",
@@ -1989,5 +1989,13 @@ workboxSW.precache([
   {
     "url": "tools/rep-max/js/layout.js",
     "revision": "d31783b521d63dac158d5a364b87b82c"
+  },
+  {
+    "url": "workbox-sw.prod.v2.1.1.js",
+    "revision": "2a5638f9e33d09efc487b96804a0aa11"
+  },
+  {
+    "url": "workbox-sw.prod.v2.1.1.js.map",
+    "revision": "50032bbb3a40ae0047a5a44cd95ff06c"
   }
 ]);

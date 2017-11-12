@@ -1,4 +1,4 @@
-importScripts('workbox-sw.prod.v2.1.1.js');
+importScripts('build/workbox-sw.prod.v2.1.1.js');
 
 /**
  * DO NOT EDIT THE FILE MANIFEST ENTRY
@@ -18,7 +18,7 @@ importScripts('workbox-sw.prod.v2.1.1.js');
  * accordingly.
  */
 
-workboxSW.router.registerRoute('/FitnessJS/(css|js|node_modules|tools)/(.*)',
+workboxSW.router.registerRoute('/FitnessJS/(build/css|js|node_modules|tools)/(.*)',
   workboxSW.strategies.networkFirst({
     cacheName: 'application',
     cacheExpiration: {
