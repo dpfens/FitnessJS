@@ -49,5 +49,4 @@ workboxSW.router.registerRoute('/FitnessJS/*.html', args => {
   return contentHandler.handle(args);
 });
 
-const workboxSW = new self.WorkboxSW();
 workboxSW.precache([]);
