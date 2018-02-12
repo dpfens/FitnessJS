@@ -28,14 +28,41 @@ namespace Fit {
           @param {Number} t1 = time
           @param {Number} d1 = old distance
           @param {Number} d2 = new distance
+          @param {Number} factor = fatigue factor in a given competition, defaults to model default: 1.06
           d1 & d2 must be in the same unit
           @returns {Number} t2 = estimated time to travel d2 in same unit as t1
         */
+        private factor: number;
+
+        static readonly RUNNINGMEN: number = 1.07732;
+        static readonly RUNNINGMEN40: number = 1.05352;
+        static readonly RUNNINGMEN50: number = 1.05374;
+        static readonly RUNNINGMEN60: number = 1.05603;
+        static readonly RUNNINGMEN70: number = 1.06370;
+
+        static readonly RUNNINGWOMEN: number = 1.08283;
+
+        static readonly SWIMMINGMEN: number = 1.02977;
+        static readonly SWIMMINGWOMEN: number = 1.03256;
+
+        static readonly NORDICMEN: number = 1.01421;
+
+        static readonly RACEWALKMEN: number = 1.05379;
+        static readonly ROLLERSKATINGMEN: number = 1.13709;
+
+        static readonly CYCLINGMEN: number = 1.04834;
+        static readonly SPEEDSKATINGMEN: number = 1.06017;
+
+        constructor(d1: number, t1: number, factor=1.06) {
+          super(d1, t1);
+          this.factor = factor;
+        }
+
         time(d2: number): number {
           if(this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
             return 0;
           }
-          return this.t1 * Math.pow( (d2/this.d1), 1.06 );
+          return this.t1 * Math.pow( (d2/this.d1), this.factor);
         }
 
         /*
@@ -52,7 +79,8 @@ namespace Fit {
           if(this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
             return 0;
           }
-          return this.d1*Math.pow(t2, 50/53)/Math.pow(this.t1, 50/53);
+          let factor = 1.0/this.factor;
+          return this.d1*Math.pow(t2, factor)/Math.pow(this.t1, factor);
         }
 
       }

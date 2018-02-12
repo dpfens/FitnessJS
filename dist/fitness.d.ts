@@ -472,6 +472,21 @@ declare namespace Fit {
                 distance(t2: number): number;
             }
             class Riegel extends PerformanceModel {
+                private factor;
+                static readonly RUNNINGMEN: number;
+                static readonly RUNNINGMEN40: number;
+                static readonly RUNNINGMEN50: number;
+                static readonly RUNNINGMEN60: number;
+                static readonly RUNNINGMEN70: number;
+                static readonly RUNNINGWOMEN: number;
+                static readonly SWIMMINGMEN: number;
+                static readonly SWIMMINGWOMEN: number;
+                static readonly NORDICMEN: number;
+                static readonly RACEWALKMEN: number;
+                static readonly ROLLERSKATINGMEN: number;
+                static readonly CYCLINGMEN: number;
+                static readonly SPEEDSKATINGMEN: number;
+                constructor(d1: number, t1: number, factor?: number);
                 time(d2: number): number;
                 distance(t2: number): number;
             }

@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 if (!Function.prototype.bind) {
     Function.prototype.bind = function (oThis) {
         if (typeof this !== 'function') {
@@ -220,24 +225,24 @@ var Fit;
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
+    var Gender;
     (function (Gender) {
         Gender[Gender["Male"] = 0] = "Male";
         Gender[Gender["Female"] = 1] = "Female";
-    })(Fit.Gender || (Fit.Gender = {}));
-    var Gender = Fit.Gender;
+    })(Gender = Fit.Gender || (Fit.Gender = {}));
+    var Race;
     (function (Race) {
         Race[Race["Asian"] = 0] = "Asian";
         Race[Race["Black"] = 1] = "Black";
         Race[Race["Hispanic"] = 2] = "Hispanic";
-    })(Fit.Race || (Fit.Race = {}));
-    var Race = Fit.Race;
+    })(Race = Fit.Race || (Fit.Race = {}));
+    var PAL;
     (function (PAL) {
         PAL[PAL["Sedentary"] = 0] = "Sedentary";
         PAL[PAL["Low"] = 1] = "Low";
         PAL[PAL["Active"] = 2] = "Active";
         PAL[PAL["VeryActive"] = 3] = "VeryActive";
-    })(Fit.PAL || (Fit.PAL = {}));
-    var PAL = Fit.PAL;
+    })(PAL = Fit.PAL || (Fit.PAL = {}));
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
@@ -1321,7 +1326,7 @@ var Fit;
         var HB = (function (_super) {
             __extends(HB, _super);
             function HB() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             HB.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1336,7 +1341,7 @@ var Fit;
         var RevisedHB = (function (_super) {
             __extends(RevisedHB, _super);
             function RevisedHB() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             RevisedHB.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1351,7 +1356,7 @@ var Fit;
         var MSJ = (function (_super) {
             __extends(MSJ, _super);
             function MSJ() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             MSJ.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1410,7 +1415,7 @@ var Fit;
         var ChildTEE = (function (_super) {
             __extends(ChildTEE, _super);
             function ChildTEE() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ChildTEE.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1446,7 +1451,7 @@ var Fit;
         var AdultTEE = (function (_super) {
             __extends(AdultTEE, _super);
             function AdultTEE() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             AdultTEE.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -2200,7 +2205,7 @@ var Fit;
         var Abadie = (function (_super) {
             __extends(Abadie, _super);
             function Abadie() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Abadie.prototype.predict = function (weight) {
                 return 7.24 + (1.05 * weight);
@@ -2214,7 +2219,7 @@ var Fit;
         var Baechle = (function (_super) {
             __extends(Baechle, _super);
             function Baechle() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Baechle.prototype.predict = function (weight) {
                 return weight * (1 + (0.033 * this.reps));
@@ -2228,7 +2233,7 @@ var Fit;
         var Brzycki = (function (_super) {
             __extends(Brzycki, _super);
             function Brzycki() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Brzycki.prototype.predict = function (weight) {
                 return weight / (1.0278 - (0.0278 * this.reps));
@@ -2245,7 +2250,7 @@ var Fit;
         var Epley = (function (_super) {
             __extends(Epley, _super);
             function Epley() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Epley.prototype.predict = function (weight) {
                 return (weight * this.reps * 0.033) + weight;
@@ -2256,7 +2261,7 @@ var Fit;
         var Landers = (function (_super) {
             __extends(Landers, _super);
             function Landers() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Landers.prototype.predict = function (weight) {
                 return weight / (1.013 - (0.0267123 * this.reps));
@@ -2274,7 +2279,7 @@ var Fit;
         var Lombardi = (function (_super) {
             __extends(Lombardi, _super);
             function Lombardi() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Lombardi.prototype.predict = function (weight) {
                 return weight * Math.pow(this.reps, 0.10);
@@ -2288,7 +2293,7 @@ var Fit;
         var Mayhew = (function (_super) {
             __extends(Mayhew, _super);
             function Mayhew() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Mayhew.prototype.football = function () {
                 return 226.7 + 7.1 * (this.reps);
@@ -2309,7 +2314,7 @@ var Fit;
         var McGlothin = (function (_super) {
             __extends(McGlothin, _super);
             function McGlothin() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             McGlothin.prototype.predict = function (weight) {
                 return (100 * weight) / (101.3 - 2.67123 * this.reps);
@@ -2323,7 +2328,7 @@ var Fit;
         var OConnor = (function (_super) {
             __extends(OConnor, _super);
             function OConnor() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             OConnor.prototype.predict = function (weight) {
                 return weight * (1 + 0.025 * this.reps);
@@ -2340,7 +2345,7 @@ var Fit;
         var ReynoldsCP = (function (_super) {
             __extends(ReynoldsCP, _super);
             function ReynoldsCP() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ReynoldsCP.prototype.predict = function (weight) {
                 return (1.1307 * weight) + 0.6998;
@@ -2351,7 +2356,7 @@ var Fit;
         var ReynoldsLP = (function (_super) {
             __extends(ReynoldsLP, _super);
             function ReynoldsLP() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ReynoldsLP.prototype.predict = function (weight) {
                 return (1.09703 * weight) + 14.2546;
@@ -2362,7 +2367,7 @@ var Fit;
         var Wathan = (function (_super) {
             __extends(Wathan, _super);
             function Wathan() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Wathan.prototype.predict = function (weight) {
                 return (100 * weight) / (48.8 + (53.8 * Math.exp(-0.075 * this.reps)));
@@ -2418,28 +2423,45 @@ var Fit;
             aerobic.PerformanceModel = PerformanceModel;
             var Riegel = (function (_super) {
                 __extends(Riegel, _super);
-                function Riegel() {
-                    _super.apply(this, arguments);
+                function Riegel(d1, t1, factor) {
+                    if (factor === void 0) { factor = 1.06; }
+                    var _this = _super.call(this, d1, t1) || this;
+                    _this.factor = factor;
+                    return _this;
                 }
                 Riegel.prototype.time = function (d2) {
                     if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
                         return 0;
                     }
-                    return this.t1 * Math.pow((d2 / this.d1), 1.06);
+                    return this.t1 * Math.pow((d2 / this.d1), this.factor);
                 };
                 Riegel.prototype.distance = function (t2) {
                     if (this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
                         return 0;
                     }
-                    return this.d1 * Math.pow(t2, 50 / 53) / Math.pow(this.t1, 50 / 53);
+                    var factor = 1.0 / this.factor;
+                    return this.d1 * Math.pow(t2, factor) / Math.pow(this.t1, factor);
                 };
+                Riegel.RUNNINGMEN = 1.07732;
+                Riegel.RUNNINGMEN40 = 1.05352;
+                Riegel.RUNNINGMEN50 = 1.05374;
+                Riegel.RUNNINGMEN60 = 1.05603;
+                Riegel.RUNNINGMEN70 = 1.06370;
+                Riegel.RUNNINGWOMEN = 1.08283;
+                Riegel.SWIMMINGMEN = 1.02977;
+                Riegel.SWIMMINGWOMEN = 1.03256;
+                Riegel.NORDICMEN = 1.01421;
+                Riegel.RACEWALKMEN = 1.05379;
+                Riegel.ROLLERSKATINGMEN = 1.13709;
+                Riegel.CYCLINGMEN = 1.04834;
+                Riegel.SPEEDSKATINGMEN = 1.06017;
                 return Riegel;
             }(PerformanceModel));
             aerobic.Riegel = Riegel;
             var Cameron = (function (_super) {
                 __extends(Cameron, _super);
                 function Cameron() {
-                    _super.apply(this, arguments);
+                    return _super !== null && _super.apply(this, arguments) || this;
                 }
                 Cameron.prototype.time = function (d2) {
                     if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
