@@ -1,4 +1,13 @@
-/// <reference path="running/adjustment.ts" />
-/// <reference path="running/pace.ts" />
-/// <reference path="running/grading.ts" />
-/// <reference path="running/jackdaniels.ts" />
+import * as adjustment from "./running/adjustment";
+import * as pace from "./running/pace";
+import * as grading from "./running/grading";
+import * as jackDaniels from "./running/jackdaniels";
+
+let running = {
+    adjustment: adjustment,
+    pace: pace,
+    grading: grading,
+    jackDaniels: jackDaniels
+};
+
+export { running };

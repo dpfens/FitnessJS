@@ -1,3 +1,5 @@
-/// <reference path="cardiac.ts" />
-/// <reference path="energy.ts" />
-/// <reference path="respiration.ts" />
+import * as cardiac from "./cardiac";
+import * as energy from "./energy";
+import * as respiration from "./respiration";
+
+export { cardiac, energy, respiration };

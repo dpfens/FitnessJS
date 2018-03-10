@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "target": "es3",
         "outFile": "../dist/fitness.js",
+        "module": "amd",
         "noImplicitAny": false,
         "removeComments": true,
         "sourceMap": true

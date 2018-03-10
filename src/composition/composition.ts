@@ -1,8 +1,10 @@
-/// <reference path="density.ts" />
-/// <reference path="hydration.ts" />
-/// <reference path="fat.ts" />
-/// <reference path="index.ts" />
-/// <reference path="mass.ts" />
-/// <reference path="stature.ts" />
-/// <reference path="surfacearea.ts" />
-/// <reference path="ideal.ts" />
+import * as density from "./density";
+import * as hydration from "./hydration";
+import * as fat from "./fat";
+import * as index from "./index";
+import * as mass from "./mass";
+import * as stature from "./stature";
+import * as surfaceArea from "./surfacearea";
+import * as ideal from "./ideal";
+
+export { density, hydration, fat, index, mass, stature, surfaceArea, ideal};

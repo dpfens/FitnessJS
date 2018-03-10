@@ -1,14 +1,9 @@
 /// <reference path="polyfills.ts"/>
 /// <reference path="utilities/date.ts"/>
-/// <reference path="conversion/conversion.ts" />
-/// <reference path="enums.ts" />
-/// <reference path="mets.ts"/>
-
-/// <reference path="balance/balance.ts" />
-/// <reference path="cardiovascular/cardiovascular.ts" />
-/// <reference path="composition/composition.ts" />
-/// <reference path="flexibility/flexibility.ts" />
-/// <reference path="strength/strength.ts" />
-
-/// <reference path="models/aerobic.ts" />
-/// <reference path="sport/sport.ts" />
+import * as conversion from "conversion/conversion";
+import * as mets from "mets";
+import * as cardiovascular from "cardiovascular/cardiovascular";
+import * as composition from "composition/composition";
+import * as strength from "strength/strength";
+import * as aerobic from "models/aerobic";
+import * as sport from "sport/sport";
