@@ -4,6 +4,7 @@
 /// <reference path="enums.ts" />
 /// <reference path="mets.ts"/>
 
+/// <reference path="anthropometry/anthropometry.ts" />
 /// <reference path="balance/balance.ts" />
 /// <reference path="cardiovascular/cardiovascular.ts" />
 /// <reference path="composition/composition.ts" />

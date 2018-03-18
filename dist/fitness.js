@@ -1134,6 +1134,242 @@ var Fit;
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
+    var anthropometry;
+    (function (anthropometry) {
+        function height_from_height_eyes(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.936;
+        }
+        anthropometry.height_from_height_eyes = height_from_height_eyes;
+        function height_from_height_head(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.870;
+        }
+        anthropometry.height_from_height_head = height_from_height_head;
+        function height_from_height_shoulders(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.818;
+        }
+        anthropometry.height_from_height_shoulders = height_from_height_shoulders;
+        function height_from_height_chest(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.720;
+        }
+        anthropometry.height_from_height_chest = height_from_height_chest;
+        function height_from_height_elbow(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.630;
+        }
+        anthropometry.height_from_height_elbow = height_from_height_elbow;
+        function height_from_height_wrist(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.485;
+        }
+        anthropometry.height_from_height_wrist = height_from_height_wrist;
+        function height_from_height_fingertip(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.377;
+        }
+        anthropometry.height_from_height_fingertip = height_from_height_fingertip;
+        function height_from_height_hips(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.530;
+        }
+        anthropometry.height_from_height_hips = height_from_height_hips;
+        function height_from_height_buttocks(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.485;
+        }
+        anthropometry.height_from_height_buttocks = height_from_height_buttocks;
+        function height_from_height_knee(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.285;
+        }
+        anthropometry.height_from_height_knee = height_from_height_knee;
+        function height_from_height_ankle(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.039;
+        }
+        anthropometry.height_from_height_ankle = height_from_height_ankle;
+        function height_from_head_height(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.130;
+        }
+        anthropometry.height_from_head_height = height_from_head_height;
+        function height_from_shoulder_distance(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.129;
+        }
+        anthropometry.height_from_shoulder_distance = height_from_shoulder_distance;
+        function height_from_shoulder_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.259;
+        }
+        anthropometry.height_from_shoulder_width = height_from_shoulder_width;
+        function height_from_hips_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.191;
+        }
+        anthropometry.height_from_hips_width = height_from_hips_width;
+        function height_from_nipple_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.174;
+        }
+        anthropometry.height_from_nipple_width = height_from_nipple_width;
+        function height_from_foot_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.055;
+        }
+        anthropometry.height_from_foot_width = height_from_foot_width;
+        function height_from_foot_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.152;
+        }
+        anthropometry.height_from_foot_length = height_from_foot_length;
+        function height_from_humerus_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.186;
+        }
+        anthropometry.height_from_humerus_length = height_from_humerus_length;
+        function height_from_forearm_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.146;
+        }
+        anthropometry.height_from_forearm_length = height_from_forearm_length;
+        function height_from_hand_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.108;
+        }
+        anthropometry.height_from_hand_length = height_from_hand_length;
+        function height_from_upperbody_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.520;
+        }
+        anthropometry.height_from_upperbody_length = height_from_upperbody_length;
+        var Segment = (function () {
+            function Segment(body_height) {
+                this.height_eyes = function () {
+                    return 0.936 * this.body_height;
+                };
+                this.height_head = function () {
+                    return 0.870 * this.body_height;
+                };
+                this.height_shoulders = function () {
+                    return 0.818 * this.body_height;
+                };
+                this.height_chest = function () {
+                    return 0.720 * this.body_height;
+                };
+                this.height_elbow = function () {
+                    return 0.630 * this.body_height;
+                };
+                this.height_wrist = function () {
+                    return 0.485 * this.body_height;
+                };
+                this.height_fingertip = function () {
+                    return 0.377 * this.body_height;
+                };
+                this.height_hips = function () {
+                    return 0.530 * this.body_height;
+                };
+                this.height_buttocks = function () {
+                    return 0.485 * this.body_height;
+                };
+                this.height_knee = function () {
+                    return 0.285 * this.body_height;
+                };
+                this.height_ankle = function () {
+                    return 0.039 * this.body_height;
+                };
+                this.head_height = function () {
+                    return 0.130 * this.body_height;
+                };
+                this.shoulder_distance = function () {
+                    return 0.129 * this.body_height;
+                };
+                this.shoulder_width = function () {
+                    return 0.259 * this.body_height;
+                };
+                this.hips_width = function () {
+                    return 0.191 * this.body_height;
+                };
+                this.nipple_width = function () {
+                    return 0.174 * this.body_height;
+                };
+                this.foot_width = function () {
+                    return 0.055 * this.body_height;
+                };
+                this.foot_length = function () {
+                    return 0.152 * this.body_height;
+                };
+                this.humerus_length = function () {
+                    return 0.186 * this.body_height;
+                };
+                this.forearm_length = function () {
+                    return 0.146 * this.body_height;
+                };
+                this.hand_length = function () {
+                    return 0.108 * this.body_height;
+                };
+                this.upperbody_length = function () {
+                    return 0.520 * this.body_height;
+                };
+                if (body_height <= 0) {
+                    throw Error('body height must be > 0');
+                }
+                this.body_height = body_height;
+            }
+            return Segment;
+        }());
+        anthropometry.Segment = Segment;
+    })(anthropometry = Fit.anthropometry || (Fit.anthropometry = {}));
+})(Fit || (Fit = {}));
+var Fit;
+(function (Fit) {
     var cardio;
     (function (cardio) {
         var cardiac;

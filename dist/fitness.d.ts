@@ -71,6 +71,58 @@ declare namespace Fit {
     }
 }
 declare namespace Fit {
+    namespace anthropometry {
+        function height_from_height_eyes(segment_length: number): number;
+        function height_from_height_head(segment_length: number): number;
+        function height_from_height_shoulders(segment_length: number): number;
+        function height_from_height_chest(segment_length: number): number;
+        function height_from_height_elbow(segment_length: number): number;
+        function height_from_height_wrist(segment_length: number): number;
+        function height_from_height_fingertip(segment_length: number): number;
+        function height_from_height_hips(segment_length: number): number;
+        function height_from_height_buttocks(segment_length: number): number;
+        function height_from_height_knee(segment_length: number): number;
+        function height_from_height_ankle(segment_length: number): number;
+        function height_from_head_height(segment_length: number): number;
+        function height_from_shoulder_distance(segment_length: number): number;
+        function height_from_shoulder_width(segment_length: number): number;
+        function height_from_hips_width(segment_length: number): number;
+        function height_from_nipple_width(segment_length: number): number;
+        function height_from_foot_width(segment_length: number): number;
+        function height_from_foot_length(segment_length: number): number;
+        function height_from_humerus_length(segment_length: number): number;
+        function height_from_forearm_length(segment_length: number): number;
+        function height_from_hand_length(segment_length: number): number;
+        function height_from_upperbody_length(segment_length: number): number;
+        class Segment {
+            private body_height;
+            constructor(body_height: number);
+            height_eyes: () => number;
+            height_head: () => number;
+            height_shoulders: () => number;
+            height_chest: () => number;
+            height_elbow: () => number;
+            height_wrist: () => number;
+            height_fingertip: () => number;
+            height_hips: () => number;
+            height_buttocks: () => number;
+            height_knee: () => number;
+            height_ankle: () => number;
+            head_height: () => number;
+            shoulder_distance: () => number;
+            shoulder_width: () => number;
+            hips_width: () => number;
+            nipple_width: () => number;
+            foot_width: () => number;
+            foot_length: () => number;
+            humerus_length: () => number;
+            forearm_length: () => number;
+            hand_length: () => number;
+            upperbody_length: () => number;
+        }
+    }
+}
+declare namespace Fit {
     namespace balance {
     }
 }
