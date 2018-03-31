@@ -2182,12 +2182,12 @@ var Fit;
             }
             Stature.prototype.strideLength = function () {
                 var heightCm = this.height * 100;
-                var strideLength;
+                var strideLength = 0;
                 if (this.gender === Fit.Gender.Female) {
-                    var strideLength_1 = 0.413 * heightCm;
+                    strideLength = 0.413 * heightCm;
                 }
                 else {
-                    var strideLength_2 = 0.415 * heightCm;
+                    strideLength = 0.415 * heightCm;
                 }
                 return strideLength / 100;
             };

@@ -64,14 +64,14 @@ namespace Fit {
 
       strideLength(): number {
         let heightCm: number =  this.height * 100;
-        let strideLength;
+        let strideLength: number = 0;
         if (this.gender === Gender.Female) {
-            let strideLength: number = 0.413 * heightCm;
+            strideLength = 0.413 * heightCm;
         } else {
-            let strideLength: number = 0.415 * heightCm;
+            strideLength = 0.415 * heightCm;
         }
 
-        return strideLength / 100
+        return strideLength / 100;
       }
 
 
