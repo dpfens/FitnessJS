@@ -1,4 +1,5 @@
 (function(w) {
+
     var snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar')),
     shareURL = {
         facebook: function(parameters) {
@@ -408,8 +409,8 @@
                   'eventCategory': 'person',
                   'eventAction': 'add',
                   'eventLabel': addedPerson.age + 'years-'
-                    + addedPerson.weight.value + addedPerson.weight.units.value + '-'
-                    + addedPerson.height.value + addedPerson.weight.units.value
+                    + addedPerson.mass.value + addedPerson.mass.units.value + '-'
+                    + addedPerson.height.value + addedPerson.mass.units.value
                 });
             }
 
@@ -440,8 +441,8 @@
                   'eventCategory': 'person',
                   'eventAction': 'remove',
                   'eventLabel': person.age + 'years-'
-                    + person.weight.value + person.weight.units.value + '-'
-                    + person.height.value + person.weight.units.value
+                    + person.mass.value + person.mass.units.value + '-'
+                    + person.height.value + person.mass.units.value
                 });
             }
           },
