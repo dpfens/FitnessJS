@@ -1,55 +1,27 @@
-importScripts('build/workbox-sw.prod.v2.1.1.js');
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
+
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.0.1/workbox-sw.js");
+
+workbox.skipWaiting();
+workbox.clientsClaim();
 
 /**
- * DO NOT EDIT THE FILE MANIFEST ENTRY
- *
- * The method precache() does the following:
- * 1. Cache URLs in the manifest to a local cache.
- * 2. When a network request is made for any of these URLs the response
- *    will ALWAYS comes from the cache, NEVER the network.
- * 3. When the service worker changes ONLY assets with a revision change are
- *    updated, old cache entries are left as is.
- *
- * By changing the file manifest manually, your users may end up not receiving
- * new versions of files because the revision hasn't changed.
- *
- * Please use workbox-build or some other tool / approach to generate the file
- * manifest which accounts for changes to local files and update the revision
- * accordingly.
+ * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
  */
-const workboxSW = new WorkboxSW();
-
-workboxSW.router.registerRoute('/FitnessJS/(build/css|js|node_modules|tools)/(.*)',
-  workboxSW.strategies.networkFirst({
-    cacheName: 'application',
-    cacheExpiration: {
-      maxEntries: 50
-    },
-    cacheableResponse: {statuses: [0, 200]}
-  })
-);
-
-workboxSW.router.registerRoute(/\.(?:png|gif|jpg|svg)$/,
-  workboxSW.strategies.cacheFirst({
-    cacheName: 'images-cache',
-    cacheExpiration: {
-      maxEntries: 50
-    }
-  })
-);
-
-var contentHandler = workboxSW.strategies.networkFirst({
-  cacheName: 'content-cache',
-  cacheExpiration: {
-    maxEntries: 50
-  }
-});
-
-workboxSW.router.registerRoute('/FitnessJS/*.html', args => {
-  return contentHandler.handle(args);
-});
-
-workboxSW.precache([
+self.__precacheManifest = [
   {
     "url": "assets/balance.svg",
     "revision": "63b7376cebfddec31254f0f0cfa5a8b9"
@@ -105,10 +77,6 @@ workboxSW.precache([
   {
     "url": "assets/wh-dirt-road.jpg",
     "revision": "8d8c96281853936fba8b63f6aa7c1d4a"
-  },
-  {
-    "url": "build/sw.js",
-    "revision": "de9420e2b1b551314b8909c01d31cdce"
   },
   {
     "url": "build/workbox-sw.prod.v2.1.1.js",
@@ -1923,10 +1891,6 @@ workboxSW.precache([
     "revision": "13ee283da2051c080dd3ebcad9f6d9ec"
   },
   {
-    "url": "sw.js",
-    "revision": "cb0edf3b2f9ad44101c511a3f22e90f3"
-  },
-  {
     "url": "tools/calories/css/style.css",
     "revision": "bf2e8eac7456469d536b3c019c66bcc1"
   },
@@ -1936,7 +1900,7 @@ workboxSW.precache([
   },
   {
     "url": "tools/calories/js/converter.js",
-    "revision": "f699207eddff8251019b539df188528e"
+    "revision": "c6c83982a1db68adc11e77a0143fb5a6"
   },
   {
     "url": "tools/calories/js/layout.js",
@@ -1968,7 +1932,7 @@ workboxSW.precache([
   },
   {
     "url": "tools/composition/js/converter.js",
-    "revision": "8d568a41c4d9ba72f37972bb61b0450c"
+    "revision": "dd0fc862b7e21717175661e6b7e1a4a9"
   },
   {
     "url": "tools/composition/js/layout.js",
@@ -1991,11 +1955,11 @@ workboxSW.precache([
     "revision": "d31783b521d63dac158d5a364b87b82c"
   },
   {
-    "url": "workbox-sw.prod.v2.1.1.js",
-    "revision": "2a5638f9e33d09efc487b96804a0aa11"
-  },
-  {
-    "url": "workbox-sw.prod.v2.1.1.js.map",
-    "revision": "50032bbb3a40ae0047a5a44cd95ff06c"
+    "url": "workbox-config.js",
+    "revision": "96c4ab865e5d083d51de58c0a375f777"
   }
-]);
+].concat(self.__precacheManifest || []);
+workbox.precaching.suppressWarnings();
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+workbox.googleAnalytics.initialize();
