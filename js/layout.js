@@ -10,10 +10,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Material Design drawer
-var drawerEl = document.querySelector('.mdc-temporary-drawer'),
-MDCTemporaryDrawer = mdc.drawer.MDCTemporaryDrawer,
-drawer = new mdc.drawer.MDCTemporaryDrawer(drawerEl);
-document.querySelector('.global-menu-button').addEventListener('click', function() {
-  drawer.open = !drawer.open;
-});
+var toolbar = mdc.toolbar.MDCToolbar.attachTo(document.querySelector('.mdc-toolbar'));
+toolbar.fixedAdjustElement = document.querySelector('.mdc-toolbar-fixed-adjust');
+
+let drawer = new mdc.drawer.MDCTemporaryDrawer(document.querySelector('.mdc-drawer--temporary'));
+document.querySelector('#menu').addEventListener('click', () => drawer.open = true);

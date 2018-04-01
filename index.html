@@ -74,113 +74,156 @@
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
-
-    <div class="mdc-toolbar mdc-toolbar--fixed">
+    <header class="mdc-toolbar mdc-toolbar--fixed">
         <div class="mdc-toolbar__row">
             <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                <a href="#" class="global-menu-button material-icons">menu</a>
-                <span class="mdc-toolbar__title catalog-title">FitnessJS</span>
+                <a href="#" id="menu" class="material-icons mdc-toolbar__menu-icon">menu</a>
+                <span class="mdc-toolbar__title"><img height="35" src="assets/logo-mini.svg" /></span>
             </section>
         </div>
-    </div>
+    </header>
 
-    <aside class="mdc-temporary-drawer">
-        <nav class="mdc-temporary-drawer__drawer">
-            <header class="mdc-temporary-drawer__header">
-                <div class="mdc-temporary-drawer__header-content mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
+    <aside class="mdc-drawer mdc-drawer--temporary mdc-typography">
+        <nav class="mdc-drawer__drawer">
+            <header class="mdc-drawer__header">
+                <div class="mdc-drawer__header-content">
                     FitnessJS
                 </div>
             </header>
-            <nav class="mdc-temporary-drawer__content mdc-list-group">
-                <div class="mdc-list">
-                    <a class="mdc-list-item mdc-temporary-drawer--selected" href="/FitnessJS">
-                            <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">home</i>Home
-                        </a>
-                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
-                            <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">book</i>Wiki
-                        </a>
-                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
-                            <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">code</i>Github
-                        </a>
-                </div>
+            <nav class="mdc-drawer__content mdc-list">
+                <a class="mdc-list-item" href="/FitnessJS">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>Home
+                </a>
+                <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">book</i>Wiki
+                </a>
+                <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">code</i>Github
+                </a>
 
                 <hr class="mdc-list-divider">
-
-                <div class="mdc-list">
-                    <a class="mdc-list-item" href="/FitnessJS/tools/calories">
-                            Calories
-                        </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/composition">
-                            Composition
-                        </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
-                            Cardio Performance
-                        </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
-                            Strength
-                        </a>
-                </div>
+                <a class="mdc-list-item" href="/FitnessJS/tools/calories">
+                    Calories
+                </a>
+                <a class="mdc-list-item" href="/FitnessJS/tools/composition">
+                    Composition
+                </a>
+                <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
+                    Cardio Performance
+                </a>
+                <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
+                    Strength
+                </a>
             </nav>
         </nav>
     </aside>
 
     <main class="mdc-toolbar-fixed-adjust">
+        <div class="mdc-layout-grid" style="background: url('assets/shoes.jpg') no-repeat center / cover">
+            <div class="mdc-layout-grid__inner">
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                    <img class="splash-logo" src="assets/logo-mini.svg" />
+                    <p class="mdc-typography--headline">Exercise physiology for building exercise applications</p>
+                    <a href="https://github.com/dpfens/FitnessJS/archive/master.zip" class="mdc-button mdc-button--raised mdc-button--primary"><i class="material-icons mdc-button__icon">get_app</i>Download</a>
+                </div>
+            </div>
+        </div>
+
         <div class="mdc-layout-grid">
             <div class="mdc-layout-grid__inner">
-                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                    <section class="mdc-card__media">
-                        <h1 class="mdc-card__title mdc-card__title--large">Cardio</h1>
-                        <h2 class="mdc-card__subtitle"></h2>
-                    </section>
-                    <section class="mdc-card__supporting-text">
-                        Estimate Cardiac, respiratory, VO<sub>2max</sub> measures
-                    </section>
-                    <section class="mdc-card__actions">
-                        <a href="/FitnessJS/tools/cardio-performance" class="mdc-button mdc-button--raised mdc-button--primary mdc-card__action">Performance Tool</a>
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/Cardio" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
-                    </section>
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                    <p class="mdc-typography--body2">Build applications that provide meaningful feedback using proven methods from exercise physiology</p>
+
+                    <ul class="mdc-list mdc-list--two-line">
+                        <li class="mdc-list-item">
+                            <span class="mdc-list-item__text">Turn basic data into insightful exercise data
+                                <span class="mdc-list-item__secondary-text">
+                                    Second-line text
+                                </span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+                <div class="mdc-layout-grid mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-12-tablet">
+                    <div class="mdc-layout-grid__inner">
+                    </div>
                 </div>
 
-                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                    <section class="mdc-card__media">
-                        <h1 class="mdc-card__title mdc-card__title--large">Composition</h1>
-                        <h2 class="mdc-card__subtitle"></h2>
-                    </section>
-                    <section class="mdc-card__supporting-text">
-                        Estimate surface area, fat-free/lean body mass, and indexes for assessing body composition
-                    </section>
-                    <section class="mdc-card__actions">
-                        <a href="/FitnessJS/tools/composition" class="mdc-button mdc-button--raised mdc-button--primary mdc-card__action">Composition Tool</a>
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/Composition" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
-                    </section>
-                </div>
+                <div class="mdc-layout-grid mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-12-tablet">
+                    <div class="mdc-layout-grid__inner">
 
-                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                    <section class="mdc-card__media">
-                        <h1 class="mdc-card__title mdc-card__title--large">METs</h1>
-                        <h2 class="mdc-card__subtitle"></h2>
-                    </section>
-                    <section class="mdc-card__supporting-text">
+                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
+                            <div class="mdc-card__primary-action">
+                                <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/shoes.jpg') no-repeat center / cover">
+                                    <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title">Cardio</div>
+                                </div>
+                                <section class="mdc-card__supporting-text mdc-typography--subheading1">
+                                    Estimate Cardiac, respiratory, VO<sub>2max</sub> measures
+                                </section>
+                            </div>
 
-                        Metabolic equivalents (METs) for estimating energy expenditure of over 800 specific activities
-                    </section>
-                    <section class="mdc-card__actions">
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/Mets" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
-                    </section>
-                </div>
+                            <div class="mdc-card__actions">
+                                <div class="mdc-card__action-buttons">
+                                    <a href="/FitnessJS/tools/cardio-performance" class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised">Performance</a>
+                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Cardio" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                    <section class="mdc-card__media">
-                        <h1 class="mdc-card__title mdc-card__title--large">Strength</h1>
-                        <h2 class="mdc-card__subtitle"></h2>
-                    </section>
-                    <section class="mdc-card__supporting-text">
-                        Estimate 1 repetition max (1-RM), relative strength or compare weightlifters across genders and weight classes
-                    </section>
-                    <section class="mdc-card__actions">
-                        <a href="/FitnessJS/tools/rep-max" class="mdc-button mdc-button--raised mdc-button--primary mdc-card__action">1-RM Tool</a>
-                        <a href="https://github.com/dpfens/FitnessJS/wiki/Strength" class="mdc-button mdc-button--compact mdc-card__action">Docs</a>
-                    </section>
+                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
+                            <div class="mdc-card__primary-action">
+                                <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/soup.jpg') no-repeat center / cover">
+                                    <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title">Composition</div>
+                                </div>
+                                <section class="mdc-card__supporting-text mdc-typography--subheading1">
+                                    Estimate surface area, fat-free/lean body mass, and indexes for assessing body composition
+                                </section>
+                            </div>
+
+                            <div class="mdc-card__actions">
+                                <div class="mdc-card__action-buttons">
+                                    <a href="/FitnessJS/tools/composition" class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised">Composition</a>
+                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Composition" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
+                            <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/track.jpg') no-repeat center / cover">
+                                <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title">METs</div>
+                            </div>
+                            <section class="mdc-card__supporting-text mdc-typography--subheading1">
+                                Metabolic equivalents (METs) for estimating energy expenditure of over 800 specific activities
+                            </section>
+
+                            <div class="mdc-card__actions">
+                                <div class="mdc-card__action-buttons">
+                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Mets" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
+                            <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/track-rubber.jpg') no-repeat center / cover">
+                                <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title">Strength</div>
+                            </div>
+                            <section class="mdc-card__supporting-text mdc-typography--subheading1">
+                                Estimate 1 repetition max (1-RM), relative strength or compare weightlifters across genders and weight classes
+                            </section>
+
+                            <div class="mdc-card__actions">
+                                <div class="mdc-card__action-buttons">
+                                    <a href="/FitnessJS/tools/rep-max" class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised">1-RM Tool</a>
+                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Strength" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

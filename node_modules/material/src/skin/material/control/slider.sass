@@ -1,0 +1,181 @@
+.material-slider
+  display: block
+  position: relative
+  padding-top: 0
+  padding-bottom: 16px
+  margin-right: 8px
+  vertical-align: top
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+
+  //overflow: hidden;
+  //border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+  input
+    position: absolute
+    left: -10000px
+
+  .slider-label
+    flex: 1
+    order: 1
+    cursor: default
+    padding: 16px 0
+    margin: 0px 2px 0px 0
+    overflow: hidden
+
+  .slider-control
+    order: 3
+    position: relative
+    cursor: pointer
+    width: 100%
+    height: 48px
+    padding: 0 8px
+
+    .slider-track
+      position: absolute
+      z-index: 1
+      cursor: pointer
+      position: relative
+      display: block
+      height: 48px
+      padding: 0
+
+      //background-color: rgba(34, 31, 31, .26);
+      transition: .3s
+
+    .slider-canvas
+      position: absolute
+      top: 0
+      left: 0
+
+    .slider-track-value
+      position: absolute
+      width: 0
+      top: 50%
+      z-index: 2
+      cursor: pointer
+      display: block
+      height: 2px
+      padding: 0
+      background-color: #4054B2
+      border-radius: 7px
+
+    .slider-marker
+      opacity: 0
+      transform: scale(0.1) translateY(60px)
+      text-align: center
+      font-size: 9px
+      color: white
+      position: absolute
+      width: 32px
+      height: 32px
+      top: -17px
+      z-index: 2
+      cursor: pointer
+      margin: auto
+      border-radius: 50%
+      transition: .2s
+
+      .slider-pin
+        fill: $primary-color
+
+    .slider-knob
+      z-index: 3
+      cursor: pointer
+      position: absolute
+      top: 50%
+      left: 0px
+      display: block
+      height: 12px
+      width: 12px
+      margin: 0
+      transform: translateY(-5px)
+      border-radius: 50%
+      background-color: white
+      border: 2px solid rgba(241, 241, 241, 100)
+
+      //box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+      transition: .2s
+
+      &.notnull
+        background-color: #4054B2
+        border: 2px solid #4054B2
+
+      &:active
+        background-color: #4054B2
+        border: 2px solid #4054B2
+
+      &:hover
+        // background-color: #4054B2;
+        // border: 2px solid #4054B2;
+
+    &.dragging
+      .slider-knob
+        top: 50%
+        background-color: white
+        border: 2px solid rgba(241, 241, 241, 100)
+
+        //box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        transition: none
+        transform: scale(1.5) translateY(-4px)
+
+        &.notnull
+          background-color: #4054B2
+          border: 2px solid #4054B2
+
+  &.is-checked
+    .slider-track
+      background-color: rgba(0, 150, 136, 0.5)
+
+      .slider-knob
+        background-color: rgba(0, 150, 136, 1)
+        left: 15px
+
+  &.is-disabled
+    .slider-label
+      opacity: .5
+
+    .slider-control
+      .slider-track
+        .slider-knob
+          background-color: #BDBDBD
+          border: 2px solid white
+
+        .slider-track-value
+          background-color: #BDBDBD
+
+      order: 3
+      cursor: pointer
+
+      .slider-track
+
+      .slider-knob
+
+  &.is-focused
+    .slider-control
+      .slider-knob
+        height: 18px
+        width: 18px
+        border: 32px solid rgba(0, 0, 0, 0.05)
+
+  &.type-discrete
+    .slider-control
+      &.dragging
+        .slider-marker
+          opacity: 1
+          transform: scale(1) translateY(0)
+          display: block
+          transition: none
+
+        .slider-knob
+          opacity: 0
+          transform: scale(0.2)
+          display: block
+          transition: .2s
+
+.dark-theme
+  .material-slider
+    .slider-control
+      .slider-track
+        .slider-tarck-value
+          background-color: #5C5C5C
