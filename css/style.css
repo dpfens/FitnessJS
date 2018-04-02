@@ -17,6 +17,10 @@ body {
   background: rgba(255,255,255,0.9);
 }
 
+.text-white {
+    color: rgba(255,255,255,0.9);
+}
+
 .hide {
     display: none;
 }
@@ -38,6 +42,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+}
+
+.mdc-card .padding-1 {
+    padding: 0.5rem 0 1rem 1rem;
 }
 
 /* primary call to action styles */

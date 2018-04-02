@@ -66,51 +66,46 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div class="mdc-toolbar mdc-toolbar--fixed">
+    <header class="mdc-toolbar mdc-toolbar--fixed">
         <div class="mdc-toolbar__row">
             <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                <a href="#" class="global-menu-button material-icons">menu</a>
-                <span class="mdc-toolbar__title catalog-title">FitnessJS</span>
+                <a href="#" id="menu" class="material-icons mdc-toolbar__menu-icon">menu</a>
+                <span class="mdc-toolbar__title"><img height="35" src="assets/logo-mini.svg" /></span>
             </section>
         </div>
-    </div>
+    </header>
 
-    <aside class="mdc-temporary-drawer">
-        <nav class="mdc-temporary-drawer__drawer">
-            <header class="mdc-temporary-drawer__header">
-                <div class="mdc-temporary-drawer__header-content mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
+    <aside class="mdc-drawer mdc-drawer--temporary mdc-typography">
+        <nav class="mdc-drawer__drawer">
+            <header class="mdc-drawer__header">
+                <div class="mdc-drawer__header-content">
                     FitnessJS
                 </div>
             </header>
-            <nav class="mdc-temporary-drawer__content mdc-list-group">
-                <div class="mdc-list">
-                    <a class="mdc-list-item mdc-temporary-drawer--selected" href="/FitnessJS">
-                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">home</i>Home
-                    </a>
-                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
-                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">book</i>Wiki
-                    </a>
-                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
-                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">code</i>Github
-                    </a>
-                </div>
+            <nav class="mdc-drawer__content mdc-list">
+                <a class="mdc-list-item" href="/FitnessJS">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>Home
+                </a>
+                <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">book</i>Wiki
+                </a>
+                <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">code</i>Github
+                </a>
 
                 <hr class="mdc-list-divider">
-
-                <div class="mdc-list">
-                    <a class="mdc-list-item" href="/FitnessJS/tools/calories">
-                        Calories
-                    </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/composition">
-                        Composition
-                    </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
-                        Cardio Performance
-                    </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
-                        Strength
-                    </a>
-                </div>
+                <a class="mdc-list-item" href="/FitnessJS/tools/calories">
+                    Calories
+                </a>
+                <a class="mdc-list-item" href="/FitnessJS/tools/composition">
+                    Composition
+                </a>
+                <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
+                    Cardio Performance
+                </a>
+                <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
+                    Strength
+                </a>
             </nav>
         </nav>
     </aside>
