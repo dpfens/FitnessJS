@@ -119,7 +119,7 @@
     </aside>
 
     <main class="mdc-toolbar-fixed-adjust">
-        <div class="mdc-layout-grid" style="background: url('assets/shoes.jpg') no-repeat center / cover">
+        <div class="mdc-layout-grid lazy-load" data-src="" style="background: url('assets/shoes.jpg') no-repeat center / cover">
             <div class="mdc-layout-grid__inner">
                 <div class="mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
                     <img class="splash-logo" src="assets/logo-mini.svg" />
@@ -162,7 +162,7 @@
                     <div class="mdc-layout-grid__inner">
 
                         <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/shoes.jpg') no-repeat center / cover">
+                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/shoes.jpg">
                                 <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">Cardio</div>
                             </div>
                             <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
@@ -180,7 +180,7 @@
                         </div>
 
                         <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/soup.jpg') no-repeat center / cover">
+                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/soup.jpg">
                                 <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">Composition</div>
                             </div>
                             <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
@@ -198,7 +198,7 @@
                         </div>
 
                         <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/track.jpg') no-repeat center / cover">
+                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/track.jpg">
                                 <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">METs</div>
                             </div>
                             <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
@@ -215,7 +215,7 @@
                         </div>
 
                         <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9" style="background: url('assets/track-rubber.jpg') no-repeat center / cover">
+                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/track-rubber.jpg">
                                 <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">Strength</div>
                             </div>
                             <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
@@ -244,7 +244,7 @@
 <script>
     mdc.autoInit()
 </script>
-<script type="text/javascript" src="js/layout.js"></script>
-<script type="text/javascript" src="js/libs/prism.js"></script>
-
+<script type="text/javascript" src="js/layout.js" defer async></script>
+<script type="text/javascript" src="js/libs/prism.js" defer async></script>
+<script type="text/javascript" src="js/lazy.js" defer async></script>
 </html>
