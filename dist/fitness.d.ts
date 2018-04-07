@@ -312,7 +312,7 @@ declare namespace Fit {
 }
 declare namespace Fit {
     namespace composition {
-        function dailyWaterNeed(): number;
+        function dailyWaterNeed(weight: number): number;
     }
 }
 declare namespace Fit {

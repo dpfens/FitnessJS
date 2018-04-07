@@ -2006,8 +2006,8 @@ var Fit;
 (function (Fit) {
     var composition;
     (function (composition) {
-        function dailyWaterNeed() {
-            return 0.033 * this.weight;
+        function dailyWaterNeed(weight) {
+            return 0.033 * weight;
         }
         composition.dailyWaterNeed = dailyWaterNeed;
     })(composition = Fit.composition || (Fit.composition = {}));
