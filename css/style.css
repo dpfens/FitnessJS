@@ -3,6 +3,10 @@ body {
   padding: 0;
 }
 
+.splash-logo {
+    max-width: 100%;
+}
+
 .hero {
   /* background: url() center / cover; */
   min-height: 200px;
@@ -11,6 +15,10 @@ body {
 
 .translucent-white {
   background: rgba(255,255,255,0.9);
+}
+
+.text-white {
+    color: rgba(255,255,255,0.9);
 }
 
 .hide {
@@ -27,6 +35,17 @@ body {
 
 .overflow-x-auto {
     overflow-x: auto;
+}
+
+/* card */
+.mdc-card__media-content--with-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.mdc-card .padding-1 {
+    padding: 0.5rem 0 1rem 1rem;
 }
 
 /* primary call to action styles */

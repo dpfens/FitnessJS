@@ -1,0 +1,4 @@
+export default `
+<svg width="18px" height="18px" class="checkbox-icon" viewBox="0 0 18 18">
+  <polygon class="checkbox-check" points="7 14.42 2 9.42 3.41 8.01 7 11.59 14.59 4 16 5.42"></polygon>
+</svg>`;

@@ -1,0 +1,138 @@
+// Here is where the magic happens
+
+
+.material-progress
+  width: 100%
+  height: 4px
+  background-color: lighten($primary-color, 30%)
+  .bar
+    width: 0%
+    height: 100%
+    background-color: $primary-color
+    transition: width 3s
+
+.material-progress.type-indeterminate
+  position: relative
+  height: 4px
+  display: block
+  width: 100%
+  background-color: lighten($primary-color, 30%)
+  overflow: hidden
+  .determinate
+    position: absolute
+    background-color: inherit
+    top: 0
+    bottom: 0
+    background-color: $primary-color
+    transition: width .3s linear
+  .bar
+    background-color: $primary-color
+    &:before
+      content: ''
+      position: absolute
+      background-color: inherit
+      top: 0
+      left: 0
+      bottom: 0
+      will-change: left, right
+      -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite
+      animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite
+    &:after
+      content: ''
+      position: absolute
+      background-color: inherit
+      top: 0
+      left: 0
+      bottom: 0
+      will-change: left, right
+      -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite
+      animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite
+      -webkit-animation-delay: 1.15s
+      animation-delay: 1.15s
+
+@-webkit-keyframes indeterminate
+  0%
+    left: -35%
+    right: 100%
+
+  60%
+    left: 100%
+    right: -90%
+
+  100%
+    left: 100%
+    right: -90%
+
+
+@keyframes indeterminate
+  0%
+    left: -35%
+    right: 100%
+
+  60%
+    left: 100%
+    right: -90%
+
+  100%
+    left: 100%
+    right: -90%
+
+
+@-webkit-keyframes indeterminate-short
+  0%
+    left: -200%
+    right: 100%
+
+  60%
+    left: 107%
+    right: -8%
+
+  100%
+    left: 107%
+    right: -8%
+
+
+@keyframes indeterminate-short
+  0%
+    left: -200%
+    right: 100%
+
+  60%
+    left: 107%
+    right: -8%
+
+  100%
+    left: 107%
+    right: -8%
+
+
+
+.material-progress.type-circular
+  .progress
+    animation: rotator 1.4s linear infinite
+
+  @keyframes rotator
+    0%
+      transform: rotate(0deg)
+
+    100%
+      transform: rotate(270deg)
+
+  .path
+    stroke: #4285F4
+    stroke-dasharray: 187
+    stroke-dashoffset: 0
+    transform-origin: center
+    animation: dash 1.4s ease-in-out infinite
+
+  @keyframes dash
+    0%
+      stroke-dashoffset: 187
+
+    50%
+      stroke-dashoffset: 187 / 4
+      transform: rotate(135deg)
+
+    100%
+      stroke-dashoffset: 187
+      transform: rotate(450deg)

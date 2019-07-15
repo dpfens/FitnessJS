@@ -1,0 +1,193 @@
+.material-calendar,
+.material-book
+  margin-left: 10px
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+
+  header
+    flex: none
+
+    .calendar-headline,
+    .book-headline
+      font-family: 'Helvetica'
+      font-weight: light
+      font-size: 17px
+
+      .week-number
+        font-size: 14px
+        display: inline-block
+        width: 50%
+        padding: 10px
+        text-align: right
+
+      .month-year
+        font-size: 24px
+        display: inline-block
+        width: 50%
+        padding: 10px
+
+      .material-toolbar
+        text-align: right
+        font-size: 24px
+        display: inline-block
+        width: 50%
+        padding: 10px
+
+        .material-button
+          margin: 0
+
+    .header-days
+      display: flex
+      flex-direction: horizontal
+      flex-wrap: nowrap
+      padding-bottom: 8px
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+
+      .margin
+        width: 100px
+        flex: none
+        display: inline-block
+
+      .date
+        font-size: .8em
+        overflow: hidden
+
+        .first
+          font-size: .8em
+          flex: 1
+
+          //display: inline-block;
+          overflow: hidden
+          text-overflow: ellipsis
+
+        .second
+          display: block
+          flex: none
+
+          //display: inline-block;
+
+        flex: 15
+
+        //white-space: nowrap;
+        //display: inline-block;
+        text-align: center
+
+    .allday
+      height: 24px
+      border-bottom: 4px solid #d4d4d4
+
+      .label
+        font-size: 11px
+        text-align: right
+        float: left
+        width: 10%
+        border-bottom: 4px solid transparent
+        min-height: 32px
+        padding: 4px
+        color: #D9D9D9
+
+      .day
+        float: left
+        width: 15%
+        min-height: 32px
+        padding: 4px
+
+  .calendar-body
+    display: flex
+    flex-direction: horizontal
+    flex-wrap: nowrap
+    position: relative
+    overflow: scroll
+    flex: 1
+
+    .hours
+      width: 100px
+
+      .hour
+        position: relative
+        font-size: 11px
+        font-weight: bold
+        line-height: 14px
+        text-align: right
+        height: 60px
+        border-right: 8px solid transaprent
+        color: #D9D9D9
+        padding-right: 5px
+
+    canvas
+      position: absolute
+      top: 0
+      left: 10%
+      width: 2000px
+      height: 1440px
+
+    .week-day
+      flex: 15
+      position: relative
+
+      //width: 15%;
+      height: 1440px
+
+      //float: left;
+      border-right: 1px solid rgba(0, 0, 0, 0.1)
+
+      &[data-day='day-6']
+        background-color: rgba(196, 196, 196, 0.1)
+
+      /*.element-event {
+       *  background-color: rgba(197, 224, 179, .8);
+       *  border-left: none;
+       *  border-radius: 3px;
+       *  padding: 5px;
+       *}
+
+  .book-body
+    position: relative
+    overflow: scroll
+    flex: 1
+
+    .resource-folder
+      .type
+        .title
+          font-size: .8em
+          padding-bottom: 4px
+          padding-top: 4px
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05)
+          background-color: rgba(0, 0, 0, 0.01)
+
+        .item
+          display: flex
+          flex-direction: horizontal
+          flex-wrap: nowrap
+          position: relative
+          text-align: left
+          border-right: 8px solid transaprent
+          color: #D9D9D9
+          padding-right: 5px
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05)
+
+          .resource-name
+            width: 100px
+            font-size: 1.5em
+            font-weight: bold
+
+      .date
+        &.weekend
+          background-color: rgba(0, 0, 0, 0.01)
+
+        flex: 15
+        position: relative
+
+        //width: 15%;
+        border-left: 1px solid rgba(0, 0, 0, 0.1)
+
+        &[data-day='day-6']
+          background-color: rgba(196, 196, 196, 0.1)
+
+        /*     .element-event {
+         *   background-color: rgba(197, 224, 179, .8);
+         *   border-left: none;
+         *   border-radius: 3px;
+         *   padding: 5px;
+         * }

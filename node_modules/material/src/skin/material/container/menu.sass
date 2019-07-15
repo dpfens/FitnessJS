@@ -1,0 +1,54 @@
+.material-menu
+
+  z-index: 50
+  position: absolute
+  display: inline-block
+  background-color: rgba(255, 255, 255, 1)
+  border-radius: 2px
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)
+  //transform: translate(-50%, -50%) scale(0)
+  transform: translateY(-50%) scale(0)
+  //opacity: 0
+  transition: .1s
+  //height: 0
+  //width: 0
+  overflow: hidden
+  &.menu-show
+    transition: .2s
+    //transform: translate(0, 0) scale(1) 
+    transform: translateY(0) scale(1)
+    //transform: translateY(100)
+    //height: initial
+    //width: initial
+    //opacity: 1
+
+  .material-list
+    position: relative
+    bottom: 0
+    padding: 8px 0
+    
+    .material-item
+      display: block
+      padding: 8px 64px 8px 16px
+      &:active
+        transition: .2s
+        background-color: rgba(0, 0, 0, 0.05)
+
+    .material-divider
+      display: block
+      height: 1px
+      padding: 0
+      background-color: rgba(0, 0, 0, 0.05)
+      margin: 8px 0
+
+.menu-mask
+  pointer-events: none
+  z-index: 49
+  position: fixed
+  height: 100%
+  width: 100%
+  transition: .3s
+  &.mask-show
+    transition: .3s
+    pointer-events: auto
+    background-color: rgba(0,0,0,.05)

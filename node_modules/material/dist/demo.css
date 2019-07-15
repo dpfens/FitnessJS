@@ -1,0 +1,90 @@
+.component-demo,
+.layout-demo {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  .component-demo > .component-head,
+  .layout-demo > .component-head {
+    z-index: 3;
+    flex: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: #4285F4;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #607D8B;
+    background-color: #3f51b5;
+    padding: 10px 16px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28); }
+    .component-demo > .component-head .text-app-title,
+    .layout-demo > .component-head .text-app-title {
+      font-size: 1.5rem;
+      font-weight: 300;
+      display: inline-block;
+      color: rgba(255, 255, 255, 0.95);
+      padding: 6px 0 6px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
+    .component-demo > .component-head .material-button.type-action .button-icon svg,
+    .layout-demo > .component-head .material-button.type-action .button-icon svg {
+      fill: rgba(255, 255, 255, 0.95); }
+    .component-demo > .component-head .material-switch,
+    .layout-demo > .component-head .material-switch {
+      display: inline-block; }
+  .component-demo > .material-drawer,
+  .layout-demo > .material-drawer {
+    z-index: 26;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12); }
+    .component-demo > .material-drawer .component-navi-head,
+    .layout-demo > .material-drawer .component-navi-head {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 100px 16px 16px; }
+      .component-demo > .material-drawer .component-navi-head .material-text,
+      .layout-demo > .material-drawer .component-navi-head .material-text {
+        display: inline-block;
+        color: rgba(255, 255, 255, 0.95);
+        padding: 6px 0 6px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
+    .component-demo > .material-drawer .material-list.list-navi,
+    .layout-demo > .material-drawer .material-list.list-navi {
+      transition: 0.2s; }
+      .component-demo > .material-drawer .material-list.list-navi .material-item,
+      .layout-demo > .material-drawer .material-list.list-navi .material-item {
+        left: 0;
+        padding: 8px 16px; }
+  .component-demo > .container-body,
+  .layout-demo > .container-body {
+    overflow: scroll; }
+    .component-demo > .container-body .material-container,
+    .layout-demo > .container-body .material-container {
+      padding: 16px; }
+    .component-demo > .container-body .material-card,
+    .layout-demo > .container-body .material-card {
+      width: initial;
+      padding: 0;
+      margin: 16px; }
+      .component-demo > .container-body .material-card .material-toolbar,
+      .layout-demo > .container-body .material-card .material-toolbar {
+        padding: 16px;
+        background-color: rgba(0, 0, 0, 0.1); }
+      .component-demo > .container-body .material-card .material-container,
+      .layout-demo > .container-body .material-card .material-container {
+        padding: 16px; }
+    .component-demo > .container-body .material-card .material-progress,
+    .layout-demo > .container-body .material-card .material-progress {
+      margin: 16px 0; }
+
+/*# sourceMappingURL=demo.css.map */

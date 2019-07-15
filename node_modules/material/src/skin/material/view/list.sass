@@ -1,0 +1,56 @@
+.material-list
+  padding: 16px 0
+  overflow: scroll
+
+  .material-item
+    display: flex
+    flex-direction: horizontal
+    flex-wrap: nowrap
+    text-align: left
+    width: 100%
+    display: block
+    font-size: 1rem
+    line-height: 1.2rem
+    appearance: span
+    padding: 14px 16px
+
+    //border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: .1s
+
+    &.is-selected
+      background-color: rgba(0, 0, 0, 0.05)
+      transition: .1s
+
+    .ui-icon
+      flex: none
+      padding: 24px
+
+    .ui-text
+      flex: 1
+      padding: 16px 12px 16px 0
+
+  .material-button
+    display: flex
+    flex-direction: horizontal
+    flex-wrap: nowrap
+    text-align: left
+    width: 100%
+    display: block
+    -ms-appearance: span
+    -moz-appearance: span
+    -webkit-appearance: span
+    appearance: span
+
+    .ui-icon
+      flex: none
+      padding: 24px
+
+    .button-label
+      flex: 1
+      padding: 16px 12px 16px 0
+
+  .ui-separator
+    display: block
+    height: 1px
+    margin: 12px
+    background-color: #DDD

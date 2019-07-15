@@ -1,0 +1,126 @@
+.material-textfield
+  display: block
+  position: relative
+  margin-right: 16px
+  padding-top: 8px
+  margin-bottom: 16px
+  vertical-align: top
+
+  .textfield-label
+    transition: .2s
+    color: rgba(0, 0, 0, 0.3)
+    position: absolute
+    font-size: .7em
+    top: 0
+
+  .textfield-underline
+    position: absolute
+    opacity: 0
+    left: 50%
+    bottom: 0px
+    height: 2px
+    width: 2px
+    background-color: #4891F4
+    transition: .1s
+
+  &.textfield-error
+    .textfield-label
+      color: #F44336
+      color: #D6392C
+
+    textarea,
+    input
+      border-bottom: 1px solid #F44336
+
+  &.state-focus
+    .textfield-label
+      transition: .2s
+      color: #4891F4
+      font-size: .7em
+      top: 0
+
+    .textfield-underline
+      opacity: 1
+      display: block
+      width: 100%
+      left: 0
+      transition: .1s
+
+  &.is-empty
+    .textfield-label
+      transition: .2s
+      pointer-events: none
+      position: absolute
+      top: 20px
+      left: 0
+      display: block
+      font-size: 1em
+      color: rgba(0, 0, 0, 0.3)
+      padding: 0 2px 0 0
+
+    &.state-focus
+      .textfield-label
+        transition: .2s
+        color: #4891F4
+        font-size: .7em
+        top: 0
+
+    .textfield-input
+      float: none
+      width: 100%
+      border: none
+      margin: 0
+
+      // margin-top: 13px;
+      background-color: transparent
+      border-radius: 0
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+
+      //outline:none;
+
+  .textfield-input
+    float: none
+    width: 100%
+    padding: 12px 8px 8px 0
+    border: none
+    margin: 0
+    background-color: transparent
+    border-radius: 0
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12)
+
+    //outline:none;
+    &:hover
+      cursor: default
+
+      //background-color: rgba(100, 100, 100, .06);
+
+    &:focus
+      cursor: text
+
+  input[readonly],
+  textarea[readonly]
+    //color: #9A9A9A;
+    //color: rgba(0, 0, 0, 1);
+    //background-color: rgba(255,255,255,1);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
+
+    &:hover
+      cursor: default
+
+      //background-color: rgba(255,255,255,1);
+
+    &:focus,
+    &:active
+      cursor: text
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.12) !important
+
+      //background-color: rgba(255,255,255,1);
+
+.dark-theme
+  .material-textfield
+    .textfield-label
+      transition: .2s
+      color: rgba(255, 255, 255, 0.3)
+
+    .textfield-input
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12)

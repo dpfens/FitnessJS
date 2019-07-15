@@ -1,0 +1,116 @@
+.view-grid
+  white-space: nowrap
+
+  &.container-body
+    overflow: hidden
+
+  flex: none
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+
+  .grid-header
+    flex: none
+    width: 100%
+    background-color: $grey-200
+    white-space: nowrap
+    border-bottom: 1px solid $grey-300
+
+    > .header-key
+      font-size: .85em
+      min-width: 50px
+      cursor: default
+      text-overflow: ellipsis
+      display: inline-block
+      white-space: nowrap
+      overflow: hidden
+      vertical-align: top
+      padding: 3px 6px
+      border-right: 1px solid $grey-300
+
+      &.key-selected
+        //color: $grey-50;
+        background-color: $grey-100
+
+      .key-sort
+        float: right
+        padding: 3px
+
+    > .ui-resizer-width
+      &.resizer-drag
+        background-color: orange
+
+  .grid-search
+    flex: none
+    width: 100%
+    background-color: white
+    background-color: $grey-100
+    white-space: nowrap
+    border-bottom: 1px solid $grey-300
+
+    > .search-key
+      min-width: 50px
+      cursor: default
+
+      //text-overflow: ellipsis;
+      display: inline-block
+      white-space: nowrap
+      overflow: hidden
+      vertical-align: top
+      padding: 6px 6px
+      border: none
+      border-right: 1px solid $grey-300
+      background-color: transparent
+
+      &.key-selected
+        //color: $grey-50;
+        background-color: $grey-100
+
+  .grid-content
+    flex: 1
+    font-size: .85em
+    position: relative
+    overflow: auto
+    border-collapse: collapse
+    border-spacing: 0
+    -webkit-overflow-scrolling: touch
+    overflow-scrolling: touch
+
+    > .content-row
+      position: absolute
+      white-space: nowrap
+      left: 0
+      border-bottom: 1px solid $grey-300
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07)
+
+      > span
+        min-height: 23px
+        min-width: 50px
+        border-right: 1px solid $grey-300
+        border-right: 1px solid rgba(0, 0, 0, 0.07)
+        padding: 4px 6px
+
+        //> span {
+        cursor: default
+        text-overflow: ellipsis
+        display: inline-block
+
+        //width: 100%;
+        white-space: nowrap
+        overflow: hidden
+        vertical-align: top
+        padding-right: 6px 10px
+
+        //}
+        &[data-key="total"]
+          text-align: right
+
+      &.item-selected
+        background-color: rgba(160, 160, 160, 0.2)
+
+        //border-right: 1px solid $blue-grey-600;
+        border-bottom: 1px solid transparent
+        margin: 0
+
+      &:last-child
+        border-bottom: none

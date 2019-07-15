@@ -66,52 +66,49 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div class="mdc-toolbar mdc-toolbar--fixed">
+    <header class="mdc-toolbar mdc-toolbar--fixed">
         <div class="mdc-toolbar__row">
             <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                <a href="#" class="global-menu-button material-icons">menu</a>
-                <span class="mdc-toolbar__title catalog-title">FitnessJS</span>
+                <a href="#" id="menu" class="material-icons mdc-toolbar__menu-icon">menu</a>
+                <span class="mdc-toolbar__title"><img height="35" src="assets/logo-mini.svg" /></span>
             </section>
         </div>
-    </div>
+    </header>
 
-    <aside class="mdc-temporary-drawer">
+    <aside class="mdc-temporary-drawer mdc-drawer mdc-drawer--temporary mdc-typography">
+
         <nav class="mdc-temporary-drawer__drawer">
-            <header class="mdc-temporary-drawer__header">
-                <div class="mdc-temporary-drawer__header-content mdc-theme--primary-bg mdc-theme--text-primary-on-primary">
-                    FitnessJS
-                </div>
-            </header>
-            <nav class="mdc-temporary-drawer__content mdc-list-group">
-                <div class="mdc-list">
-                    <a class="mdc-list-item mdc-temporary-drawer--selected" href="/FitnessJS">
-                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">home</i>Home
-                    </a>
-                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
-                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">book</i>Wiki
-                    </a>
-                    <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
-                        <i class="material-icons mdc-list-item__start-detail" aria-hidden="true">code</i>Github
-                    </a>
-                </div>
+          <header class="mdc-temporary-drawer__header" style="background:var(--nav-header-background);">
+            <div class="mdc-temporary-drawer__header-content">
+                <h1 class="mdc-typography--headline mdc-typography--adjust-margin" style="color:#fff;">FitnessJS</h1>
+            </div>
+          </header>
 
-                <hr class="mdc-list-divider">
+          <nav class="mdc-temporary-drawer__content mdc-list">
+            <a class="mdc-list-item" href="/FitnessJS">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>Home
+            </a>
+            <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">book</i>Wiki
+            </a>
+            <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">code</i>Github
+            </a>
 
-                <div class="mdc-list">
-                    <a class="mdc-list-item" href="/FitnessJS/tools/calories">
-                        Calories
-                    </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/composition">
-                        Composition
-                    </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
-                        Cardio Performance
-                    </a>
-                    <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
-                        Strength
-                    </a>
-                </div>
-            </nav>
+            <hr class="mdc-list-divider">
+            <a class="mdc-list-item" href="/FitnessJS/tools/calories">
+                Calories
+            </a>
+            <a class="mdc-list-item" href="/FitnessJS/tools/composition">
+                Composition
+            </a>
+            <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
+                Cardio Performance
+            </a>
+            <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
+                Strength
+            </a>
+          </nav>
         </nav>
     </aside>
 
@@ -129,7 +126,7 @@
                         <p>In all cases, your personal information is only provided to the owners of the FitnessJS library and Github repository.</p>
 
                         <h3>Use of Cookies</h3>
-                        <p>The FitnessJS websit uses "cookies" which are small files which allow us to store and sometimes track what you are looking at when you visit our sites. If you are concerned about the potential use of information gathered from your computer by "cookies," you can set your browser to prompt you before it accepts a cookie. Most Internet browsers have settings that let you identify or reject cookies. In some cases, blocking cookies may impact certain login and privileged-access features on the Web site.</p>
+                        <p>The FitnessJS website uses "cookies" which are small files which allow us to store and sometimes track what you are looking at when you visit our sites. If you are concerned about the potential use of information gathered from your computer by "cookies," you can set your browser to prompt you before it accepts a cookie. Most Internet browsers have settings that let you identify or reject cookies. In some cases, blocking cookies may impact certain login and privileged-access features on the Web site.</p>
 
                         <h3>Collection and Use of Non-personal information</h3>
                         <p>If you do nothing during your visit but browse, read pages, or download information, our sites' Google Analytic's tracking will automatically record the following information about your visit without reference to your personal identity.</p>
@@ -168,7 +165,7 @@
                     <p>We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
                     <p>All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.</p>
 
-                    <h3>Links to Other Websitea</h3>
+                    <h3>Links to Other Websites</h3>
                     <p>FitnessJS has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that My Company, Inc. (change this) shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
 
                     <h3>Governing Law</h3>
@@ -185,7 +182,7 @@
 </body>
 <link rel="stylesheet" href="css/prism.css">
 <link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/libs/material-components-web.min.js"></script>
-<script type="text/javascript" src="js/layout.js"></script>
+<script type="text/javascript" src="node_modules/material-components-web/dist/material-components-web.js"></script>
+<script type="text/javascript" src="js/layout.js" defer async></script>
 
 </html>
