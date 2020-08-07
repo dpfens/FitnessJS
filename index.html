@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us" dir="ltr">
 
 <head>
-    <!-- Google Tag Manager -->
+    <!-- Google Tag Manager >
     <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
@@ -21,6 +21,7 @@
     </script>
     <!-- End Google Tag Manager -->
     <title>FitnessJS - An Exercise Science library</title>
+    <title>Stopwatch</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -64,189 +65,361 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/material-components-web.min.css">
+    <link rel="dns-prefetch" href="https://storage.googleapis.com"/>
+    <link rel="dns-prefetch" href="https://www.google-analytics.com"/>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com"/>
+
+    <link rel="preconnect" href="https://storage.googleapis.com" crossorigin/>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin/>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin/>
+
+    <link rel="stylesheet" href="css/bulma-0.9.0/bulma.css">
 </head>
 
-<body class="material-body mdc-typography">
-    <!-- Google Tag Manager (noscript) -->
+<body>
+    <!-- Google Tag Manager (noscript)>
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <header class="mdc-toolbar mdc-toolbar--fixed">
-        <div class="mdc-toolbar__row">
-            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                <a href="#" id="menu" class="material-icons mdc-toolbar__menu-icon">menu</a>
-                <span class="mdc-toolbar__title"><img height="35" src="assets/logo-mini.svg" /></span>
-            </section>
-        </div>
+
+
+
+    <header>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+
+        <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/FitnessJS">
+                    <img src="assets/logo-mini.svg" width="150" alt="FitnessJS logo" />
+                </a>
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="#cardiovascular">Cardiovascular</a>
+                    <a class="navbar-item" href="#composition">Composition</a>
+                    <a class="navbar-item" href="#models">Models</a>
+                    <a class="navbar-item" href="#sport">Sports</a>
+                    <a class="navbar-item" href="#strength">Strength</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Tools
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="/FitnessJS/tools/calories">Calories</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/composition">Composition</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/cardio-performance">Cardio Performance</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/strength">Strength</a>
+                        </div>
+                    </div>
+                    <a class="navbar-item" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
+                    <a class="navbar-item" href="https://github.com/dpfens/FitnessJS">Github</a>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <aside class="mdc-temporary-drawer mdc-drawer mdc-drawer--temporary mdc-typography">
-
-        <nav class="mdc-temporary-drawer__drawer">
-          <header class="mdc-temporary-drawer__header" style="background:var(--nav-header-background);">
-            <div class="mdc-temporary-drawer__header-content">
-                <h1 class="mdc-typography--headline mdc-typography--adjust-margin" style="color:#fff;">FitnessJS</h1>
+    <main class="container is-fluid">
+        <section class="section">
+            <div class="container">
+                <h1 class="title">FitnessJS</h1>
+                <h2 class="subtitle">A library for body composition, cardiovascular, and strength estimation and athletic performance prediction.</h2>
+                <p>FitnessJS is a functions for performing all types of peer-reviewed exercise-related calculations ranging from anthropometry calculations to running performance prediction.  These functions and classes are built to be modular, so that your source code will not need to be modified to to swap in a new formula.</p>
             </div>
-          </header>
+        </section>
 
-          <nav class="mdc-temporary-drawer__content mdc-list">
-            <a class="mdc-list-item" href="/FitnessJS">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>Home
-            </a>
-            <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">book</i>Wiki
-            </a>
-            <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">code</i>Github
-            </a>
+        <div class="columns">
+            <aside class="menu column is-one-fifth">
+                <p class="menu-label">Anthropometry</p>
+                <p class="menu-label">Cardiovascular</p>
+                <ul class="menu-list">
+                    <li><a href="#cardiac">Cardiac</a></li>
+                    <li><a href="#energy">Energy</a></li>
+                    <li><a href="#respiration">Respiration</a></li>
+                </ul>
 
-            <hr class="mdc-list-divider">
-            <a class="mdc-list-item" href="/FitnessJS/tools/calories">
-                Calories
-            </a>
-            <a class="mdc-list-item" href="/FitnessJS/tools/composition">
-                Composition
-            </a>
-            <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
-                Cardio Performance
-            </a>
-            <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
-                Strength
-            </a>
-          </nav>
-        </nav>
-    </aside>
+                <p class="menu-label">Composition</p>
+                <ul class="menu-list">
+                    <li><a href="#density">Density</a></li>
+                    <li><a href="#fat">Fat</a></li>
+                    <li><a href="#hydration">Hydration</a></li>
+                    <li><a href="#idea">Ideal</a></li>
+                    <li><a href="#index">Index</a></li>
+                    <li><a href="#mass">Mass</a></li>
+                    <li><a href="#stature">Stature</a></li>
+                    <li><a href="#surface-area">Surface Area</a></li>
+                </ul>
 
-    <main class="mdc-toolbar-fixed-adjust">
-        <div class="mdc-layout-grid lazy-load" data-src="" style="background: url('assets/shoes.jpg') no-repeat center / cover">
-            <div class="mdc-layout-grid__inner">
-                <div class="mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
-                    <img class="splash-logo" src="assets/logo-mini.svg" />
-                    <p class="mdc-typography--headline">Exercise physiology for building exercise applications</p>
-                    <a href="https://github.com/dpfens/FitnessJS/archive/master.zip" class="mdc-button mdc-button--raised mdc-button--primary"><i class="material-icons mdc-button__icon">get_app</i>Download</a>
-                </div>
-            </div>
-        </div>
+                <p class="menu-label">Conversion</p>
 
-        <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-                <div class="mdc-layout-grid mdc-layout-grid__cell--span-5 mdc-layout-grid__cell--span-12-phone mdc-layout-grid__cell--span-12-tablet">
-                    <div class="mdc-layout-grid__inner">
-                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-                            <h3 class="mdc-typography--display2">Do more with FitnessJS</h3>
-                            <p class="mdc-typography--body2">Build applications that provide meaningful feedback using proven methods from exercise physiology</p>
+                <p class="menu-label">Models</p>
+                <ul class="menu-list">
+                    <li><a href="#aerobic">Aerobic</a></li>
+                </ul>
 
-                            <ul class="mdc-typography--body2">
-                                <li>
-                                    Turn demographic data into insightful health and exercise data
-                                </li>
-                                <li>
-                                    Estimate endurance performances from competition and estimate paces for training
-                                </li>
-                                <li>
-                                    Compare and normalize strength performances and predict repetition maximums
-                                </li>
-                                <li>
-                                    Sport-specific calculations such as Jack Daniel's formulas for endurance runners
-                                </li>
-                            </ul>
+                <p class="menu-label">Sport</p>
+                <ul class="menu-list">
+                    <li><a href="#running">Running</a></li>
+                </ul>
 
-                            <h4 class="mdc-typography--headline">Applications</h4>
-                            <p class="mdc-typography--body2">Use the following applications to see how FitnessJS can do with basic data</p>
+                <p class="menu-label">Strength</p>
+            </aside>
+
+            <div class="column">
+
+                <section class="hero is-primary" id="anthropometry">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h2 class="title">Anthropometry</h2>
+                            <p class="subtitle">Estimating the height of the body based on the length of other anatomical parts, and vice versa</p>
+                            <p><a href="https://en.wikipedia.org/wiki/Anthropometry">Anthropometry</a> involves measurement of the physical properties of the human body.  Currently, the anthropometric calcultions focus on estimating the height of a human based on other measures of the human body and estimating other measures from the total height.  These calculation can be useful for determining the dimensions of a person's body based on incomplete information.</p>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div class="mdc-layout-grid mdc-layout-grid__cell--span-7 mdc-layout-grid__cell--span-12-tablet">
-                    <div class="mdc-layout-grid__inner">
-
-                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/shoes.jpg">
-                                <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">Cardio</div>
-                            </div>
-                            <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
-                                Estimate Cardiac, respiratory, VO<sub>2max</sub> measures
-                            </section>
-
-                            <hr class="mdc-list-divider">
-
-                            <div class="mdc-card__actions">
-                                <div class="mdc-card__action-buttons">
-                                    <a href="/FitnessJS/tools/cardio-performance" class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised">Tool</a>
-                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Cardio" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/soup.jpg">
-                                <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">Composition</div>
-                            </div>
-                            <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
-                                Estimate surface area, fat-free/lean body mass, and indexes for assessing body composition
-                            </section>
-
-                            <hr class="mdc-list-divider">
-
-                            <div class="mdc-card__actions">
-                                <div class="mdc-card__action-buttons">
-                                    <a href="/FitnessJS/tools/composition" class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised">Tool</a>
-                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Composition" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/track.jpg">
-                                <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">METs</div>
-                            </div>
-                            <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
-                                Metabolic equivalents (METs) for estimating energy expenditure of over 800 specific activities
-                            </section>
-
-                            <hr class="mdc-list-divider">
-
-                            <div class="mdc-card__actions">
-                                <div class="mdc-card__action-buttons">
-                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Mets" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-desktop">
-                            <div class="mdc-card__media mdc-card__media--16-9 lazy-load" data-src="assets/track-rubber.jpg">
-                                <div class="mdc-card__media-content mdc-typography--headline mdc-card__media-content--with-title text-white padding-1">Strength</div>
-                            </div>
-                            <section class="mdc-card__supporting-text mdc-typography--subheading1 padding-1">
-                                Estimate 1 repetition max (1-RM), relative strength or compare weightlifters across genders and weight classes
-                            </section>
-
-                            <hr class="mdc-list-divider">
-
-                            <div class="mdc-card__actions">
-                                <div class="mdc-card__action-buttons">
-                                    <a href="/FitnessJS/tools/rep-max" class="mdc-button mdc-card__action mdc-card__action--button mdc-button--raised">1-RM Tool</a>
-                                    <a href="https://github.com/dpfens/FitnessJS/wiki/Strength" class="mdc-button mdc-card__action mdc-card__action--button">Docs</a>
-                                </div>
-                            </div>
+                <section class="hero is-primary" id="cardiovascular">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h2 class="title">Cardiovascular</h2>
+                            <h3 class="subtitle">Cardiac, Energy Expenditure, and Respiratory calculations</h3>
                         </div>
                     </div>
-                </div>
+                </section>
+
+                <section class="section" id="cardiac">
+                    <div class="container">
+                        <h3 class="subtitle">Cardiac</h3>
+                        <p>A collection of estimator functions for estimating <abbr title="Maximum Heart Rate">HR<sub>max</sub></abbr> and other heart-related formulas.  HR<sub>max</sub> is important in exercise and personal training as an intensity and safety metric.  The closer a person's heart rate is to their HR<sub>max</sub> the harder they are exerting themselves, and will have a higher energy expenditure.  Older adults tend to be at higher-risk of a heart attach and must ensure that their heart rates do not come within a given range of their HR<sub>max</sub> to avoid potential heart attacks.</p>
+
+                        <p>All estimators are <code>class</code> definitions that implement the same interface:</p>
+
+                        <pre><code class="lang-javascript">function Estimator(age) {
+    this.age = age;
+}
+
+Estimator.prototype.predict = function(dateOfBirth) {
+    return heartRateMax;
+}
+
+Estimator.prototype.age = function(heartRate) {
+    return ageInYears;
+}</code></pre>
+
+                        <p>This consistent interface is intended, so developers can more easily write applications that can dynamically use different <code>Estimator</code> classes to perform the estimation based on the demographics of the individual.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="energy">
+                    <div class="container">
+                        <h3 class="subtitle">Energy</h3>
+                        <p>A collection of formulas that estimate the caloric needs of the body such as <abbr title="Basal Metabolic Rate">BMR</abbr>, <abbr title="Resting Metabolic Rate">RMR</abbr>, and more.</p>
+
+                        <p>All BMR estimators are <code>class</code> definitions that implement the same interface:</p>
+
+                        <pre><code class="lang-javascript">function BMREstimator(gender) {
+    this.gender = gender;
+}
+
+BMREstimator.prototype.predict = function(dateOfBirth, weight, height) {
+    return bmrInKilocalories;
+}</code></pre>
+
+                        <p>where <code>gender</code> is one of <code>Fit.Gender.Male</code> or <code>Fit.Gender.Female</code>.</p>
+
+                        <p>All <abbr title="Total Energy Expenditure"></abbr> estimators are <code>class</code> definitions that implement the same interface as well:</p>
+
+                        <pre><code class="lang-javascript">function TEEEstimator(gender, pal) {
+    this.gender = gender;
+    this.pal = pal;
+}
+
+TEEEstimator.prototype.predict = function(dateOfBirth, weight, height) {
+    return teeInKilocalories;
+}</code></pre>
+                        <p>where a <code>pal</code> is one of <code>Fit.PAL.Sedentary</code>, <code>Fit.PAL.Low</code>, <code>Fit.PAL.Active</code>, or <code>Fit.PAL.VeryActive</code>.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="respiration">
+                    <div class="container">
+                        <h3 class="subtitle">Respiration</h3>
+                        <p>A collection of calculations for estimating Residual Volume of the lungs, and estimating VO<sub>2max</sub> based off of clinical exercise tests.  For more information on the testing protocols see the <a href="https://github.com/dpfens/FitnessJS/wiki/Test-Protocols">Test Protocols in the wiki</a>.</p>
+                    </div>
+                </section>
+
+                <section class="hero is-primary" id="composition">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h2 class="title">Composition</h2>
+                            <h3 class="subtitle">Calculations involving the body composition, or for calculating body composition</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="density">
+                    <div class="container">
+                        <h3 class="subtitle">density</h3>
+                        <p>A collection of calcuations for estimating the density of the body using skinfold tests.  The method to be used to return the density depends on the age, race, and lifestyle factors of the individual.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="fat">
+                    <div class="container">
+                        <h3 class="subtitle">Fat</h3>
+                        <p>A collection of calculations for estimating the body fat percentage of an individual based on body-density, or <abbr title="Body Mass Index">BMI</abbr>.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="ideal">
+                    <div class="container">
+                        <h3 class="subtitle">Ideal</h3>
+                        <p>A collection of estimating ideal body factors such as weight, or waist circumference based on gender, height, and weight.</p>
+
+                        <div class="message is-warning">
+                            <div class="message-header">
+                                <p>Warning</p>
+                            </div>
+                            <div class="message-body">
+                                Please keep in mind that these are <b>estimations</b> and are not always accurate.  A person's body can be perfectly healthy and not match the output produced by these calculations.  Therefore individuals should not turn to unhealthy behaviors to change their body to match those of these estimations.  Please consult a health professional regarding altering behaviors.
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <section class="section" id="index">
+                    <div class="container">
+                        <h3 class="subtitle">Index</h3>
+                        <p>A collection of metrics used for normalizing body weight assessments. Indices include <abbr title="Body Mass Index"><a href="https://en.wikipedia.org/wiki/Body_mass_index">BMI</a></abbr>, <abbr title="Body Mass Index Prime"><a href="https://en.wikipedia.org/wiki/Body_mass_index#BMI_prime">BMIPrime</a></abbr>, <abbr title="Body Adiposity Index"><a href="https://en.wikipedia.org/wiki/Body_adiposity_index">BAI</a></abbr>, and the <a href="https://en.wikipedia.org/wiki/Corpulence_index">Corpulence Index</a></p>
+                    </div>
+                </section>
+
+                <section class="section" id="mass">
+                    <div class="container">
+                        <h3 class="subtitle">Mass</h3>
+                        <p>A collection of calculations for estimating <abbr title="Fat Free Mass">FFM</abbr> across demographics and is a primary determinant of <abbr title="Resting Energy Expenditure">REE</abbr>.  FFM can be better than total body weight for prescribing levels of medications and for assessing metabolic disorders.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="stature">
+                    <div class="container">
+                        <h3 class="subtitle">Stature</h3>
+                        <p>A couple of metrics used for estimating skeleton stature of an individual based on total height, age and gender.  Also includes a calculation for estimating stride length based on height and gender.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="surface-area">
+                    <div class="container">
+                        <h3 class="subtitle">Surface Area</h3>
+                        <p>A collection of calcuations forestimating the <a href="https://en.wikipedia.org/wiki/Body_surface_area">surface area of an individuals body</a> based on gender, age, weight, and height.  Surface area has a <a href="https://en.wikipedia.org/wiki/Body_surface_area#Uses">few uses</a> and can be a better indicator of daily energy expenditure than body mass because it is less affected by abnormal fat stores.</p>
+                    </div>
+                </section>
+
+                <section class="hero is-primary" id="conversation">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h2 class="title">Conversion</h2>
+                            <h3 class="subtitle"></h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hero is-primary" id="models">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h2 class="title">Models</h2>
+                            <h3 class="subtitle">Models that have a proven use-case for estimation</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="aerobic">
+                    <div class="container">
+                        <h3 class="subtitle">Aerobic</h3>
+                        <p>A collection of models for prediction performance across aerobic sports, such as the Riegel and Cameron models.</p>
+
+                        <p>The <code>Riegel</code> and <code>Cameron</code> models use the same <code>PerformanceModel</code> interface:</p>
+
+                        <pre><code class="language-javascript">function PerformanceModel(d1, t1) {
+    this.d1 = d1;
+    this.t1 = t1;
+}
+
+PerformanceModel.prototype.time = function(d2) {
+    return t2;
+}
+
+PerformanceModel.prototype.distance = function(t2) {
+    return d2;
+}</code></pre>
+
+                        <p>where <code>t1</code> and <code>d1</code> correspond to the time and distance of a base-line performance.  <code>t2</code> and <code>d2</code> correspond to the time and distance of the predicted performance.  By using the same interface, the <code>Riegel</code> and <code>Cameron</code> models can be used interchangeably.</p>
+
+                        <p><b>Note</b>: The <code>Reigel</code> model can be used to predict performances using multiple modes of travel, such as running, swimming, nordic skiing, racewalking, rollerskating, cycling, and speedskating.  The <code>Cameron</code> model only supports running performances, and distances must be provided in miles, and time in seconds.</p>
+                    </div>
+                </section>
+
+                <section class="hero is-primary" id="sport">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h2 class="title">Sport</h2>
+                            <h3 class="subtitle"></h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="running">
+                    <div class="container">
+                        <h3 class="subtitle">Running</h3>
+                        <p>A collection of a variety of calcuations related to running such as adjusting performances based on external temperature, age grading performances, VO<sub>2</sub>, pace ranges based on HR<sub>max</sub>, and more.</p>
+                    </div>
+                </section>
+
+                <section class="hero is-primary" id="strength">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h2 class="title">Strength</h2>
+                            <h3 class="subtitle"></h3>
+                            <p>A collection of calculations related to strength-based performances.  Calculations range from comparing performances, to estimating the weight for a given number of repetitions.</p>
+
+                            <p>All <abbr title="1 Repetition Maximum">1-RM</abbr> estimators are <code>class</code> definitions that implement the same interface as well:</p>
+
+                            <pre><code class="lang-javascript">function RMEstimator(reps) {
+    this.reps = reps;
+}
+
+RMEstimator.prototype.predict = function(weight) {
+    return 1RepetitionMaximumInKg;
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
     </main>
 
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>FitnessJS</strong> by <a href="https://dougfenstermacher.com">Doug Fenstermacher</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+            </p>
+        </div>
+    </footer>
+
 </body>
 <link rel="stylesheet" href="css/prism.css">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/libs/material-components-web.min.js"></script>
-<script>
-    mdc.autoInit()
-</script>
-<script type="text/javascript" src="js/layout.js" defer async></script>
 <script type="text/javascript" src="js/libs/prism.js" defer async></script>
 <script type="text/javascript" src="js/lazy.js" defer async></script>
+<script type="text/javascript" src="js/layout.js" defer async></script>
 </html>

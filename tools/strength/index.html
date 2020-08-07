@@ -3,38 +3,49 @@
 
 <head>
     <!-- Google Tag Manager >
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NCXJXW');</script>
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NCXJXW');
+    </script>
     <!-- End Google Tag Manager -->
-    <title>FitnessJS - Calorie Calculator</title>
+    <title>FitnessJS - Rep Max Calculator</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="health,wellness,fitness,physical fitness,physical activity,diet,nutrition,calories,energy expenditure,bmr,rmr,tee,physical activity level,weight loss,weight gain,calories burned">
-    <meta name="description" content="A tool for estimating and comparing calories burned across genders, age groups, and levels of physical activity by BMR, RMR, and total energy expenditure.">
+    <meta name="keywords" content="health,wellness,fitness,physical fitness,physical activity,weightlifting,lifting,gym,formula,calculations,bodybuilding,javascript,1-RM,1 rep max calculator,1rm calculator,one rep max calculator,bench press calculator,max bench calculator">
+    <meta name="description" content="A tool for estimating and comparing repetition maximums in weightlifting, ranging from a 1-rep maximum(1-RM) to a 10-rep maximum (10-RM).">
 
     <!-- Open Graph Tags -->
-    <meta >
-    <meta >
+    <meta id="meta-title" property="og:title" content="Rep Max Calculator">
+    <meta id="meta-description" property="og:description" content="Calculate and compare the maximum number of weight and repetitions in weightlifting for bench press and other lifts.">
     <meta property="og:type" content="product">
-    <meta >
-    <meta property="og:url" content="https://dpfens.github.io/FitnessJS/tools/calories/">
+    <meta id="meta-image" property="og:image" content="https://dpfens.github.io/FitnessJS/assets/track.jpg">
+    <meta property="og:url" content="https://dpfens.github.io/FitnessJS/tools/strength/">
     <meta name="twitter:card" content="summary_large_image" />
 
     <!--  Non-Essential, But Recommended -->
     <meta property="og:site_name" content="FitnessJS">
     <meta name="twitter:creator" content="@DougFenstermach" />
-    <meta name="twitter:image:alt" content="Nutrient-dense foods are an important aspect of meeting the body's needs">
+    <meta name="twitter:image:alt" content="Sprint lanes of a track & field track">
 
     <!--  Non-Essential, But Required for Analytics -->
     <meta property="fb:app_id" content="1762255830763736" />
     <meta name="twitter:site" content="@DougFenstermach">
 
-    <link rel="canonical" href="https://dpfens.github.io/FitnessJS/tools/calories/" />
+    <link rel="canonical" href="https://dpfens.github.io/FitnessJS/tools/strength/" />
 
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#29ABE2" />
@@ -45,7 +56,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="manifest" href="manifest.json">
 
     <link rel="dns-prefetch" href="https://storage.googleapis.com"/>
     <link rel="dns-prefetch" href="https://www.google-analytics.com"/>
@@ -60,7 +70,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="stylesheet" href="../../css/bulma-0.9.0/bulma.css">
 </head>
 
-<body
+<body>
     <!-- Google Tag Manager (noscript) >
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -118,7 +128,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </p>
         </div>
     </footer>
+
 </body>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="css/style.css">
 
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>

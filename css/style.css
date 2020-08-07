@@ -3,78 +3,6 @@ body {
   padding: 0;
 }
 
-.splash-logo {
-    max-width: 100%;
-}
-
-.hero {
-  /* background: url() center / cover; */
-  min-height: 200px;
-  height: 40vh;
-}
-
-.translucent-white {
-  background: rgba(255,255,255,0.9);
-}
-
-.text-white {
-    color: rgba(255,255,255,0.9);
-}
-
-.hide {
-    display: none;
-}
-
-.f-right {
-    float: right;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.overflow-x-auto {
-    overflow-x: auto;
-}
-
-/* card */
-.mdc-card__media-content--with-title {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.mdc-card .padding-1 {
-    padding: 0.5rem 0 1rem 1rem;
-}
-
-/* primary call to action styles */
-
-#primary-action-button {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-}
-
-@media(min-width: 1024px) {
-    #primary-action-button {
-        bottom: 3rem;
-        right: 5rem;
-    }
-}
-
-/* Tab styles */
-.tab-panels .panel {
-    display: none;
-}
-.tab-panels .panel.active {
-    display: block;
-}
-
-.card-cover {
-  height: 200px;
-  color: white;
-}
 
 .mets-cover {
   background: url('/FitnessJS/assets/vegetables.jpg') no-repeat center center;
@@ -99,9 +27,4 @@ body {
 .rep-max-cover {
   background: url('/FitnessJS/assets/track-rubber.jpg') no-repeat center center;
   background-size: cover;
-}
-
-.mdl-layout-title > a {
-  text-decoration: inherit;
-  color: inherit;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- Google Tag Manager -->
+    <!-- Google Tag Manager>
     <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
@@ -57,12 +57,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="../../css/material-components-web.min.css">
+    <link rel="dns-prefetch" href="https://storage.googleapis.com"/>
+    <link rel="dns-prefetch" href="https://www.google-analytics.com"/>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com"/>
+
+    <link rel="preconnect" href="https://storage.googleapis.com" crossorigin/>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin/>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin/>
+
+    <link rel="stylesheet" href="../../css/bulma-0.9.0/bulma.css">
 </head>
 
-<body class="material-body mdc-typography">
-    <!-- Google Tag Manager (noscript) -->
+<body>
+    <!-- Google Tag Manager (noscript)>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
@@ -86,207 +95,77 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
-    <header class="mdc-toolbar mdc-toolbar--fixed">
-        <div class="mdc-toolbar__row">
-            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
-                <a href="#" id="menu" class="material-icons mdc-toolbar__menu-icon">menu</a>
-                <span class="mdc-toolbar__title"><img height="35" src="../../assets/logo-mini.svg" /></span>
-            </section>
-        </div>
+
+    <header>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+
+        <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/FitnessJS">
+                    <img src="../../assets/logo-mini.svg" width="150" alt="FitnessJS logo" />
+                </a>
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Tools
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="/FitnessJS/tools/calories">Calories</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/composition">Composition</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/cardio-performance">Cardio Performance</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/strength">Strength</a>
+                        </div>
+                    </div>
+                    <a class="navbar-item" href="https://github.com/dpfens/FitnessJS/wiki">Wiki</a>
+                    <a class="navbar-item" href="https://github.com/dpfens/FitnessJS">Github</a>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <aside class="mdc-temporary-drawer mdc-drawer mdc-drawer--temporary mdc-typography">
-
-        <nav class="mdc-temporary-drawer__drawer">
-          <header class="mdc-temporary-drawer__header" style="background:var(--nav-header-background);">
-            <div class="mdc-temporary-drawer__header-content">
-                <h1 class="mdc-typography--headline mdc-typography--adjust-margin" style="color:#fff;">FitnessJS</h1>
-            </div>
-          </header>
-
-          <nav class="mdc-temporary-drawer__content mdc-list">
-            <a class="mdc-list-item" href="/FitnessJS">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>Home
-            </a>
-            <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS/wiki">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">book</i>Wiki
-            </a>
-            <a class="mdc-list-item" href="https://github.com/dpfens/FitnessJS">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">code</i>Github
-            </a>
-
-            <hr class="mdc-list-divider">
-            <a class="mdc-list-item" href="/FitnessJS/tools/calories">
-                Calories
-            </a>
-            <a class="mdc-list-item" href="/FitnessJS/tools/composition">
-                Composition
-            </a>
-            <a class="mdc-list-item" href="/FitnessJS/tools/cardio-performance">
-                Cardio Performance
-            </a>
-            <a class="mdc-list-item" href="/FitnessJS/tools/rep-max">
-                Strength
-            </a>
-          </nav>
-        </nav>
-    </aside>
-
-    <main id="app" class="mdc-toolbar-fixed-adjust">
-        <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-
-
-                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4">
-
-                    <ul v-if="performances.length" class="mdc-list mdc-list--two-line">
-
-                        <li v-for="performance in performances" class="mdc-list-item">
-                            <span class="mdc-list-item__start-detail material-icons" role="presentation">reorder</span>
-                            <span class="mdc-list-item__text">
-                                {{ performance.time.formatted }}
-                                <span class="mdc-list-item__text__secondary">{{ performance.distance.value }} {{ performance.distance.units.name }}</span>
-                            </span>
-                            <span class="mdc-list-item__end-detail">
-                                <button type="button" class="edit-button mdc-fab mdc-fab--mini mdc-fab--plain material-icons" aria-label="Edit person" title="Edit" v-on:click="editPerformance(performance)">edit</button>
-                            </span>
-                        </li>
-
-                    </ul>
-                    <div v-else>
-                        <p class="text-center">No one...yet</p>
-                    </div>
-
+    <main>
+        <section class="hero is-dark">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Cardio Performance Prediction</h1>
+                    <p><code>Fit.model.aerobic</code> contains models capable of modeling and prediction performances across age groups, sports and genders.  You can use the tool below to predict running performances using the <a href="https://www.runscore.com/coursemeasurement/Articles/ARHE.pdf">Riegel</a> model and <a href="https://www.cs.uml.edu/~phoffman/cammod.html">Cameron</a> models.</p>
                 </div>
-
-                <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell mdc-layout-grid__cell--span-8 mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">
-                    <!--div class="mdc-menu-anchor align-right">
-                        <button id="share-menu-button" class="mdc-fab mdc-fab--mini material-icons" aria-label="Share">
-                            <span class="mdc-fab__icon">share</span>
-                        </button>
-
-                        <div id="share-menu" class="mdc-menu" tabindex="-1">
-                            <div class="mdc-menu__items mdc-list" role="menu" aria-hidden="true">
-                                <a v-bind:href="share.facebook" class="mdc-list-item" role="menuitem" tabindex="0">
-                                    Facebook
-                                </a>
-                                <a v-bind:href="share.twitter" class="mdc-list-item" role="menuitem" tabindex="0">
-                                    Twitter
-                                </a>
-                            </div>
-                        </div>
-                    </div-->
-                    <canvas id="chart"></canvas>
-
-                </div>
-
             </div>
+        </section>
 
-        </div>
-
-        <button id="primary-action-button" class="mdc-fab material-icons" aria-label="Edit">
-            <span class="mdc-fab__icon">add</span>
-        </button>
-
-        <aside id="edit-performance-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="edit-person-label" aria-describedby="edit-person-description">
-            <div class="mdc-dialog__surface">
-                <header class="mdc-dialog__header">
-                    <h2 id="edit-person-label" class="mdc-dialog__header__title">
-                        Edit Performance
-                    </h2>
-                </header>
-                <section id="edit-person-description" class="mdc-dialog__body">
-                    <div class="mdc-layout-grid">
-
-                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
-
-                            <div class="mdc-text-field">
-                                <input type="tel" class="mdc-text-field__input" v-model="editingPerformance.time.formatted" name="time">
-                                <label class="mdc-floating-label" for="time">Time</label>
-                                <div class="mdc-line-ripple"></div>
-                            </div>
-
-                            <div class="mdc-text-field">
-                                <input type="tel" class="mdc-text-field__input" v-model="editingPerformance.distance.value" name="distance">
-                                <label class="mdc-floating-label" for="distance">Distance</label>
-                                <div class="mdc-line-ripple"></div>
-                            </div>
-
-                            <select class="mdc-select" v-model="editingPerformance.distance.units">
-                                <option v-bind:value="unit" v-for="unit in units.distance.options">{{ unit.name }}</option>
-                            </select>
-                        </div>
-                    </div>
-                </section>
-
-                <footer class="mdc-dialog__footer">
-                    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
-                    <button type="button" v-on:click="savePerformance(editingPerformance)" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Save</button>
-                </footer>
-            </div>
-            <div class="mdc-dialog__backdrop"></div>
-        </aside>
-
-        <aside id="new-performance-dialog" class="mdc-dialog" role="alertdialog" aria-labelledby="new-person-label" aria-describedby="create-new-person-description">
-            <div class="mdc-dialog__surface">
-                <header class="mdc-dialog__header">
-                    <h2 id="new-person-label" class="mdc-dialog__header__title">
-                        Create a new person
-                    </h2>
-                </header>
-                <section id="create-new-person-description" class="mdc-dialog__body">
-                    <div class="mdc-layout-grid">
-
-                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--span-6-desktop">
-
-                            <div class="mdc-text-field">
-                                <input type="tel" class="mdc-text-field__input" v-model="newPerformance.time.formatted" v-on:keyup.enter="addPerformance(newPerformance, true)" name="time">
-                                <label class="mdc-floating-label" for="time">Time</label>
-                                <div class="mdc-line-ripple"></div>
-                            </div>
-
-                            <div class="mdc-text-field">
-                                <input type="tel" class="mdc-text-field__input" v-model="newPerformance.distance.value" v-on:keyup.enter="addPerformance(newPerformance, true)" name="distance">
-                                <label class="mdc-floating-label" for="distance">Distance</label>
-                                <div class="mdc-line-ripple"></div>
-                            </div>
-
-                            <select class="mdc-select" v-model="newPerformance.distance.units">
-                                <option v-bind:value="unit" v-for="unit in units.distance.options">{{ unit.name }}</option>
-                            </select>
-                        </div>
-                    </div>
-                </section>
-
-                <footer class="mdc-dialog__footer">
-                    <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Cancel</button>
-                    <button type="button" v-on:click="addPerformance" class="mdc-button mdc-button--raised mdc-button--primary mdc-dialog__footer__button mdc-dialog__footer__button--accept">Create</button>
-                </footer>
-            </div>
-            <div class="mdc-dialog__backdrop"></div>
-        </aside>
-
+        <div id="app" class="container is-fluid"></div>
     </main>
 
-    <div class="mdc-snackbar" aria-live="assertive" aria-atomic="true" aria-hidden="true">
-        <div class="mdc-snackbar__text"></div>
-        <div class="mdc-snackbar__action-wrapper">
-            <button type="button" class="mdc-button mdc-snackbar__action-button"></button>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>FitnessJS</strong> by <a href="https://dougfenstermacher.com">Doug Fenstermacher</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+            </p>
         </div>
-    </div>
+    </footer>
 
 </body>
 <link rel="stylesheet" href="../../css/style.css">
 <link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="../../js/libs/material-components-web.min.js"></script>
-<script type="text/javascript" src="../../js/tools/preferences.js"></script>
-<script type="text/javascript" src="../../js/libs/vue.min.js"></script>
-<script type="text/javascript" src="../../js/libs/vue-router.js"></script>
-<script type="text/javascript" src="../../js/libs/fitness.min.js"></script>
-<script type="text/javascript" src="../../js/libs/Chart.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="../../js/libs/fitness.js"></script>
+<script type="text/javascript" src="js/dist/form.js" defer async></script>
+<script type="text/javascript" src="js/dist/display.js" defer async></script>
+<script type="text/javascript" src="js/dist/app.js" defer async></script>
 <script type="text/javascript" src="../../js/layout.js" defer async></script>
-<script type="text/javascript" src="js/converter.js" defer async></script>
-<script type="text/javascript" src="js/layout.js" defer async></script>
 
 <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
 
