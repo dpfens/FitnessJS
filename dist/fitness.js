@@ -1,7 +1,10 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -2435,6 +2438,9 @@ var Fit;
             RMEstimator.prototype.predict = function (weight) {
                 throw new Error("The prediction method is not implemented");
             };
+            RMEstimator.isValid = function (gender, age, repetitions, weight) {
+                throw new Error("The static isValid method is not implemented");
+            };
             return RMEstimator;
         }());
         strength.RMEstimator = RMEstimator;
@@ -2449,6 +2455,9 @@ var Fit;
             Abadie.prototype.weight = function (rm) {
                 return (4. / 105) * (25 * rm - 181);
             };
+            Abadie.isValid = function (gender, age, repetitions, weight) {
+                return gender === Fit.Gender.Female && repetitions >= 5 && repetitions <= 10 && age > 17 && age < 25;
+            };
             return Abadie;
         }(RMEstimator));
         strength.Abadie = Abadie;
@@ -2462,6 +2471,9 @@ var Fit;
             };
             Baechle.prototype.weight = function (rm) {
                 return (1000 * rm) / (33 * this.reps + 1000);
+            };
+            Baechle.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return Baechle;
         }(RMEstimator));
@@ -2480,6 +2492,9 @@ var Fit;
             Brzycki.prototype.twoSet = function (weight, rep2, weight2) {
                 return ((weight - weight2) / (rep2 - this.reps)) * (this.reps - 1) + weight;
             };
+            Brzycki.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return Brzycki;
         }(RMEstimator));
         strength.Brzycki = Brzycki;
@@ -2490,6 +2505,9 @@ var Fit;
             }
             Epley.prototype.predict = function (weight) {
                 return (weight * this.reps * 0.033) + weight;
+            };
+            Epley.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return Epley;
         }(RMEstimator));
@@ -2509,6 +2527,9 @@ var Fit;
                 var value = 101.3 - (2.67123 * this.reps);
                 return value / 100;
             };
+            Landers.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return Landers;
         }(RMEstimator));
         strength.Landers = Landers;
@@ -2522,6 +2543,9 @@ var Fit;
             };
             Lombardi.prototype.weight = function (rm) {
                 return rm / Math.pow(this.reps, 0.10);
+            };
+            Lombardi.isValid = function (gender, age, repetitions, weight) {
+                return repetitions < 11;
             };
             return Lombardi;
         }(RMEstimator));
@@ -2544,6 +2568,9 @@ var Fit;
             Mayhew.prototype.weight = function (rm) {
                 return (rm * (52.2 + 41.9 * Math.exp(-0.055 * this.reps))) / 100;
             };
+            Mayhew.isValid = function (gender, age, repetitions, weight) {
+                return repetitions < 15 && age > 17 && age < 25;
+            };
             return Mayhew;
         }(RMEstimator));
         strength.Mayhew = Mayhew;
@@ -2557,6 +2584,9 @@ var Fit;
             };
             McGlothin.prototype.weight = function (rm) {
                 return (rm * (101.3 - 2.67123 * this.reps)) / 100;
+            };
+            McGlothin.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return McGlothin;
         }(RMEstimator));
@@ -2575,6 +2605,9 @@ var Fit;
             OConnor.prototype.weight = function (rm) {
                 return (40. * rm) / (this.reps + 40);
             };
+            OConnor.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return OConnor;
         }(RMEstimator));
         strength.OConnor = OConnor;
@@ -2586,6 +2619,9 @@ var Fit;
             ReynoldsCP.prototype.predict = function (weight) {
                 return (1.1307 * weight) + 0.6998;
             };
+            ReynoldsCP.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return ReynoldsCP;
         }(RMEstimator));
         strength.ReynoldsCP = ReynoldsCP;
@@ -2596,6 +2632,9 @@ var Fit;
             }
             ReynoldsLP.prototype.predict = function (weight) {
                 return (1.09703 * weight) + 14.2546;
+            };
+            ReynoldsLP.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return ReynoldsLP;
         }(RMEstimator));
@@ -2610,6 +2649,9 @@ var Fit;
             };
             Wathan.prototype.weight = function (rm) {
                 return (rm * (48.8 + (53.8 * Math.exp(-0.075 * this.reps)))) / 100;
+            };
+            Wathan.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return Wathan;
         }(RMEstimator));

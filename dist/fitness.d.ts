@@ -38,18 +38,18 @@ declare namespace Fit {
 declare namespace Fit {
     enum Gender {
         Male = 0,
-        Female = 1,
+        Female = 1
     }
     enum Race {
         Asian = 0,
         Black = 1,
-        Hispanic = 2,
+        Hispanic = 2
     }
     enum PAL {
         Sedentary = 0,
         Low = 1,
         Active = 2,
-        VeryActive = 3,
+        VeryActive = 3
     }
 }
 declare namespace Fit {
@@ -451,56 +451,69 @@ declare namespace Fit {
             reps: number;
             constructor(reps: number);
             predict(weight: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Abadie extends RMEstimator {
             predict(weight: number): number;
             weight(rm: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Baechle extends RMEstimator {
             predict(weight: number): number;
             weight(rm: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Brzycki extends RMEstimator {
             predict(weight: number): number;
             weight(rm: number): number;
             twoSet(weight: number, rep2: number, weight2: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Epley extends RMEstimator {
             predict(weight: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Landers extends RMEstimator {
             predict(weight: number): number;
             weight(rm: number): number;
             percent(): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Lombardi extends RMEstimator {
             predict(weight: number): number;
             weight(rm: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Mayhew extends RMEstimator {
             football(): number;
             predict(weight: number): number;
             percent(): number;
             weight(rm: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class McGlothin extends RMEstimator {
             predict(weight: number): number;
             weight(rm: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class OConnor extends RMEstimator {
             predict(weight: number): number;
             percent(weight: number): number;
             weight(rm: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class ReynoldsCP extends RMEstimator {
             predict(weight: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class ReynoldsLP extends RMEstimator {
             predict(weight: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class Wathan extends RMEstimator {
             predict(weight: number): number;
             weight(rm: number): number;
+            static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean;
         }
         class RM {
             gender: Gender;
@@ -600,3 +613,4 @@ declare namespace Fit {
         }
     }
 }
+//# sourceMappingURL=fitness.d.ts.map

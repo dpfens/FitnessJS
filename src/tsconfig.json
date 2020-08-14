@@ -4,7 +4,9 @@
         "outFile": "../dist/fitness.js",
         "noImplicitAny": false,
         "removeComments": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "declarationMap": true,
+        "declaration": true
     },
     "files" : [
         "main.ts"

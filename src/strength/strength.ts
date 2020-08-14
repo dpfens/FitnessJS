@@ -139,6 +139,10 @@ export class RMEstimator {
     predict(weight: number): number {
         throw new Error("The prediction method is not implemented");
     }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        throw new Error("The static isValid method is not implemented");
+    }
 }
 
 export class Abadie extends RMEstimator {
@@ -151,6 +155,9 @@ export class Abadie extends RMEstimator {
         return (4./105)*(25*rm-181);
     }
 
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return gender === Gender.Female && repetitions >= 5 && repetitions <= 10 && age > 17 && age < 25;
+    }
 }
 
 export class Baechle extends RMEstimator {
@@ -163,6 +170,9 @@ export class Baechle extends RMEstimator {
         return (1000*rm)/(33*this.reps + 1000);
     }
 
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
+    }
 }
 
 export class Brzycki extends RMEstimator {
@@ -179,12 +189,19 @@ export class Brzycki extends RMEstimator {
         return ((weight - weight2)/(rep2 - this.reps)) * (this.reps - 1) + weight;
     }
 
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
+    }
 }
 
 export class Epley extends RMEstimator {
 
     predict(weight: number): number {
         return (weight * this.reps * 0.033)+weight;
+    }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
     }
 }
 
@@ -202,7 +219,11 @@ export class Landers extends RMEstimator {
         let value: number = 101.3 - (2.67123 * this.reps );
         return value / 100;
     }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
     }
+}
 
 export class Lombardi extends RMEstimator {
 
@@ -212,6 +233,10 @@ export class Lombardi extends RMEstimator {
 
     weight(rm: number): number {
         return rm/Math.pow(this.reps,0.10);
+    }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return repetitions < 11;
     }
 }
 
@@ -233,6 +258,10 @@ export class Mayhew extends RMEstimator {
     weight(rm: number): number {
         return (rm*( 52.2 + 41.9 * Math.exp(-0.055 * this.reps) ) )/100;
     }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return repetitions < 15 && age > 17 && age < 25;
+    }
 }
 
 export class McGlothin extends RMEstimator {
@@ -243,6 +272,10 @@ export class McGlothin extends RMEstimator {
 
     weight(rm: number): number {
         return (rm*(101.3 - 2.67123 * this.reps) )/100;
+    }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
     }
 }
 
@@ -259,6 +292,10 @@ export class  OConnor extends RMEstimator {
     weight(rm: number): number {
         return (40.*rm)/(this.reps+40);
     }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
+    }
 }
 
 export class ReynoldsCP extends RMEstimator {
@@ -266,12 +303,20 @@ export class ReynoldsCP extends RMEstimator {
     predict(weight: number): number {
         return (1.1307 * weight) + 0.6998;
     }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
+    }
 }
 
 export class ReynoldsLP extends RMEstimator {
 
     predict(weight: number): number {
         return (1.09703 * weight) + 14.2546;
+    }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
     }
 }
 
@@ -283,6 +328,10 @@ export class Wathan extends RMEstimator {
 
     weight(rm: number): number {
         return (rm*(48.8+(53.8*Math.exp(-0.075 * this.reps) ) ) )/100;
+    }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return true;
     }
 }
 
