@@ -16,22 +16,18 @@ var App = function (_React$Component) {
 
         _this.state = {
             'gender': _this.props.genders[0],
-            'age': 18,
+            'age': 0,
             'reps': {
                 'value': 0
             },
             'mass': {
-                'value': 0,
-                'unit': null,
-                'originalUnit': null
-            },
-            'rm': {
-                'value': 0,
+                'value': '',
                 'unit': null,
                 'originalUnit': null
             }
         };
         _this.onGenderChange = _this.onGenderChange.bind(_this);
+        _this.onAgeChange = _this.onAgeChange.bind(_this);
         _this.onRepChange = _this.onRepChange.bind(_this);
         _this.onMassChange = _this.onMassChange.bind(_this);
         return _this;
@@ -46,7 +42,7 @@ var App = function (_React$Component) {
     }, {
         key: 'onGenderChange',
         value: function onGenderChange(value) {
-            this.setState({ 't1': { 'value': value } });
+            this.setState({ 'gender': value });
         }
     }, {
         key: 'onAgeChange',
@@ -77,30 +73,30 @@ var App = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.state);
             var processors = [Fit.strength.Abadie, Fit.strength.Baechle, Fit.strength.Brzycki, Fit.strength.Epley, Fit.strength.Landers, Fit.strength.Lombardi, Fit.strength.Mayhew, Fit.strength.McGlothin, Fit.strength.OConnor, Fit.strength.Wathan],
-                display = '';
+                display = React.createElement(
+                'h2',
+                { className: 'title text-center' },
+                'Not enough information to predict 1-RM :-('
+            );
 
             if (this.state.repetitions && this.state.mass.value && this.state.mass.originalUnit) {
-                display = React.createElement(RMDisplay, { processors: processors, repetitions: this.state.repetitions, mass: this.state.mass });
+                display = React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'h2',
+                        { className: 'subtitle' },
+                        '1-RM estimations'
+                    ),
+                    React.createElement(RMDisplay, { processors: processors, gender: this.state.gender, age: this.state.age, repetitions: this.state.repetitions, mass: this.state.mass })
+                );
             }
             return React.createElement(
                 'div',
                 null,
-                React.createElement(
-                    'div',
-                    { className: 'columns' },
-                    React.createElement(
-                        'div',
-                        { className: 'column' },
-                        React.createElement(Form, { massUnits: this.props.massUnits, massUnit: this.props.massUnit, genders: this.props.genders, genderChange: this.onGenderChange, repChange: this.onRepChange, massChange: this.onMassChange })
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'column' },
-                        display
-                    )
-                )
+                React.createElement(Form, { massUnits: this.props.massUnits, massUnit: this.props.massUnit, genders: this.props.genders, genderChange: this.onGenderChange, ageChange: this.onAgeChange, repChange: this.onRepChange, massChange: this.onMassChange }),
+                display
             );
         }
     }]);

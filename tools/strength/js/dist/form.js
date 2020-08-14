@@ -113,6 +113,7 @@ var Dropdown = function (_React$Component2) {
         value: function onChangeHandler(event) {
             var rawValue = event.target.value,
                 option = this.props.options[rawValue];
+            console.log(option);
             this.setState({ 'value': option });
             if (this.props.valueChange) {
                 this.props.valueChange(option);
@@ -121,6 +122,7 @@ var Dropdown = function (_React$Component2) {
     }, {
         key: 'render',
         value: function render() {
+
             return React.createElement(
                 'div',
                 { className: 'field' },
@@ -155,7 +157,7 @@ var UnitValue = function (_React$Component3) {
         var _this3 = _possibleConstructorReturn(this, (UnitValue.__proto__ || Object.getPrototypeOf(UnitValue)).call(this, props));
 
         _this3.state = {
-            'displayValue': 0,
+            'displayValue': '',
             'value': 0,
             'unit': props.units[0]
         };
@@ -215,6 +217,16 @@ var UnitValue = function (_React$Component3) {
             } else {
                 label = '';
             }
+
+            var helpText = '';
+            if (this.props.helpText) {
+                helpText = React.createElement(
+                    'p',
+                    { className: 'help' },
+                    this.props.helpText
+                );
+            }
+
             return React.createElement(
                 'div',
                 { className: 'field unit-value' },
@@ -232,7 +244,8 @@ var UnitValue = function (_React$Component3) {
                             this.units
                         )
                     )
-                )
+                ),
+                helpText
             );
         }
     }]);
@@ -254,24 +267,52 @@ var Form = function (_React$Component4) {
         value: function render() {
             return React.createElement(
                 'form',
-                { className: 'columns' },
+                { className: 'columns is-mobile' },
                 React.createElement(
                     'div',
-                    { className: 'column is-half' },
+                    { className: 'column is-half is-mobile' },
                     React.createElement(
                         'h2',
                         { className: 'subtitle' },
-                        'You'
+                        'Demographics'
                     ),
-                    React.createElement(Dropdown, { label: 'Gender', options: this.props.genders, onChange: this.props.onGenderChange }),
-                    React.createElement(Input, { type: 'tel', label: 'Age', maxLength: '4', valueChange: this.props.onAgeChange }),
+                    React.createElement(
+                        'div',
+                        { className: 'columns' },
+                        React.createElement(
+                            'div',
+                            { className: 'column is-half' },
+                            React.createElement(Dropdown, { label: 'Gender', options: this.props.genders, valueChange: this.props.genderChange, helpText: 'The gender of the athlete' })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'column is-half' },
+                            React.createElement(Input, { type: 'tel', label: 'Age', maxLength: '3', valueChange: this.props.ageChange, helpText: 'Age is provided in years' })
+                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'column is-half is-mobile' },
                     React.createElement(
                         'h2',
                         { className: 'subtitle' },
                         'Your Performance'
                     ),
-                    React.createElement(Input, { type: 'tel', label: 'Repetitions', maxLength: '4', helpText: 'The number of full repetitions of the exercise', valueChange: this.props.repChange }),
-                    React.createElement(UnitValue, { label: 'Weight', maxLength: '4', returnUnit: this.props.massUnit, valueChange: this.props.massChange, units: this.props.massUnits })
+                    React.createElement(
+                        'div',
+                        { className: 'columns' },
+                        React.createElement(
+                            'div',
+                            { className: 'column is-half' },
+                            React.createElement(Input, { type: 'tel', label: 'Repetitions', maxLength: '4', helpText: 'The number of full repetitions', valueChange: this.props.repChange })
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'column is-half' },
+                            React.createElement(UnitValue, { label: 'Weight', maxLength: '4', returnUnit: this.props.massUnit, valueChange: this.props.massChange, units: this.props.massUnits, helpText: 'The weight lifted for each repetition' })
+                        )
+                    )
                 )
             );
         }

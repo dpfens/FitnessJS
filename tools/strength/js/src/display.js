@@ -6,27 +6,42 @@ class RMDisplay extends React.Component {
 
     render() {
         var rows = [],
+            gender = this.props.gender.code,
+            age = this.props.age,
             processors = this.props.processors,
             repetitions = this.props.repetitions,
             massValue = this.props.mass.value,
-            massUnit = this.props.mass.originalUnit.name
+            massUnit = this.props.mass.originalUnit.code
         for (var i = 0; i < processors.length; i++) {
-            var processor = new processors[i](repetitions),
+            var processorCls = processors[i];
+            if (!processorCls.isValid(gender, age, repetitions, massValue)) {
+                continue;
+            }
+            var processor = new processorCls(repetitions),
                 predictedMass = processor.predict(massValue),
-                name = processors[i].name,
-                row = <tr key={name}>
+                name = processors[i].name;
+
+            if (predictedMass < 0) {
+                continue;
+            }
+
+            var predictedMassRender = Math.round(predictedMass * 100 ) / 100;
+
+            var row = <tr key={name}>
                     <td>{name}</td>
-                    <td>{predictedMass}</td>
-                    <td>{massUnit}</td>
+                    <td>{predictedMassRender}</td>
                 </tr>
+
                 rows.push(row);
         }
-        return <table className="table">
+
+        var caption = <caption>{this.props.caption}</caption>
+        return <table className="table is-fullwidth">
+            {caption}
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Mass</th>
-                    <th>Unit</th>
+                    <th>Mass ({massUnit})</th>
                 </tr>
             </thead>
             <tbody>

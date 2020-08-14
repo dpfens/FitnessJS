@@ -1,8 +1,16 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 if (!Function.prototype.bind) {
     Function.prototype.bind = function (oThis) {
         if (typeof this !== 'function') {
@@ -220,24 +228,24 @@ var Fit;
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
+    var Gender;
     (function (Gender) {
         Gender[Gender["Male"] = 0] = "Male";
         Gender[Gender["Female"] = 1] = "Female";
-    })(Fit.Gender || (Fit.Gender = {}));
-    var Gender = Fit.Gender;
+    })(Gender = Fit.Gender || (Fit.Gender = {}));
+    var Race;
     (function (Race) {
         Race[Race["Asian"] = 0] = "Asian";
         Race[Race["Black"] = 1] = "Black";
         Race[Race["Hispanic"] = 2] = "Hispanic";
-    })(Fit.Race || (Fit.Race = {}));
-    var Race = Fit.Race;
+    })(Race = Fit.Race || (Fit.Race = {}));
+    var PAL;
     (function (PAL) {
         PAL[PAL["Sedentary"] = 0] = "Sedentary";
         PAL[PAL["Low"] = 1] = "Low";
         PAL[PAL["Active"] = 2] = "Active";
         PAL[PAL["VeryActive"] = 3] = "VeryActive";
-    })(Fit.PAL || (Fit.PAL = {}));
-    var PAL = Fit.PAL;
+    })(PAL = Fit.PAL || (Fit.PAL = {}));
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
@@ -1129,6 +1137,242 @@ var Fit;
 })(Fit || (Fit = {}));
 var Fit;
 (function (Fit) {
+    var anthropometry;
+    (function (anthropometry) {
+        function height_from_height_eyes(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.936;
+        }
+        anthropometry.height_from_height_eyes = height_from_height_eyes;
+        function height_from_height_head(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.870;
+        }
+        anthropometry.height_from_height_head = height_from_height_head;
+        function height_from_height_shoulders(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.818;
+        }
+        anthropometry.height_from_height_shoulders = height_from_height_shoulders;
+        function height_from_height_chest(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.720;
+        }
+        anthropometry.height_from_height_chest = height_from_height_chest;
+        function height_from_height_elbow(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.630;
+        }
+        anthropometry.height_from_height_elbow = height_from_height_elbow;
+        function height_from_height_wrist(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.485;
+        }
+        anthropometry.height_from_height_wrist = height_from_height_wrist;
+        function height_from_height_fingertip(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.377;
+        }
+        anthropometry.height_from_height_fingertip = height_from_height_fingertip;
+        function height_from_height_hips(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.530;
+        }
+        anthropometry.height_from_height_hips = height_from_height_hips;
+        function height_from_height_buttocks(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.485;
+        }
+        anthropometry.height_from_height_buttocks = height_from_height_buttocks;
+        function height_from_height_knee(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.285;
+        }
+        anthropometry.height_from_height_knee = height_from_height_knee;
+        function height_from_height_ankle(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.039;
+        }
+        anthropometry.height_from_height_ankle = height_from_height_ankle;
+        function height_from_head_height(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.130;
+        }
+        anthropometry.height_from_head_height = height_from_head_height;
+        function height_from_shoulder_distance(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.129;
+        }
+        anthropometry.height_from_shoulder_distance = height_from_shoulder_distance;
+        function height_from_shoulder_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.259;
+        }
+        anthropometry.height_from_shoulder_width = height_from_shoulder_width;
+        function height_from_hips_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.191;
+        }
+        anthropometry.height_from_hips_width = height_from_hips_width;
+        function height_from_nipple_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.174;
+        }
+        anthropometry.height_from_nipple_width = height_from_nipple_width;
+        function height_from_foot_width(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.055;
+        }
+        anthropometry.height_from_foot_width = height_from_foot_width;
+        function height_from_foot_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.152;
+        }
+        anthropometry.height_from_foot_length = height_from_foot_length;
+        function height_from_humerus_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.186;
+        }
+        anthropometry.height_from_humerus_length = height_from_humerus_length;
+        function height_from_forearm_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.146;
+        }
+        anthropometry.height_from_forearm_length = height_from_forearm_length;
+        function height_from_hand_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.108;
+        }
+        anthropometry.height_from_hand_length = height_from_hand_length;
+        function height_from_upperbody_length(segment_length) {
+            if (segment_length <= 0) {
+                return 0;
+            }
+            return segment_length / 0.520;
+        }
+        anthropometry.height_from_upperbody_length = height_from_upperbody_length;
+        var Segment = (function () {
+            function Segment(body_height) {
+                this.height_eyes = function () {
+                    return 0.936 * this.body_height;
+                };
+                this.height_head = function () {
+                    return 0.870 * this.body_height;
+                };
+                this.height_shoulders = function () {
+                    return 0.818 * this.body_height;
+                };
+                this.height_chest = function () {
+                    return 0.720 * this.body_height;
+                };
+                this.height_elbow = function () {
+                    return 0.630 * this.body_height;
+                };
+                this.height_wrist = function () {
+                    return 0.485 * this.body_height;
+                };
+                this.height_fingertip = function () {
+                    return 0.377 * this.body_height;
+                };
+                this.height_hips = function () {
+                    return 0.530 * this.body_height;
+                };
+                this.height_buttocks = function () {
+                    return 0.485 * this.body_height;
+                };
+                this.height_knee = function () {
+                    return 0.285 * this.body_height;
+                };
+                this.height_ankle = function () {
+                    return 0.039 * this.body_height;
+                };
+                this.head_height = function () {
+                    return 0.130 * this.body_height;
+                };
+                this.shoulder_distance = function () {
+                    return 0.129 * this.body_height;
+                };
+                this.shoulder_width = function () {
+                    return 0.259 * this.body_height;
+                };
+                this.hips_width = function () {
+                    return 0.191 * this.body_height;
+                };
+                this.nipple_width = function () {
+                    return 0.174 * this.body_height;
+                };
+                this.foot_width = function () {
+                    return 0.055 * this.body_height;
+                };
+                this.foot_length = function () {
+                    return 0.152 * this.body_height;
+                };
+                this.humerus_length = function () {
+                    return 0.186 * this.body_height;
+                };
+                this.forearm_length = function () {
+                    return 0.146 * this.body_height;
+                };
+                this.hand_length = function () {
+                    return 0.108 * this.body_height;
+                };
+                this.upperbody_length = function () {
+                    return 0.520 * this.body_height;
+                };
+                if (body_height <= 0) {
+                    throw Error('body height must be > 0');
+                }
+                this.body_height = body_height;
+            }
+            return Segment;
+        }());
+        anthropometry.Segment = Segment;
+    })(anthropometry = Fit.anthropometry || (Fit.anthropometry = {}));
+})(Fit || (Fit = {}));
+var Fit;
+(function (Fit) {
     var cardio;
     (function (cardio) {
         var cardiac;
@@ -1321,7 +1565,7 @@ var Fit;
         var HB = (function (_super) {
             __extends(HB, _super);
             function HB() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             HB.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1336,14 +1580,14 @@ var Fit;
         var RevisedHB = (function (_super) {
             __extends(RevisedHB, _super);
             function RevisedHB() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             RevisedHB.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
                 if (this.gender === Fit.Gender.Female) {
-                    return (9.5634 * weight) + (1.8496 * height) - (4.6756 * age) + 655.0955;
+                    return (9.247 * weight) + (3.098 * height) - (4.330 * age) + 447.593;
                 }
-                return (13.7516 * weight) + (5.0033 * height) - (6.7550 * age) + 66.4730;
+                return (13.397 * weight) + (4.799 * height) - (5.677 * age) + 88.362;
             };
             return RevisedHB;
         }(BMREstimator));
@@ -1351,7 +1595,7 @@ var Fit;
         var MSJ = (function (_super) {
             __extends(MSJ, _super);
             function MSJ() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             MSJ.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1410,7 +1654,7 @@ var Fit;
         var ChildTEE = (function (_super) {
             __extends(ChildTEE, _super);
             function ChildTEE() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ChildTEE.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1446,7 +1690,7 @@ var Fit;
         var AdultTEE = (function (_super) {
             __extends(AdultTEE, _super);
             function AdultTEE() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             AdultTEE.prototype.predict = function (dob, weight, height) {
                 var age = dob.delta("years");
@@ -1765,8 +2009,8 @@ var Fit;
 (function (Fit) {
     var composition;
     (function (composition) {
-        function dailyWaterNeed() {
-            return 0.033 * this.weight;
+        function dailyWaterNeed(weight) {
+            return 0.033 * weight;
         }
         composition.dailyWaterNeed = dailyWaterNeed;
     })(composition = Fit.composition || (Fit.composition = {}));
@@ -1941,12 +2185,12 @@ var Fit;
             }
             Stature.prototype.strideLength = function () {
                 var heightCm = this.height * 100;
-                var strideLength;
+                var strideLength = 0;
                 if (this.gender === Fit.Gender.Female) {
-                    var strideLength_1 = 0.413 * heightCm;
+                    strideLength = 0.413 * heightCm;
                 }
                 else {
-                    var strideLength_2 = 0.415 * heightCm;
+                    strideLength = 0.415 * heightCm;
                 }
                 return strideLength / 100;
             };
@@ -2194,13 +2438,16 @@ var Fit;
             RMEstimator.prototype.predict = function (weight) {
                 throw new Error("The prediction method is not implemented");
             };
+            RMEstimator.isValid = function (gender, age, repetitions, weight) {
+                throw new Error("The static isValid method is not implemented");
+            };
             return RMEstimator;
         }());
         strength.RMEstimator = RMEstimator;
         var Abadie = (function (_super) {
             __extends(Abadie, _super);
             function Abadie() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Abadie.prototype.predict = function (weight) {
                 return 7.24 + (1.05 * weight);
@@ -2208,13 +2455,16 @@ var Fit;
             Abadie.prototype.weight = function (rm) {
                 return (4. / 105) * (25 * rm - 181);
             };
+            Abadie.isValid = function (gender, age, repetitions, weight) {
+                return gender === Fit.Gender.Female && repetitions >= 5 && repetitions <= 10 && age > 17 && age < 25;
+            };
             return Abadie;
         }(RMEstimator));
         strength.Abadie = Abadie;
         var Baechle = (function (_super) {
             __extends(Baechle, _super);
             function Baechle() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Baechle.prototype.predict = function (weight) {
                 return weight * (1 + (0.033 * this.reps));
@@ -2222,13 +2472,16 @@ var Fit;
             Baechle.prototype.weight = function (rm) {
                 return (1000 * rm) / (33 * this.reps + 1000);
             };
+            Baechle.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return Baechle;
         }(RMEstimator));
         strength.Baechle = Baechle;
         var Brzycki = (function (_super) {
             __extends(Brzycki, _super);
             function Brzycki() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Brzycki.prototype.predict = function (weight) {
                 return weight / (1.0278 - (0.0278 * this.reps));
@@ -2239,16 +2492,22 @@ var Fit;
             Brzycki.prototype.twoSet = function (weight, rep2, weight2) {
                 return ((weight - weight2) / (rep2 - this.reps)) * (this.reps - 1) + weight;
             };
+            Brzycki.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return Brzycki;
         }(RMEstimator));
         strength.Brzycki = Brzycki;
         var Epley = (function (_super) {
             __extends(Epley, _super);
             function Epley() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Epley.prototype.predict = function (weight) {
                 return (weight * this.reps * 0.033) + weight;
+            };
+            Epley.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return Epley;
         }(RMEstimator));
@@ -2256,7 +2515,7 @@ var Fit;
         var Landers = (function (_super) {
             __extends(Landers, _super);
             function Landers() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Landers.prototype.predict = function (weight) {
                 return weight / (1.013 - (0.0267123 * this.reps));
@@ -2268,13 +2527,16 @@ var Fit;
                 var value = 101.3 - (2.67123 * this.reps);
                 return value / 100;
             };
+            Landers.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return Landers;
         }(RMEstimator));
         strength.Landers = Landers;
         var Lombardi = (function (_super) {
             __extends(Lombardi, _super);
             function Lombardi() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Lombardi.prototype.predict = function (weight) {
                 return weight * Math.pow(this.reps, 0.10);
@@ -2282,13 +2544,16 @@ var Fit;
             Lombardi.prototype.weight = function (rm) {
                 return rm / Math.pow(this.reps, 0.10);
             };
+            Lombardi.isValid = function (gender, age, repetitions, weight) {
+                return repetitions < 11;
+            };
             return Lombardi;
         }(RMEstimator));
         strength.Lombardi = Lombardi;
         var Mayhew = (function (_super) {
             __extends(Mayhew, _super);
             function Mayhew() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Mayhew.prototype.football = function () {
                 return 226.7 + 7.1 * (this.reps);
@@ -2303,13 +2568,16 @@ var Fit;
             Mayhew.prototype.weight = function (rm) {
                 return (rm * (52.2 + 41.9 * Math.exp(-0.055 * this.reps))) / 100;
             };
+            Mayhew.isValid = function (gender, age, repetitions, weight) {
+                return repetitions < 15 && age > 17 && age < 25;
+            };
             return Mayhew;
         }(RMEstimator));
         strength.Mayhew = Mayhew;
         var McGlothin = (function (_super) {
             __extends(McGlothin, _super);
             function McGlothin() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             McGlothin.prototype.predict = function (weight) {
                 return (100 * weight) / (101.3 - 2.67123 * this.reps);
@@ -2317,13 +2585,16 @@ var Fit;
             McGlothin.prototype.weight = function (rm) {
                 return (rm * (101.3 - 2.67123 * this.reps)) / 100;
             };
+            McGlothin.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return McGlothin;
         }(RMEstimator));
         strength.McGlothin = McGlothin;
         var OConnor = (function (_super) {
             __extends(OConnor, _super);
             function OConnor() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             OConnor.prototype.predict = function (weight) {
                 return weight * (1 + 0.025 * this.reps);
@@ -2334,16 +2605,22 @@ var Fit;
             OConnor.prototype.weight = function (rm) {
                 return (40. * rm) / (this.reps + 40);
             };
+            OConnor.isValid = function (gender, age, repetitions, weight) {
+                return true;
+            };
             return OConnor;
         }(RMEstimator));
         strength.OConnor = OConnor;
         var ReynoldsCP = (function (_super) {
             __extends(ReynoldsCP, _super);
             function ReynoldsCP() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ReynoldsCP.prototype.predict = function (weight) {
                 return (1.1307 * weight) + 0.6998;
+            };
+            ReynoldsCP.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return ReynoldsCP;
         }(RMEstimator));
@@ -2351,10 +2628,13 @@ var Fit;
         var ReynoldsLP = (function (_super) {
             __extends(ReynoldsLP, _super);
             function ReynoldsLP() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ReynoldsLP.prototype.predict = function (weight) {
                 return (1.09703 * weight) + 14.2546;
+            };
+            ReynoldsLP.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return ReynoldsLP;
         }(RMEstimator));
@@ -2362,13 +2642,16 @@ var Fit;
         var Wathan = (function (_super) {
             __extends(Wathan, _super);
             function Wathan() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             Wathan.prototype.predict = function (weight) {
                 return (100 * weight) / (48.8 + (53.8 * Math.exp(-0.075 * this.reps)));
             };
             Wathan.prototype.weight = function (rm) {
                 return (rm * (48.8 + (53.8 * Math.exp(-0.075 * this.reps)))) / 100;
+            };
+            Wathan.isValid = function (gender, age, repetitions, weight) {
+                return true;
             };
             return Wathan;
         }(RMEstimator));
@@ -2418,28 +2701,45 @@ var Fit;
             aerobic.PerformanceModel = PerformanceModel;
             var Riegel = (function (_super) {
                 __extends(Riegel, _super);
-                function Riegel() {
-                    _super.apply(this, arguments);
+                function Riegel(d1, t1, factor) {
+                    if (factor === void 0) { factor = 1.06; }
+                    var _this = _super.call(this, d1, t1) || this;
+                    _this.factor = factor;
+                    return _this;
                 }
                 Riegel.prototype.time = function (d2) {
                     if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {
                         return 0;
                     }
-                    return this.t1 * Math.pow((d2 / this.d1), 1.06);
+                    return this.t1 * Math.pow((d2 / this.d1), this.factor);
                 };
                 Riegel.prototype.distance = function (t2) {
                     if (this.t1 <= 0 || this.d1 <= 0 || t2 <= 0) {
                         return 0;
                     }
-                    return this.d1 * Math.pow(t2, 50 / 53) / Math.pow(this.t1, 50 / 53);
+                    var factor = 1.0 / this.factor;
+                    return this.d1 * Math.pow(t2, factor) / Math.pow(this.t1, factor);
                 };
+                Riegel.RUNNINGMEN = 1.07732;
+                Riegel.RUNNINGMEN40 = 1.05352;
+                Riegel.RUNNINGMEN50 = 1.05374;
+                Riegel.RUNNINGMEN60 = 1.05603;
+                Riegel.RUNNINGMEN70 = 1.06370;
+                Riegel.RUNNINGWOMEN = 1.08283;
+                Riegel.SWIMMINGMEN = 1.02977;
+                Riegel.SWIMMINGWOMEN = 1.03256;
+                Riegel.NORDICMEN = 1.01421;
+                Riegel.RACEWALKMEN = 1.05379;
+                Riegel.ROLLERSKATINGMEN = 1.13709;
+                Riegel.CYCLINGMEN = 1.04834;
+                Riegel.SPEEDSKATINGMEN = 1.06017;
                 return Riegel;
             }(PerformanceModel));
             aerobic.Riegel = Riegel;
             var Cameron = (function (_super) {
                 __extends(Cameron, _super);
                 function Cameron() {
-                    _super.apply(this, arguments);
+                    return _super !== null && _super.apply(this, arguments) || this;
                 }
                 Cameron.prototype.time = function (d2) {
                     if (this.t1 <= 0 || this.d1 <= 0 || d2 <= 0) {

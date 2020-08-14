@@ -3,22 +3,18 @@ class App extends React.Component {
       super(props);
       this.state = {
           'gender': this.props.genders[0],
-          'age': 18,
+          'age': 0,
           'reps': {
              'value': 0,
           },
           'mass': {
-              'value': 0,
+              'value': '',
               'unit': null,
               'originalUnit': null
           },
-          'rm': {
-              'value': 0,
-              'unit': null,
-              'originalUnit': null
-          }
       };
       this.onGenderChange = this.onGenderChange.bind(this);
+      this.onAgeChange = this.onAgeChange.bind(this);
       this.onRepChange = this.onRepChange.bind(this);
       this.onMassChange = this.onMassChange.bind(this);
     }
@@ -32,7 +28,7 @@ class App extends React.Component {
     }
 
     onGenderChange(value) {
-        this.setState({'t1': {'value': value}});
+        this.setState({'gender': value});
     }
 
     onAgeChange(value) {
@@ -59,23 +55,19 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(this.state);
         var processors = [Fit.strength.Abadie, Fit.strength.Baechle, Fit.strength.Brzycki, Fit.strength.Epley, Fit.strength.Landers, Fit.strength.Lombardi, Fit.strength.Mayhew, Fit.strength.McGlothin, Fit.strength.OConnor, Fit.strength.Wathan],
-            display = '';
+            display = <h2 className="title text-center">Not enough information to predict 1-RM :-(</h2>;
 
         if (this.state.repetitions && this.state.mass.value && this.state.mass.originalUnit) {
-            display = <RMDisplay processors={processors} repetitions={this.state.repetitions} mass={this.state.mass} />
+            display = <div>
+                <h2 className="subtitle">1-RM estimations</h2>
+                <RMDisplay processors={processors} gender={this.state.gender} age={this.state.age} repetitions={this.state.repetitions} mass={this.state.mass} />
+            </div>
         }
         return (
             <div>
-                <div className="columns">
-                    <div className="column">
-                        <Form massUnits={this.props.massUnits} massUnit={this.props.massUnit} genders={this.props.genders} genderChange={this.onGenderChange} repChange={this.onRepChange} massChange={this.onMassChange} />
-                    </div>
-                    <div className="column">
-                        {display}
-                    </div>
-                </div>
+                <Form massUnits={this.props.massUnits} massUnit={this.props.massUnit} genders={this.props.genders} genderChange={this.onGenderChange} ageChange={this.onAgeChange} repChange={this.onRepChange} massChange={this.onMassChange} />
+                {display}
             </div>
         );
     }
