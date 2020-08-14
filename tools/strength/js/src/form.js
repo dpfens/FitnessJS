@@ -62,6 +62,7 @@ class Dropdown extends React.Component {
     onChangeHandler(event) {
         var rawValue = event.target.value,
             option = this.props.options[rawValue];
+        console.log(option);
         this.setState({'value': option});
         if (this.props.valueChange) {
             this.props.valueChange(option);
@@ -69,6 +70,7 @@ class Dropdown extends React.Component {
     }
 
     render() {
+
         return (
             <div className="field">
                 {this.label}
@@ -88,7 +90,7 @@ class UnitValue extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            'displayValue': 0,
+            'displayValue': '',
             'value': 0,
             'unit': props.units[0]
         }
@@ -132,6 +134,12 @@ class UnitValue extends React.Component {
         } else {
             label = '';
         }
+
+        var helpText = ''
+        if(this.props.helpText) {
+            helpText = <p className="help">{this.props.helpText}</p>
+        }
+
         return (
             <div className="field unit-value">
                 {label}
@@ -141,6 +149,7 @@ class UnitValue extends React.Component {
                         <select onChange={this.onUnitChange} >{this.units}</select>
                     </div>
                 </div>
+                {helpText}
             </div>
         );
     }
@@ -155,15 +164,28 @@ class Form extends React.Component {
 
   render() {
     return (
-        <form className="columns">
-            <div className="column is-half">
-                <h2 className="subtitle">You</h2>
-                <Dropdown label="Gender" options={this.props.genders} onChange={this.props.onGenderChange} />
-                <Input type="tel" label="Age" maxLength="4" valueChange={this.props.onAgeChange} />
-
+        <form className="columns is-mobile">
+            <div className="column is-half is-mobile">
+                <h2 className="subtitle">Demographics</h2>
+                <div className="columns">
+                    <div className="column is-half">
+                        <Dropdown label="Gender" options={this.props.genders} valueChange={this.props.genderChange} helpText="The gender of the athlete" />
+                    </div>
+                    <div className="column is-half">
+                        <Input type="tel" label="Age" maxLength="3" valueChange={this.props.ageChange} helpText="Age is provided in years" />
+                    </div>
+                </div>
+            </div>
+            <div className="column is-half is-mobile">
                 <h2 className="subtitle">Your Performance</h2>
-                <Input type="tel" label="Repetitions" maxLength="4" helpText="The number of full repetitions of the exercise" valueChange={this.props.repChange} />
-                <UnitValue label="Weight" maxLength="4" returnUnit={this.props.massUnit} valueChange={this.props.massChange} units={this.props.massUnits} />
+                <div className="columns">
+                    <div className="column is-half">
+                        <Input type="tel" label="Repetitions" maxLength="4" helpText="The number of full repetitions" valueChange={this.props.repChange} />
+                    </div>
+                    <div className="column is-half">
+                        <UnitValue label="Weight" maxLength="4" returnUnit={this.props.massUnit} valueChange={this.props.massChange} units={this.props.massUnits} helpText="The weight lifted for each repetition" />
+                    </div>
+                </div>
             </div>
         </form>
     );

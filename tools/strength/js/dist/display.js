@@ -19,15 +19,28 @@ var RMDisplay = function (_React$Component) {
         key: "render",
         value: function render() {
             var rows = [],
+                gender = this.props.gender.code,
+                age = this.props.age,
                 processors = this.props.processors,
                 repetitions = this.props.repetitions,
                 massValue = this.props.mass.value,
-                massUnit = this.props.mass.originalUnit.name;
+                massUnit = this.props.mass.originalUnit.code;
             for (var i = 0; i < processors.length; i++) {
-                var processor = new processors[i](repetitions),
+                var processorCls = processors[i];
+                if (!processorCls.isValid(gender, age, repetitions, massValue)) {
+                    continue;
+                }
+                var processor = new processorCls(repetitions),
                     predictedMass = processor.predict(massValue),
-                    name = processors[i].name,
-                    row = React.createElement(
+                    name = processors[i].name;
+
+                if (predictedMass < 0) {
+                    continue;
+                }
+
+                var predictedMassRender = Math.round(predictedMass * 100) / 100;
+
+                var row = React.createElement(
                     "tr",
                     { key: name },
                     React.createElement(
@@ -38,19 +51,22 @@ var RMDisplay = function (_React$Component) {
                     React.createElement(
                         "td",
                         null,
-                        predictedMass
-                    ),
-                    React.createElement(
-                        "td",
-                        null,
-                        massUnit
+                        predictedMassRender
                     )
                 );
+
                 rows.push(row);
             }
+
+            var caption = React.createElement(
+                "caption",
+                null,
+                this.props.caption
+            );
             return React.createElement(
                 "table",
-                { className: "table" },
+                { className: "table is-fullwidth" },
+                caption,
                 React.createElement(
                     "thead",
                     null,
@@ -65,12 +81,9 @@ var RMDisplay = function (_React$Component) {
                         React.createElement(
                             "th",
                             null,
-                            "Mass"
-                        ),
-                        React.createElement(
-                            "th",
-                            null,
-                            "Unit"
+                            "Mass (",
+                            massUnit,
+                            ")"
                         )
                     )
                 ),

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- Google Tag Manager>
+    <!-- Google Tag Manager-->
     <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
@@ -20,7 +20,7 @@
         })(window, document, 'script', 'dataLayer', 'GTM-NCXJXW');
     </script>
     <!-- End Google Tag Manager -->
-    <title>FitnessJS - Race Time Calculator</title>
+    <title>FitnessJS - Cardio Performance Calculator</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -71,7 +71,7 @@
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript)>
+    <!-- Google Tag Manager (noscript)-->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
@@ -117,8 +117,8 @@
                             Tools
                         </a>
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href="/FitnessJS/tools/calories">Calories</a>
-                            <a class="navbar-item" href="/FitnessJS/tools/composition">Composition</a>
+                            <!--a class="navbar-item" href="/FitnessJS/tools/calories">Calories</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/composition">Composition</a-->
                             <a class="navbar-item" href="/FitnessJS/tools/cardio-performance">Cardio Performance</a>
                             <a class="navbar-item" href="/FitnessJS/tools/strength">Strength</a>
                         </div>
@@ -141,6 +141,17 @@
         </section>
 
         <div id="app" class="container is-fluid"></div>
+
+        <section class="section">
+            <div class="container content is-medium">
+                <h2 class="title">Considerations for Performance Prediction</h2>
+                <p>Cardiovascular activities include cycling, swimming, cross-country skiing, ice skating, and more.  While there are many formulas and approaches for predicting cardio performance, this tool implements the Riegel model for running and swimming performances, and the Cameron model for running performances.</p>
+
+                <p>The Riegel formula is based on a "fatigue factor" because it determines the rate at which an athlete slows down over time and distance.  Commonly this fatigue factor is assumed to be 1.06, which is used on the "Basic" tab of the tool.  However, Peter Riegel's <a href="https://www.runscore.com/coursemeasurement/Articles/ARHE.pdf">original article</a> outlined many fatigue factor values for estimating performances across many sports to account for difference in gender and age.  If you go to the "Advanced" tab of the tool, you may find that your estimated performances will take those different fatigue factors into account.  You can find your particular fatigue factor in the rendered equations to the right of the results.  Riegel's paper provides more coefficients for male runners than any other sport-gender combination, making those running performance estimations the most gender-age specific.  Unfortunately there are one only 2 fatigue factors that are specific to women.</p>
+
+                <p>The <a href="https://www.cs.uml.edu/~phoffman/cammod.html">Cameron model</a> can only be used for running performances.  Normally, the inputs to the Cameron model would need to be converted to seconds for time and miles for distance, but this tool performs the unit conversions prior to executing the model.  </p>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -157,8 +168,12 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 
-<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<!--script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script-->
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="../../js/libs/fitness.js"></script>
