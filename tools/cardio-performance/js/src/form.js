@@ -24,9 +24,9 @@ class DurationInput extends React.Component {
             value = 0;
         }
         var totalDuration = this.calculateDuration(value, this.state.minutes, this.state.seconds);
-        this.setState({'hours': rawValue, 'value': totalDuration});
+        this.setState({'hours': value, 'value': totalDuration});
         if (this.props.valueChange) {
-            var hours = rawValue,
+            var hours = value,
                 minutes = this.state.minutes,
                 seconds = this.state.seconds;
             this.props.valueChange(totalDuration, hours, minutes, seconds);
@@ -42,10 +42,10 @@ class DurationInput extends React.Component {
             value = 0;
         }
         var totalDuration = this.calculateDuration(this.state.hours, value, this.state.seconds);
-        this.setState({'minutes': rawValue, 'value': totalDuration});
+        this.setState({'minutes': value, 'value': totalDuration});
         if (this.props.valueChange) {
             var hours = this.state.hours,
-                minutes = rawValue,
+                minutes = value,
                 seconds = this.state.seconds;
             this.props.valueChange(totalDuration, hours, minutes, seconds);
         }
@@ -60,17 +60,18 @@ class DurationInput extends React.Component {
             value = 0;
         }
         var totalDuration = this.calculateDuration(this.state.hours, this.state.minutes, value);
-        this.setState({'seconds': rawValue, 'value': totalDuration});
+        this.setState({'seconds': value, 'value': totalDuration});
         if (this.props.valueChange) {
             var hours = this.state.hours,
                 minutes = this.state.minutes,
-                seconds = rawValue;
+                seconds = value;
             this.props.valueChange(totalDuration, hours, minutes, seconds);
         }
 
     }
 
     calculateDuration(hours, minutes, seconds) {
+      console.log(hours, minutes, seconds);
         var output = hours * 3600 + minutes * 60 + seconds;
         return output;
     }
@@ -199,7 +200,14 @@ class UnitValue extends React.Component {
     }
 
     onValueChange(event) {
-        var value = event.target.value,
+        var rawValue = event.target.value,
+            value,
+            outputValue;
+        if (rawValue) {
+            value = parseFloat(rawValue)
+        } else {
+            value = 0;
+        }
         outputValue = this.calculateValue(value, this.state.unit, this.props.returnUnit);
         this.setState({'value': outputValue, 'displayValue': value});
         if (this.props.valueChange) {

@@ -56,6 +56,7 @@ class App extends React.Component {
 
     onT1Change(value, hours, minutes, seconds) {
         var obj = {'value': value, 'hours': hours, 'minutes': minutes, 'seconds': seconds};
+        console.log(obj);
         this.setState({'t1': obj});
     }
 

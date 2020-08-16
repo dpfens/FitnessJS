@@ -1,6 +1,6 @@
 'use strict';
 
-class Input extends React.Component {
+class NumberInput extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -19,8 +19,33 @@ class Input extends React.Component {
         this.onChangeHandler = this.onChangeHandler.bind(this);
     }
 
+    isValidInput(content) {
+      var validCharacters = '0123456789.';
+      for (var i = 0; i < content.length; i++) {
+        var character = content[i],
+            isValidCharacter = validCharacters.indexOf(character) > -1;
+        if (!isValidCharacter) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+
     onChangeHandler(event) {
-        var rawValue = event.target.value;
+        var rawValue = event.target.value,
+            value;
+
+        if (!this.isValidInput(rawValue)) {
+          return;
+        }
+
+        if (rawValue) {
+          value = parseFloat(rawValue);
+        } else {
+          value = 0
+        }
+
         this.setState({'value': rawValue});
         if (this.props.valueChange) {
             this.props.valueChange(rawValue);
@@ -32,7 +57,7 @@ class Input extends React.Component {
             <div className="field">
                 {this.label}
                 <p className="control">
-                    <input className="input" maxLength={this.maxLength} type={this.props.type} onChange={this.onChangeHandler} placeholder={this.props.placeholder} />
+                    <input value={this.state.value} className="input" maxLength={this.maxLength} type={this.props.type} onChange={this.onChangeHandler} placeholder={this.props.placeholder} />
                 </p>
                 {this.helpText}
             </div>
@@ -62,7 +87,6 @@ class Dropdown extends React.Component {
     onChangeHandler(event) {
         var rawValue = event.target.value,
             option = this.props.options[rawValue];
-        console.log(option);
         this.setState({'value': option});
         if (this.props.valueChange) {
             this.props.valueChange(option);
@@ -102,9 +126,16 @@ class UnitValue extends React.Component {
     }
 
     onValueChange(event) {
-        var value = event.target.value,
+        var rawValue = event.target.value,
+            value,
+            outputValue;
+        if (rawValue) {
+            value = parseFloat(rawValue);
+        } else {
+            value = 0;
+        }
         outputValue = this.calculateValue(value, this.state.unit, this.props.returnUnit);
-        this.setState({'displayValue': value});
+        this.setState({'displayValue': rawValue, 'value': value});
         if (this.props.valueChange) {
             this.props.valueChange(outputValue, value, this.state.unit);
         }
@@ -172,7 +203,7 @@ class Form extends React.Component {
                         <Dropdown label="Gender" options={this.props.genders} valueChange={this.props.genderChange} helpText="The gender of the athlete" />
                     </div>
                     <div className="column is-half">
-                        <Input type="tel" label="Age" maxLength="3" valueChange={this.props.ageChange} helpText="Age is provided in years" />
+                        <NumberInput type="tel" label="Age" maxLength="3" valueChange={this.props.ageChange} helpText="Age is provided in years" />
                     </div>
                 </div>
             </div>
@@ -180,7 +211,7 @@ class Form extends React.Component {
                 <h2 className="subtitle">Your Performance</h2>
                 <div className="columns">
                     <div className="column is-half">
-                        <Input type="tel" label="Repetitions" maxLength="4" helpText="The number of full repetitions" valueChange={this.props.repChange} />
+                        <NumberInput type="tel" label="Repetitions" maxLength="4" helpText="The number of full repetitions" valueChange={this.props.repChange} />
                     </div>
                     <div className="column is-half">
                         <UnitValue label="Weight" maxLength="4" returnUnit={this.props.massUnit} valueChange={this.props.massChange} units={this.props.massUnits} helpText="The weight lifted for each repetition" />

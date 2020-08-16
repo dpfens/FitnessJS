@@ -8,13 +8,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Input = function (_React$Component) {
-    _inherits(Input, _React$Component);
+var NumberInput = function (_React$Component) {
+    _inherits(NumberInput, _React$Component);
 
-    function Input(props) {
-        _classCallCheck(this, Input);
+    function NumberInput(props) {
+        _classCallCheck(this, NumberInput);
 
-        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (NumberInput.__proto__ || Object.getPrototypeOf(NumberInput)).call(this, props));
 
         _this.state = {
             'value': 0
@@ -41,10 +41,35 @@ var Input = function (_React$Component) {
         return _this;
     }
 
-    _createClass(Input, [{
+    _createClass(NumberInput, [{
+        key: 'isValidInput',
+        value: function isValidInput(content) {
+            var validCharacters = '0123456789.';
+            for (var i = 0; i < content.length; i++) {
+                var character = content[i],
+                    isValidCharacter = validCharacters.indexOf(character) > -1;
+                if (!isValidCharacter) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }, {
         key: 'onChangeHandler',
         value: function onChangeHandler(event) {
-            var rawValue = event.target.value;
+            var rawValue = event.target.value,
+                value;
+
+            if (!this.isValidInput(rawValue)) {
+                return;
+            }
+
+            if (rawValue) {
+                value = parseFloat(rawValue);
+            } else {
+                value = 0;
+            }
+
             this.setState({ 'value': rawValue });
             if (this.props.valueChange) {
                 this.props.valueChange(rawValue);
@@ -60,14 +85,14 @@ var Input = function (_React$Component) {
                 React.createElement(
                     'p',
                     { className: 'control' },
-                    React.createElement('input', { className: 'input', maxLength: this.maxLength, type: this.props.type, onChange: this.onChangeHandler, placeholder: this.props.placeholder })
+                    React.createElement('input', { value: this.state.value, className: 'input', maxLength: this.maxLength, type: this.props.type, onChange: this.onChangeHandler, placeholder: this.props.placeholder })
                 ),
                 this.helpText
             );
         }
     }]);
 
-    return Input;
+    return NumberInput;
 }(React.Component);
 
 var Dropdown = function (_React$Component2) {
@@ -113,7 +138,6 @@ var Dropdown = function (_React$Component2) {
         value: function onChangeHandler(event) {
             var rawValue = event.target.value,
                 option = this.props.options[rawValue];
-            console.log(option);
             this.setState({ 'value': option });
             if (this.props.valueChange) {
                 this.props.valueChange(option);
@@ -178,9 +202,16 @@ var UnitValue = function (_React$Component3) {
     _createClass(UnitValue, [{
         key: 'onValueChange',
         value: function onValueChange(event) {
-            var value = event.target.value,
-                outputValue = this.calculateValue(value, this.state.unit, this.props.returnUnit);
-            this.setState({ 'displayValue': value });
+            var rawValue = event.target.value,
+                value,
+                outputValue;
+            if (rawValue) {
+                value = parseFloat(rawValue);
+            } else {
+                value = 0;
+            }
+            outputValue = this.calculateValue(value, this.state.unit, this.props.returnUnit);
+            this.setState({ 'displayValue': rawValue, 'value': value });
             if (this.props.valueChange) {
                 this.props.valueChange(outputValue, value, this.state.unit);
             }
@@ -287,7 +318,7 @@ var Form = function (_React$Component4) {
                         React.createElement(
                             'div',
                             { className: 'column is-half' },
-                            React.createElement(Input, { type: 'tel', label: 'Age', maxLength: '3', valueChange: this.props.ageChange, helpText: 'Age is provided in years' })
+                            React.createElement(NumberInput, { type: 'tel', label: 'Age', maxLength: '3', valueChange: this.props.ageChange, helpText: 'Age is provided in years' })
                         )
                     )
                 ),
@@ -305,7 +336,7 @@ var Form = function (_React$Component4) {
                         React.createElement(
                             'div',
                             { className: 'column is-half' },
-                            React.createElement(Input, { type: 'tel', label: 'Repetitions', maxLength: '4', helpText: 'The number of full repetitions', valueChange: this.props.repChange })
+                            React.createElement(NumberInput, { type: 'tel', label: 'Repetitions', maxLength: '4', helpText: 'The number of full repetitions', valueChange: this.props.repChange })
                         ),
                         React.createElement(
                             'div',

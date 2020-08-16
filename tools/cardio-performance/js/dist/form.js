@@ -41,9 +41,9 @@ var DurationInput = function (_React$Component) {
                 value = 0;
             }
             var totalDuration = this.calculateDuration(value, this.state.minutes, this.state.seconds);
-            this.setState({ 'hours': rawValue, 'value': totalDuration });
+            this.setState({ 'hours': value, 'value': totalDuration });
             if (this.props.valueChange) {
-                var hours = rawValue,
+                var hours = value,
                     minutes = this.state.minutes,
                     seconds = this.state.seconds;
                 this.props.valueChange(totalDuration, hours, minutes, seconds);
@@ -60,10 +60,10 @@ var DurationInput = function (_React$Component) {
                 value = 0;
             }
             var totalDuration = this.calculateDuration(this.state.hours, value, this.state.seconds);
-            this.setState({ 'minutes': rawValue, 'value': totalDuration });
+            this.setState({ 'minutes': value, 'value': totalDuration });
             if (this.props.valueChange) {
                 var hours = this.state.hours,
-                    minutes = rawValue,
+                    minutes = value,
                     seconds = this.state.seconds;
                 this.props.valueChange(totalDuration, hours, minutes, seconds);
             }
@@ -79,17 +79,18 @@ var DurationInput = function (_React$Component) {
                 value = 0;
             }
             var totalDuration = this.calculateDuration(this.state.hours, this.state.minutes, value);
-            this.setState({ 'seconds': rawValue, 'value': totalDuration });
+            this.setState({ 'seconds': value, 'value': totalDuration });
             if (this.props.valueChange) {
                 var hours = this.state.hours,
                     minutes = this.state.minutes,
-                    seconds = rawValue;
+                    seconds = value;
                 this.props.valueChange(totalDuration, hours, minutes, seconds);
             }
         }
     }, {
         key: 'calculateDuration',
         value: function calculateDuration(hours, minutes, seconds) {
+            console.log(hours, minutes, seconds);
             var output = hours * 3600 + minutes * 60 + seconds;
             return output;
         }
@@ -303,8 +304,15 @@ var UnitValue = function (_React$Component4) {
     _createClass(UnitValue, [{
         key: 'onValueChange',
         value: function onValueChange(event) {
-            var value = event.target.value,
-                outputValue = this.calculateValue(value, this.state.unit, this.props.returnUnit);
+            var rawValue = event.target.value,
+                value,
+                outputValue;
+            if (rawValue) {
+                value = parseFloat(rawValue);
+            } else {
+                value = 0;
+            }
+            outputValue = this.calculateValue(value, this.state.unit, this.props.returnUnit);
             this.setState({ 'value': outputValue, 'displayValue': value });
             if (this.props.valueChange) {
                 this.props.valueChange(outputValue, value, this.state.unit);

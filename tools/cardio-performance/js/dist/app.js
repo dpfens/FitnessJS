@@ -73,6 +73,7 @@ var App = function (_React$Component) {
         key: 'onT1Change',
         value: function onT1Change(value, hours, minutes, seconds) {
             var obj = { 'value': value, 'hours': hours, 'minutes': minutes, 'seconds': seconds };
+            console.log(obj);
             this.setState({ 't1': obj });
         }
     }, {
