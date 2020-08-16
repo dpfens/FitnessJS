@@ -2,28 +2,27 @@
 <html lang="en">
 
 <head>
-    <!-- Google Tag Manager >
+    <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NCXJXW');</script>
     <!-- End Google Tag Manager -->
-    <title>FitnessJS - Calorie Calculator</title>
+    <title>FitnessJS - Energy Expenditure</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="health,wellness,fitness,physical fitness,physical activity,diet,nutrition,calories,energy expenditure,bmr,rmr,tee,physical activity level,weight loss,weight gain,calories burned">
     <meta name="description" content="A tool for estimating and comparing calories burned across genders, age groups, and levels of physical activity by BMR, RMR, and total energy expenditure.">
-    <meta name="robots" content="noindex"/>
 
     <!-- Open Graph Tags -->
-    <meta >
-    <meta >
+    <meta id="meta-title" property="og:title" content="Energy Expenditure Estimator">
+    <meta id="meta-description" property="og:description" content="Estimate the energyu expenditure of a person based on their demographic information and physical activity levels.">
     <meta property="og:type" content="product">
-    <meta >
-    <meta property="og:url" content="https://dpfens.github.io/FitnessJS/tools/calories/">
+    <meta id="meta-image" property="og:image" content="https://dpfens.github.io/FitnessJS/assets/track-rubber.jpg">
+    <meta property="og:url" content="https://dpfens.github.io/FitnessJS/tools/energy/">
     <meta name="twitter:card" content="summary_large_image" />
 
     <!--  Non-Essential, But Recommended -->
@@ -35,7 +34,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta property="fb:app_id" content="1762255830763736" />
     <meta name="twitter:site" content="@DougFenstermach">
 
-    <link rel="canonical" href="https://dpfens.github.io/FitnessJS/tools/calories/" />
+    <link rel="canonical" href="https://dpfens.github.io/FitnessJS/tools/energy/" />
 
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#29ABE2" />
@@ -46,7 +45,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="manifest" href="manifest.json">
 
     <link rel="dns-prefetch" href="https://storage.googleapis.com"/>
     <link rel="dns-prefetch" href="https://www.google-analytics.com"/>
@@ -62,7 +60,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 
 <body
-    <!-- Google Tag Manager (noscript) >
+    <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NCXJXW"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
@@ -95,8 +93,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             Tools
                         </a>
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href="/FitnessJS/tools/calories">Calories</a>
-                            <a class="navbar-item" href="/FitnessJS/tools/composition">Composition</a>
+                            <a class="navbar-item" href="/FitnessJS/tools/energy">Energy</a>
+                            <!--a class="navbar-item" href="/FitnessJS/tools/composition">Composition</a-->
                             <a class="navbar-item" href="/FitnessJS/tools/cardio-performance">Cardio Performance</a>
                             <a class="navbar-item" href="/FitnessJS/tools/strength">Strength</a>
                         </div>
@@ -109,6 +107,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </header>
 
     <main>
+        <section class="hero is-dark">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Energy Expenditure Estimation</h1>
+                    <p></p>
+                </div>
+            </div>
+        </section>
+
+        <div id="app" class="container is-fluid"></div>
+
+        <section class="section">
+            <div class="container content is-medium">
+                <h2 class="title"></h2>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -121,9 +135,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </footer>
 </body>
 
+<link rel="stylesheet" href="css/style.css">
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
+<script type="text/javascript" src="../../js/libs/fitness.js"></script>
+<script type="text/javascript" src="js/dist/form.js" defer async></script>
+<script type="text/javascript" src="js/dist/display.js" defer async></script>
 <script type="text/javascript" src="js/dist/app.js" defer async></script>
 <script type="text/javascript" src="../../js/layout.js" defer async></script>
 

@@ -1,0 +1,13 @@
+div.select.multiple select {
+    display: inline-block;
+}
+
+.unit-value input {
+    min-width: 4em;
+    width: 10%;
+    margin-right: 0.2em;
+}
+
+.unit-value select {
+    width: 8em;
+}

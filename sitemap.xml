@@ -12,9 +12,16 @@
         <priority>0.80</priority>
     </url>
     <url>
+        <loc>https://dpfens.github.io/FitnessJS/tools/energy</loc>
+        <lastmod>2020-08-16T20:24:55+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+    <url>
         <loc>https://dpfens.github.io/FitnessJS/tools/strength</loc>
         <lastmod>2020-08-15T20:24:55+00:00</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.80</priority>
     </url>
+
 </urlset>
