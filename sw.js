@@ -1,7 +1,9 @@
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+
 const CACHE_NAME = 'offline-html';
 // This assumes /offline.html is a URL for your self-contained
 // (no external images or styles) offline page.
-const FALLBACK_HTML_URL = '/stopwatch/';
+const FALLBACK_HTML_URL = '/FitnessJS/';
 // Populate the cache with the offline HTML page when the
 // service worker is installed.
 self.addEventListener('install', async (event) => {
