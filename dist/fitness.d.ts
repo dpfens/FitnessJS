@@ -55,9 +55,9 @@ declare namespace Fit {
 declare namespace Fit {
     namespace mets {
         class MET {
-            value: number;
-            code: string;
-            description: string;
+            readonly value: number;
+            readonly code: string;
+            readonly description: string;
             constructor(value: number, code: string, description: string);
         }
         function byCode(code: string): MET;
