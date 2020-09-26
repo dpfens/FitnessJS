@@ -134,6 +134,8 @@
                 <h1 class="title">FitnessJS</h1>
                 <h2 class="subtitle">A library for body composition, cardiovascular, and strength estimation and athletic performance prediction.</h2>
                 <p>FitnessJS is a functions for performing all types of peer-reviewed exercise-related calculations ranging from anthropometry calculations to running performance prediction.  These functions and classes are built to be modular, so that your source code will not need to be modified to to swap in a new formula.</p>
+                <p>FitnessJS is implemented in <a href="https://www.typescriptlang.org/">Typescript</a> and includes Typescript declarations for writing safer code and preventing errors early.</p>
+
             </div>
         </section>
 
@@ -202,16 +204,11 @@
 
                         <p>All estimators are <code>class</code> definitions that implement the same interface:</p>
 
-                        <pre><code class="lang-javascript">function Estimator(age) {
-    this.age = age;
-}
+                        <pre><code class="language-typescript">interface Estimator {
+    predict(dob: Date); // returns hearted rates in beats per minute (BPM)
 
-Estimator.prototype.predict = function(dateOfBirth) {
-    return heartRateMax;
-}
+    age(hr: number); // returns age in years
 
-Estimator.prototype.age = function(heartRate) {
-    return ageInYears;
 }</code></pre>
 
                         <p>This consistent interface is intended, so developers can more easily write applications that can dynamically use different <code>Estimator</code> classes to perform the estimation based on the demographics of the individual.</p>
@@ -225,25 +222,48 @@ Estimator.prototype.age = function(heartRate) {
 
                         <p>All BMR estimators are <code>class</code> definitions that implement the same interface:</p>
 
-                        <pre><code class="lang-javascript">function BMREstimator(gender) {
-    this.gender = gender;
-}
+                        <pre><code class="language-typescript">class BMREstimator {
+      public gender: Gender;
 
-BMREstimator.prototype.predict = function(dateOfBirth, weight, height) {
-    return bmrInKilocalories;
+      constructor(gender: Gender) {
+        this.gender = gender;
+      }
+
+      predict(dob: Date, weight: number, height: number): number {
+        return bmrInKilocalories;
+      }
+
 }</code></pre>
 
                         <p>where <code>gender</code> is one of <code>Fit.Gender.Male</code> or <code>Fit.Gender.Female</code>.</p>
 
                         <p>All <abbr title="Total Energy Expenditure"></abbr> estimators are <code>class</code> definitions that implement the same interface as well:</p>
 
-                        <pre><code class="lang-javascript">function TEEEstimator(gender, pal) {
+                        <pre><code class="language-typescript">function TEEEstimator(gender, pal) {
     this.gender = gender;
     this.pal = pal;
 }
 
 TEEEstimator.prototype.predict = function(dateOfBirth, weight, height) {
     return teeInKilocalories;
+}
+
+class TEEEstimator {
+    public gender: Gender;
+    public pal: PAL;
+
+    constructor(gender: Gender, pal: PAL) {
+        this.gender = gender;
+        this.pal = pal;
+    }
+
+    predict(dob: Date, weight: number, height: number): number {
+        return teeInKilocalories;
+    }
+
+    fromActivity(weight: number, mets: number): number {
+        return teeInKilocalories;
+    }
 }</code></pre>
                         <p>where a <code>pal</code> is one of <code>Fit.PAL.Sedentary</code>, <code>Fit.PAL.Low</code>, <code>Fit.PAL.Active</code>, or <code>Fit.PAL.VeryActive</code>.</p>
                     </div>
@@ -328,10 +348,25 @@ TEEEstimator.prototype.predict = function(dateOfBirth, weight, height) {
                     <div class="hero-body">
                         <div class="container">
                             <h2 class="title">Conversion</h2>
-                            <h3 class="subtitle"></h3>
+                            <h3 class="subtitle">For making unit conversions painless</h3>
+                            <p>The library includes logic for easily performing unit conversions.</p>
+                            <ul>
+                                <li><code>SwainConverter</code> for converting between VO<sub>2 Max</sub> and Percent HR<sub>Max</sub></li>
+                                <li><p><code>UnitConverter</code> for standard unit conversion.  Here is an example of converting meters to feet:</p>
+
+                                  <pre><code class="language-typescript">let convertedValue: number =  new Fit.conversion.UnitConverter(1609.34, 'm').to('feet').val();  // 5280</code></pre>
+
+                                  <p>This converter can be extended dynamically to include more units using the <code>addUnit</code> static method.</p>
+                                </li>
+                                <li><p><code>TemperatureConverter</code> for temperature conversion between Farenheit, Celsius, and Kelvin.  This can used similarly to the <code>UnitConverter</code>:</p>
+
+                                  <pre><code class="language-typescript">let convertedTemperature: number =  new Fit.conversion.TemperatureConverter(32, 'F').to('C').val() // convert Farenheit to Celsius</code></pre>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </section>
+
 
                 <section class="hero is-primary" id="models">
                     <div class="hero-body">
@@ -347,19 +382,21 @@ TEEEstimator.prototype.predict = function(dateOfBirth, weight, height) {
                         <h3 class="subtitle">Aerobic</h3>
                         <p>A collection of models for prediction performance across aerobic sports, such as the Riegel and Cameron models.</p>
 
-                        <p>The <code>Riegel</code> and <code>Cameron</code> models use the same <code>PerformanceModel</code> interface:</p>
+                        <p>The <code>Riegel</code> and <code>Cameron</code> models inherit from the <code>PerformanceModel</code> class:</p>
 
-                        <pre><code class="language-javascript">function PerformanceModel(d1, t1) {
-    this.d1 = d1;
-    this.t1 = t1;
-}
+                        <pre><code class="language-typescript">abstract class PerformanceModel {
+    protected t1: number;
+    protected d1: number;
 
-PerformanceModel.prototype.time = function(d2) {
-    return t2;
-}
+    constructor(d1: number, t1: number) {
+      this.d1 = d1;
+      this.t1 = t1;
+    }
 
-PerformanceModel.prototype.distance = function(t2) {
-    return d2;
+    time(d2: number): number { return 0}
+
+    distance(t2: number): number { return 0}
+
 }</code></pre>
 
                         <p>where <code>t1</code> and <code>d1</code> correspond to the time and distance of a base-line performance.  <code>t2</code> and <code>d2</code> correspond to the time and distance of the predicted performance.  By using the same interface, the <code>Riegel</code> and <code>Cameron</code> models can be used interchangeably.</p>
@@ -393,13 +430,25 @@ PerformanceModel.prototype.distance = function(t2) {
 
                             <p>All <abbr title="1 Repetition Maximum">1-RM</abbr> estimators are <code>class</code> definitions that implement the same interface as well:</p>
 
-                            <pre><code class="lang-javascript">function RMEstimator(reps) {
-    this.reps = reps;
-}
+                            <pre><code class="language-typescript">class RMEstimator {
+  public reps: number;
 
-RMEstimator.prototype.predict = function(weight) {
-    return 1RepetitionMaximumInKg;
-}</code></pre>
+    constructor(reps: number) {
+        this.reps = reps;
+    }
+
+    predict(weight: number): number {
+        // calculations ...
+        return weightInKilograms;
+    }
+
+    static isValid(gender: Gender, age: number, repetitions: number, weight: number): boolean {
+        return RMEstimatorSubclassIsValid;
+    }
+}
+</code></pre>
+
+                            <p>where <code>isValid</code> can be used to dynamically determine if an <code>RMEstimator</code> can be applied to a given demographic or performance.</p>
                         </div>
                     </div>
                 </section>
@@ -419,7 +468,7 @@ RMEstimator.prototype.predict = function(weight) {
 
 </body>
 <link rel="stylesheet" href="css/prism.css">
-<script type="text/javascript" src="js/libs/prism.js" defer async></script>
+<script type="text/javascript" src="js/libs/prism.js" async></script>
 <script type="text/javascript" src="js/lazy.js" defer async></script>
 <script type="text/javascript" src="js/layout.js" defer async></script>
 </html>
