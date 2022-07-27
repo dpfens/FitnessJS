@@ -18,13 +18,17 @@ class RMDisplay extends React.Component {
                 continue;
             }
             var processor = new processorCls(repetitions),
-                predictedMass = processor.predict(massValue),
+                predictedMassKg = processor.predict(massValue),
                 name = processors[i].name;
 
-            if (predictedMass < 0) {
+            if (predictedMassKg < 0) {
                 continue;
             }
 
+            var predictedMass = predictedMassKg;
+            if (massUnit === 'lb') {
+              predictedMass = predictedMassKg * 2.2;
+            }
             var predictedMassRender = Math.round(predictedMass * 100 ) / 100;
 
             var row = <tr key={name}>
