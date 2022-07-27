@@ -132,12 +132,12 @@
         <section class="section">
             <div class="container content is-medium">
                 <h2 class="title">1-RM</h2>
-                <p>The <abbr title="One-repetition Maximum">1-RM</abbr> is the maximum weight a person can lift for one repetition.  1-RM can be used as an upper bound for weight training load, where the load is measured as a percentage of the 1-RM.</p>
+                <p>The <abbr title="One-repetition Maximum">1-RM</abbr> is the maximum weight a person can lift for one repetition.  <a ref="https://en.wikipedia.org/wiki/One-repetition_maximum">1-RM</a> can be used as an upper bound for weight training load, where the load is measured as a percentage of the 1-RM.</p>
 
                 <p>Maximal testing for 1-RM may not be safe and should only be performed with safety measures by experienced weight lifters.  A submaximal testing approach is safer and can be used by less experienced weight lifters to estimate 1-RM without taking on the safety risks.  The 1-RM estimators could understimate an individual's real 1-RM in cases where the individual is inexperienced, or less muscular.  These 1-RM estimators are modelled on the performances of experienced weight lifters.</p>
 
                 <h3 class="subtitle is-4">Choosing the right model</h3>
-                <p>Each estimation method is modelled on the performances of a specific demographic, and should only be applied to individuals and performances that fit that criteria of the model. The above application only renders the 1-RM estimation for applicable models based on the information provided. For information on each model, including the demographics and limitations, see the wiki on <a href="">1-RM Estimators</a>.</p>
+                <p>Each estimation method is modelled on the performances of a specific demographic, and should only be applied to individuals and performances that fit that criteria of the model. The above application only renders the 1-RM estimation for applicable models based on the information provided. For information on each model, including the demographics and limitations, see the wiki on <a href="https://github.com/dpfens/FitnessJS/wiki/Strength">1-RM Estimators</a>.</p>
 
                 <p><b>For developers:</b> each <code>Fit.strength.RMEstimator</code> has an <code>isValid</code> method.  Based on the <code>Fit.Gender</code>, age, repetitions, and weight of the submaximal test, the method will return <code>true</code> or <code>false</code> to indicate if the model can/should be used to predict the 1-RM of the individual.  This way the developer can write applications to dynamically choose models.</p>
 
