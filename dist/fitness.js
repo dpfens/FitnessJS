@@ -6,6 +6,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -58,7 +60,7 @@ var Fit;
                     var target = unitTable[this.targetUnit];
                     var current = unitTable[this.currentUnit];
                     if (!target || !current || target.base != current.base) {
-                        throw new Error("Conversion not possible: " + this.currentUnit + " -> " + this.targetUnit);
+                        throw new Error("Conversion not possible: ".concat(this.currentUnit, " -> ").concat(this.targetUnit));
                     }
                     return this.value * (current.multiplier / target.multiplier);
                 };
@@ -213,7 +215,7 @@ var Fit;
                     var currentUnit = this.currentUnit.toUpperCase();
                     var targetUnit = this.targetUnit.toUpperCase();
                     if (!temperatureTable[currentUnit] || !temperatureTable[currentUnit][targetUnit]) {
-                        throw new Error("Conversion not possible: &deg;" + this.currentUnit + " -> &deg;" + this.targetUnit);
+                        throw new Error("Conversion not possible: &deg;".concat(this.currentUnit, " -> &deg;").concat(this.targetUnit));
                     }
                     var conversionFunction = temperatureTable[currentUnit][targetUnit];
                     return conversionFunction(this.value);
