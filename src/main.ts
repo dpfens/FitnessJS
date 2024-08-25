@@ -12,4 +12,5 @@
 /// <reference path="strength/strength.ts" />
 
 /// <reference path="models/aerobic.ts" />
+/// <reference path="models/anaerobic.ts" />
 /// <reference path="sport/sport.ts" />

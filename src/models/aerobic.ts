@@ -1,3 +1,5 @@
+/// <reference path='interface.ts'/>
+
 namespace Fit {
 
   export namespace model {
@@ -20,7 +22,7 @@ namespace Fit {
       }
 
 
-      export class Riegel extends PerformanceModel {
+      export class Riegel extends PerformanceModel implements DistanceEstimatable, TimeEstimatable {
         /*
           Riegel Running Model
           @description Error rate 4.1% according to http://cs229.stanford.edu/proj2015/247_report.pdf
@@ -85,7 +87,7 @@ namespace Fit {
 
       }
 
-      export class Cameron extends PerformanceModel {
+      export class Cameron extends PerformanceModel implements DistanceEstimatable, TimeEstimatable {
         /*
           Cameron Running Model
           @description Works well for:
@@ -107,7 +109,7 @@ namespace Fit {
       }
 
 
-      export class VV {
+      export class VV implements TimeEstimatable {
         protected t1;
         protected d1;
 

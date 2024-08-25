@@ -526,6 +526,12 @@ declare namespace Fit {
         }
     }
 }
+interface DistanceEstimatable {
+    distance(t2: number): number;
+}
+interface TimeEstimatable {
+    time(d2: number): number;
+}
 declare namespace Fit {
     namespace model {
         namespace aerobic {
@@ -536,7 +542,7 @@ declare namespace Fit {
                 time(d2: number): number;
                 distance(t2: number): number;
             }
-            class Riegel extends PerformanceModel {
+            class Riegel extends PerformanceModel implements DistanceEstimatable, TimeEstimatable {
                 private factor;
                 static readonly RUNNINGMEN: number;
                 static readonly RUNNINGMEN40: number;
@@ -555,10 +561,10 @@ declare namespace Fit {
                 time(d2: number): number;
                 distance(t2: number): number;
             }
-            class Cameron extends PerformanceModel {
+            class Cameron extends PerformanceModel implements DistanceEstimatable, TimeEstimatable {
                 time(d2: number): number;
             }
-            class VV {
+            class VV implements TimeEstimatable {
                 protected t1: any;
                 protected d1: any;
                 constructor(d1: number, t1: number);
@@ -567,6 +573,12 @@ declare namespace Fit {
                 time(mileage: any, d2?: number): number;
                 time2(mileage: number, d2: number, t2: number, distance?: number): number;
             }
+        }
+    }
+}
+declare namespace Fit {
+    namespace model {
+        namespace anaerobic {
         }
     }
 }
