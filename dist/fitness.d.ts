@@ -130,8 +130,8 @@ declare namespace Fit {
     namespace cardio {
         namespace cardiac {
             interface Estimator {
-                predict(dob: Date): any;
-                age(hr: number): any;
+                predict(dob: Date): number;
+                age(hr: number): number;
             }
             class Astrand implements Estimator {
                 predict(dob: Date): number;
@@ -568,8 +568,8 @@ declare namespace Fit {
                 protected t1: any;
                 protected d1: any;
                 constructor(d1: number, t1: number);
-                adj_timer(d1: number, t1: number): number;
-                riegel_velocity(distance: number): number;
+                protected adj_timer(d1: number, t1: number): number;
+                protected riegel_velocity(distance: number): number;
                 time(mileage: any, d2?: number): number;
                 time2(mileage: number, d2: number, t2: number, distance?: number): number;
             }
