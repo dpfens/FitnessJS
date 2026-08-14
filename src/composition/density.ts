@@ -1,136 +1,203 @@
-/// <reference path="../enums.ts" />
+import { Gender } from "../enums.js";
 
-/*
-Body Density
-*/
+export interface SkinfoldDensityParams {
+  gender: Gender;
+  age: number;
+  sum: number; // skinfold sum in mm; which skinfolds depends on the Estimator
+}
 
-namespace Fit {
+/**
+ * Estimator interface for skinfold-based body density (%body density)
+ * estimation formulas.
+ */
+export interface SkinfoldDensityEstimator {
+  estimate(params: SkinfoldDensityParams): number;
+}
 
-	export namespace composition {
+/** Skinfold density formula for children */
+export class SkinfoldDensityChildEstimator implements SkinfoldDensityEstimator {
+  /**
+   * @param sum - sum2SKF in mm
+   * @returns %body density
+   */
+  estimate({ gender, sum }: SkinfoldDensityParams): number {
+    if (gender === Gender.Female) {
+      return 0.61 * sum + 5.1;
+    }
+    return 0.735 * sum + 1.0;
+  }
+}
 
-		/*
-		creates a new Density instance
-		@class
-		@classdesc creates a Density class for body density calculations
-		*/
-		export class Density {
-			private gender: Gender;
-	    private dob: Date;
-	    private height: number;
-	    private weight: number;
+/** Skinfold density formula for Black and Hispanic females (and, per the original formula, non-females) */
+export class SkinfoldDensityBlackHispanicFemaleEstimator
+  implements SkinfoldDensityEstimator
+{
+  /**
+   * @param sum - sum7SKF in mm (chest + abdomen + thigh + triceps + subscapular + suprailiac + midaxilla)
+   * @returns %body density
+   */
+  estimate({ gender, age, sum }: SkinfoldDensityParams): number {
+    if (gender === Gender.Female) {
+      return (
+        1.097 - 0.00046971 * sum + 0.00000056 * Math.pow(sum, 2) - 0.00012828 * age
+      );
+    }
+    return (
+      1.112 - 0.00043499 * sum + 0.00000055 * Math.pow(sum, 2) - 0.00028826 * age
+    );
+  }
+}
 
-			constructor(gender: Gender, dob: Date, height: number, weight: number) {
-	      this.gender = gender;
-	      this.dob = dob;
-	      this.height = height;
-	      this.weight = weight;
-	    }
+/** Skinfold density formula for white males (per the original formula, gender-independent) */
+export class SkinfoldDensityWhiteMaleEstimator
+  implements SkinfoldDensityEstimator
+{
+  /**
+   * @param sum - sum3SKF in mm (chest + abdomen + thigh)
+   * @returns %body density
+   */
+  estimate({ age, sum }: SkinfoldDensityParams): number {
+    return (
+      1.10938 - 0.0008267 * sum + 0.0000016 * Math.pow(sum, 2) - 0.0002574 * age
+    );
+  }
+}
 
-			/*
-			@param {Number} bd at TLCNS in g/cc
-			returns {Number} Body density at residual volume in g/cc
-			*/
-			dbAtRV = function(bd: number): number {
-				if(this.gender === Gender.Female) {
-					return 0.4745 * bd + 0.5173;
-				}
-				return 0.5829 * bd + 0.4059;
-			}
+/** Skinfold density formula for white females with anorexia */
+export class SkinfoldDensityWhiteFemaleAnorexicEstimator
+  implements SkinfoldDensityEstimator
+{
+  /**
+   * @param sum - sum3SKF in mm (triceps + suprailiac + thigh)
+   * @returns %body density
+   */
+  estimate({ age, sum }: SkinfoldDensityParams): number {
+    return (
+      1.0994921 -
+      0.0009929 * sum +
+      0.0000023 * Math.pow(sum, 2) -
+      0.00001392 * age
+    );
+  }
+}
 
-			/*
-			@param {Number} sum2SKF in millimeters
-			@return {Number} %body density
-			*/
-			skinfoldDbChild = function(sum2SKF: number): number {
-			  if(this.gender === Gender.Female) {
-			    return (0.610*sum2SKF) + 5.1;
-			  }
-			  return (0.735*sum2SKF) + 1.0;
-			}
+/** Skinfold density formula for athletes */
+export class SkinfoldDensityAthleteEstimator
+  implements SkinfoldDensityEstimator
+{
+  /**
+   * @param sum - female: sum4SKF (triceps + anterior suprailiac + abdomen + thigh);
+   *              male: sum7SKF (chest + abdomen + thigh + triceps + subscapular + suprailiac + midaxilla)
+   * @returns body density in g/cc
+   */
+  estimate({ gender, age, sum }: SkinfoldDensityParams): number {
+    if (gender === Gender.Female) {
+      return (
+        1.096095 - 0.0006952 * sum + 0.0000011 * Math.pow(sum, 2) - 0.0000714 * age
+      );
+    }
+    return (
+      1.112 - 0.00043499 * sum + 0.00000055 * Math.pow(sum, 2) - 0.00028826 * age
+    );
+  }
+}
 
-			/*
-			@param {Number} sum7SKF in millimeters (chest + abdomen + thigh + triceps + subscapular + suprailiac + midaxilla)
-			@return {Number} %body density
-			*/
-			skinfoldDbBlackHispanicFemale = function(sum7SKF: number): number {
-				let age = this.dob.delta("years");
-			  if(this.gender === Gender.Female) {
-			    return 1.0970 - (0.00046971*sum7SKF) + (0.00000056*Math.pow(sum7SKF, 2)) - (0.00012828*age);
-			  }
-				return 1.112 - (0.00043499*sum7SKF) + (0.00000055*Math.pow(sum7SKF, 2)) - (0.00028826*age);
-			}
+/** Skinfold density formula for Black collegiate athletes, ages 18-34 */
+export class SkinfoldDensityCollegiateAthleteBlackEstimator
+  implements SkinfoldDensityEstimator
+{
+  /**
+   * @param sum - sum3SKF in mm (abdomen + thigh + triceps)
+   * @returns body density in g/cc
+   */
+  estimate({ gender, sum }: SkinfoldDensityParams): number {
+    if (gender === Gender.Female) {
+      return 8.997 + 0.2468 * sum - 1.998;
+    }
+    return 8.997 + 0.2468 * sum - 6.343 * 1 - 1.998;
+  }
+}
 
-			/*
-			@param {Number} sum3SKF in millimeters (chest + abdomen + thigh)
-			@return {Number} %body density
-			*/
-			skinfoldDbWhiteMale = function(sum3SKF: number): number {
-				let age = this.dob.delta("years");
-				return  1.10938 - (0.0008267*sum3SKF) + (0.0000016*Math.pow(sum3SKF, 2)) - (0.0002574*age);
-			}
+/** Skinfold density formula for white collegiate athletes, ages 18-34 */
+export class SkinfoldDensityCollegiateAthleteWhiteEstimator
+  implements SkinfoldDensityEstimator
+{
+  /**
+   * @param sum - sum3SKF in mm (abdomen + thigh + triceps)
+   * @returns body density in g/cc
+   */
+  estimate({ gender, sum }: SkinfoldDensityParams): number {
+    if (gender === Gender.Female) {
+      return 8.997 + 0.2468 * sum;
+    }
+    return 8.997 + 0.2468 * sum - 6.343 * 1;
+  }
+}
 
-			/*
-			@param {Number} sum3SKF in millimeters (triceps + suprailiac + thigh)
-			@return {Number} %body density
-			*/
-			skinfoldDbWhiteFemaleAnorexic = function(sum3SKF: number): number {
-				let age = this.dob.delta("years");
-				return 1.0994921 - (0.0009929*sum3SKF) + (0.0000023*Math.pow(sum3SKF, 2)) - (0.00001392*age);
-			}
+/**
+ * @class
+ * @classdesc computes body density and body volume, delegating skinfold-based
+ * density estimation to a pluggable SkinfoldDensityEstimator
+ */
+export class Density {
+  private gender: Gender;
+  private age: number;
+  private weight: number;
+  private skinfoldEstimator?: SkinfoldDensityEstimator;
 
-			/*
-			@param {Number} sum in mm (adbodem + thigh + triceps)
-			@returns {Number} body density in g/cc
-			*/
-			skinfoldDbAthlete = function(sum: number): number {
-				let age = this.dob.delta("years");
-			  if(this.gender === Gender.Female) {
-					// sum is sum4SKF (triceps + anterior suprailiac + abdomen + thigh)
-			    return 1.096095 - (0.0006952*sum) + (0.0000011*Math.pow(sum, 2)) - (0.0000714*age);
-			  }
-				// sum is sum7SKF (chest + abdomen + thigh + triceps + subscapular + suprailiac + midaxilla)
-				return 1.112 - (0.00043499*sum) + (0.00000055*Math.pow(sum, 2)) - (0.00028826*age) ;
-			}
+  constructor(
+    gender: Gender,
+    age: number,
+    weight: number,
+    skinfoldEstimator?: SkinfoldDensityEstimator
+  ) {
+    this.gender = gender;
+    this.age = age;
+    this.weight = weight;
+    this.skinfoldEstimator = skinfoldEstimator;
+  }
 
-			/*
-			@description For use with black collegiate athletes, 18-34
-			@param {Number} sum3SKF in mm (adbodem + thigh + triceps)
-			@returns {Number} body density in g/cc
-			*/
-			skinfoldDbCollegiateAthleteBlack = function(sum): number {
-			  if(this.gender === Gender.Female) {
-			    return  8.997 + (0.2468*sum) - (1.998);
-			  }
-				return 8.997 + (0.2468*sum) - (6.343 * 1) - (1.998);
-			}
+  setSkinfoldEstimator(Estimator: SkinfoldDensityEstimator): void {
+    this.skinfoldEstimator = Estimator;
+  }
 
-			/*
-			@description For use with white collegiate athletes, 18-34
-			@param {Number} sum3SKF in mm (abdomen + thigh + triceps)
-			@returns {Number} body density in g/cc
-			*/
-			skinfoldDbCollegiateAthleteWhite = function(sum3SKF: number): number {
-			  if(this.gender === Gender.Female) {
-			    return 8.997 + (0.2468*sum3SKF);
-			  }
-				return 8.997 + (0.2468*sum3SKF) - (6.343 * 1);
-			}
+  /**
+   * Delegates to the configured skinfold density Estimator.
+   * @param sum - skinfold sum in mm; which skinfolds are summed depends on the Estimator in use
+   * @returns %body density (or body density in g/cc, depending on Estimator)
+   */
+  skinfoldDb(sum: number): number {
+    if (!this.skinfoldEstimator) {
+      throw new Error("No skinfold density Estimator set.");
+    }
+    return this.skinfoldEstimator.estimate({
+      gender: this.gender,
+      age: this.age,
+      sum,
+    });
+  }
 
-			/*
-			Body Volume
-			uww = underwater this.weight
-			rb = residual volume in mL
-			gv = volume of air in gastrointestinal tract(default: 100mL)
-			*/
+  /**
+   * Converts body density at total lung capacity (TLC) to body density
+   * at residual volume (RV).
+   * @param bd - body density at TLC in g/cc
+   * @returns body density at residual volume in g/cc
+   */
+  dbAtRV(bd: number): number {
+    if (this.gender === Gender.Female) {
+      return 0.4745 * bd + 0.5173;
+    }
+    return 0.5829 * bd + 0.4059;
+  }
 
-			bodyVol = function(uww: number, rv: number, gv: number): number {
-			    let waterDensity = 1;
-			    return ((this.weight - uww)/ waterDensity) - (rv - gv);
-			}
-
-		}
-
-	}
-
-
+  /**
+   * Computes body volume from underwater weighing.
+   * @param uww - underwater weight
+   * @param rv - residual volume in mL
+   * @param gv - volume of air in the gastrointestinal tract in mL (default: 100mL)
+   * @returns body volume
+   */
+  bodyVol(uww: number, rv: number, gv: number): number {
+    return (this.weight - uww) / 1.0 - (rv - gv);
+  }
 }

@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "types": [],
+
+    // Environment
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+
+    // Module handling — "Preserve" + "bundler" is the correct pair for Rollup
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+
+    // Output
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+
+    // Correctness
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Interop
+    "importHelpers": true,
+    "skipLibCheck": false,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}
