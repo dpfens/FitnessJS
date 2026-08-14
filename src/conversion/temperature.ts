@@ -1,57 +1,56 @@
-namespace Fit {
+export type TemperatureUnit = 'C' | 'F' | 'K' | 'R';
 
-  export module conversion {
-    let temperatureTable: any = {
-      C: {
-        F: function(c: number): number { return c * 9/5 + 32; },
-        K: function(c: number): number { return c + 273.15; },
-        R: function(c: number): number { return c * 9/5 + 491.67; }
-      },
-      F: {
-        C: function(f: number): number { return (f-32) * 5/9; },
-        K: function(f: number): number { return (f+459.67)*5/9; },
-        R: function(f: number): number { return f + 459.67; }
-      },
-      K: {
-        C: function(k: number): number { return k - 273.15; },
-        F: function(k: number): number { return k * 9/5 - 459.67;},
-        R: function(k: number): number { return k * 9/5; }
-      },
-      R: {
-        C: function(r: number): number { return r * 5/9 - 273.15; },
-        F: function(r: number): number { return r - 459.67; },
-        K: function(r: number): number { return r * 5/9; }
-      }
-    };
+type ConversionFn = (value: number) => number;
 
-    export class TemperatureConverter {
-      private value;
-      private currentUnit;
+const temperatureTable: Record<TemperatureUnit, Partial<Record<TemperatureUnit, ConversionFn>>> = {
+  C: {
+    F: (c) => c * 9 / 5 + 32,
+    K: (c) => c + 273.15,
+    R: (c) => c * 9 / 5 + 491.67,
+  },
+  F: {
+    C: (f) => (f - 32) * 5 / 9,
+    K: (f) => (f + 459.67) * 5 / 9,
+    R: (f) => f + 459.67,
+  },
+  K: {
+    C: (k) => k - 273.15,
+    F: (k) => k * 9 / 5 - 459.67,
+    R: (k) => k * 9 / 5,
+  },
+  R: {
+    C: (r) => r * 5 / 9 - 273.15,
+    F: (r) => r - 459.67,
+    K: (r) => r * 5 / 9,
+  },
+};
 
-      constructor(value: number, unit: string) {
-        this.value = value;
-        this.currentUnit = unit;
-      }
+export class TemperatureConverter {
+  private value: number;
+  private currentUnit: TemperatureUnit;
+  private targetUnit!: TemperatureUnit;
 
-      to = function(targetUnit: number) {
-        this.targetUnit = targetUnit;
-        return this;
-      };
-
-      val = function(): number {
-        let currentUnit = this.currentUnit.toUpperCase();
-        let targetUnit = this.targetUnit.toUpperCase();
-
-        if(!temperatureTable[currentUnit] || !temperatureTable[currentUnit][targetUnit] ) {
-          throw new Error(`Conversion not possible: &deg;${this.currentUnit} -> &deg;${this.targetUnit}`);
-        }
-        let conversionFunction = temperatureTable[currentUnit][targetUnit];
-
-        return conversionFunction(this.value);
-      };
-
-    }
-
+  constructor(value: number, unit: TemperatureUnit) {
+    this.value = value;
+    this.currentUnit = unit;
   }
 
+  to(targetUnit: TemperatureUnit): this {
+    this.targetUnit = targetUnit;
+    return this;
+  }
+
+  val(): number {
+    if (this.currentUnit === this.targetUnit) {
+      return this.value;
+    }
+
+    const conversionFunction = temperatureTable[this.currentUnit][this.targetUnit];
+
+    if (!conversionFunction) {
+      throw new Error(`Conversion not possible: °${this.currentUnit} -> °${this.targetUnit}`);
+    }
+
+    return conversionFunction(this.value);
+  }
 }
